@@ -17,6 +17,7 @@ import { Route as AuthenticatedDashboardRouteImport } from './routes/_authentica
 import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
 import { Route as AuthenticatedAdminAiRouteImport } from './routes/_authenticated/admin.ai'
 import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
+import { Route as AuthenticatedAdminConfigRouteImport } from './routes/_authenticated/admin.config'
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
 import { Route as AuthenticatedAiQueueRouteImport } from './routes/_authenticated/ai.queue'
@@ -106,6 +107,12 @@ const AuthenticatedAdminAuditRoute = AuthenticatedAdminAuditRouteImport.update({
   path: '/admin/audit',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminConfigRoute =
+  AuthenticatedAdminConfigRouteImport.update({
+    id: '/admin/config',
+    path: '/admin/config',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminSettingsRoute =
   AuthenticatedAdminSettingsRouteImport.update({
     id: '/admin/settings',
@@ -399,6 +406,7 @@ export interface FileRoutesByFullPath {
   '/notifications': typeof AuthenticatedNotificationsRoute
   '/admin/ai': typeof AuthenticatedAdminAiRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/admin/config': typeof AuthenticatedAdminConfigRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/ai/queue': typeof AuthenticatedAiQueueRoute
@@ -456,6 +464,7 @@ export interface FileRoutesByTo {
   '/notifications': typeof AuthenticatedNotificationsRoute
   '/admin/ai': typeof AuthenticatedAdminAiRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/admin/config': typeof AuthenticatedAdminConfigRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/ai/queue': typeof AuthenticatedAiQueueRoute
@@ -515,6 +524,7 @@ export interface FileRoutesById {
   '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
   '/_authenticated/admin/ai': typeof AuthenticatedAdminAiRoute
   '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/_authenticated/admin/config': typeof AuthenticatedAdminConfigRoute
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/ai/queue': typeof AuthenticatedAiQueueRoute
@@ -574,6 +584,7 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/admin/ai'
     | '/admin/audit'
+    | '/admin/config'
     | '/admin/settings'
     | '/admin/users'
     | '/ai/queue'
@@ -631,6 +642,7 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/admin/ai'
     | '/admin/audit'
+    | '/admin/config'
     | '/admin/settings'
     | '/admin/users'
     | '/ai/queue'
@@ -689,6 +701,7 @@ export interface FileRouteTypes {
     | '/_authenticated/notifications'
     | '/_authenticated/admin/ai'
     | '/_authenticated/admin/audit'
+    | '/_authenticated/admin/config'
     | '/_authenticated/admin/settings'
     | '/_authenticated/admin/users'
     | '/_authenticated/ai/queue'
@@ -802,6 +815,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/audit'
       fullPath: '/admin/audit'
       preLoaderRoute: typeof AuthenticatedAdminAuditRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/config': {
+      id: '/_authenticated/admin/config'
+      path: '/admin/config'
+      fullPath: '/admin/config'
+      preLoaderRoute: typeof AuthenticatedAdminConfigRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/settings': {
@@ -1149,6 +1169,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
   AuthenticatedAdminAiRoute: typeof AuthenticatedAdminAiRoute
   AuthenticatedAdminAuditRoute: typeof AuthenticatedAdminAuditRoute
+  AuthenticatedAdminConfigRoute: typeof AuthenticatedAdminConfigRoute
   AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
   AuthenticatedAiQueueRoute: typeof AuthenticatedAiQueueRoute
@@ -1204,6 +1225,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
   AuthenticatedAdminAiRoute: AuthenticatedAdminAiRoute,
   AuthenticatedAdminAuditRoute: AuthenticatedAdminAuditRoute,
+  AuthenticatedAdminConfigRoute: AuthenticatedAdminConfigRoute,
   AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
   AuthenticatedAiQueueRoute: AuthenticatedAiQueueRoute,
