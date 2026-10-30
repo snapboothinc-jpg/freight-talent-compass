@@ -40,9 +40,11 @@ import { Route as AuthenticatedPerformanceMatrixRouteImport } from './routes/_au
 import { Route as AuthenticatedPerformanceMyRouteImport } from './routes/_authenticated/performance.my'
 import { Route as AuthenticatedPerformanceTeamRouteImport } from './routes/_authenticated/performance.team'
 import { Route as AuthenticatedRecognitionIndexRouteImport } from './routes/_authenticated/recognition.index'
+import { Route as AuthenticatedRecognitionAnalyticsRouteImport } from './routes/_authenticated/recognition.analytics'
 import { Route as AuthenticatedRecognitionMyRouteImport } from './routes/_authenticated/recognition.my'
 import { Route as AuthenticatedRecognitionNominateRouteImport } from './routes/_authenticated/recognition.nominate'
 import { Route as AuthenticatedRecognitionQueueRouteImport } from './routes/_authenticated/recognition.queue'
+import { Route as AuthenticatedReportsIndexRouteImport } from './routes/_authenticated/reports.index'
 import { Route as AuthenticatedSuccessionIndexRouteImport } from './routes/_authenticated/succession.index'
 import { Route as AuthenticatedSuccessionCandidatesRouteImport } from './routes/_authenticated/succession.candidates'
 import { Route as AuthenticatedSuccessionPositionsRouteImport } from './routes/_authenticated/succession.positions'
@@ -239,6 +241,12 @@ const AuthenticatedRecognitionIndexRoute =
     path: '/recognition/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedRecognitionAnalyticsRoute =
+  AuthenticatedRecognitionAnalyticsRouteImport.update({
+    id: '/recognition/analytics',
+    path: '/recognition/analytics',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedRecognitionMyRoute =
   AuthenticatedRecognitionMyRouteImport.update({
     id: '/recognition/my',
@@ -255,6 +263,12 @@ const AuthenticatedRecognitionQueueRoute =
   AuthenticatedRecognitionQueueRouteImport.update({
     id: '/recognition/queue',
     path: '/recognition/queue',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedReportsIndexRoute =
+  AuthenticatedReportsIndexRouteImport.update({
+    id: '/reports/',
+    path: '/reports/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedSuccessionIndexRoute =
@@ -404,6 +418,7 @@ export interface FileRoutesByFullPath {
   '/performance/matrix': typeof AuthenticatedPerformanceMatrixRoute
   '/performance/my': typeof AuthenticatedPerformanceMyRoute
   '/performance/team': typeof AuthenticatedPerformanceTeamRoute
+  '/recognition/analytics': typeof AuthenticatedRecognitionAnalyticsRoute
   '/recognition/my': typeof AuthenticatedRecognitionMyRoute
   '/recognition/nominate': typeof AuthenticatedRecognitionNominateRoute
   '/recognition/queue': typeof AuthenticatedRecognitionQueueRoute
@@ -416,6 +431,7 @@ export interface FileRoutesByFullPath {
   '/learning/': typeof AuthenticatedLearningIndexRoute
   '/performance/': typeof AuthenticatedPerformanceIndexRoute
   '/recognition/': typeof AuthenticatedRecognitionIndexRoute
+  '/reports/': typeof AuthenticatedReportsIndexRoute
   '/succession/': typeof AuthenticatedSuccessionIndexRoute
   '/training/': typeof AuthenticatedTrainingIndexRoute
   '/competency/library/$id': typeof AuthenticatedCompetencyLibraryIdRoute
@@ -459,6 +475,7 @@ export interface FileRoutesByTo {
   '/performance/matrix': typeof AuthenticatedPerformanceMatrixRoute
   '/performance/my': typeof AuthenticatedPerformanceMyRoute
   '/performance/team': typeof AuthenticatedPerformanceTeamRoute
+  '/recognition/analytics': typeof AuthenticatedRecognitionAnalyticsRoute
   '/recognition/my': typeof AuthenticatedRecognitionMyRoute
   '/recognition/nominate': typeof AuthenticatedRecognitionNominateRoute
   '/recognition/queue': typeof AuthenticatedRecognitionQueueRoute
@@ -471,6 +488,7 @@ export interface FileRoutesByTo {
   '/learning': typeof AuthenticatedLearningIndexRoute
   '/performance': typeof AuthenticatedPerformanceIndexRoute
   '/recognition': typeof AuthenticatedRecognitionIndexRoute
+  '/reports': typeof AuthenticatedReportsIndexRoute
   '/succession': typeof AuthenticatedSuccessionIndexRoute
   '/training': typeof AuthenticatedTrainingIndexRoute
   '/competency/library/$id': typeof AuthenticatedCompetencyLibraryIdRoute
@@ -516,6 +534,7 @@ export interface FileRoutesById {
   '/_authenticated/performance/matrix': typeof AuthenticatedPerformanceMatrixRoute
   '/_authenticated/performance/my': typeof AuthenticatedPerformanceMyRoute
   '/_authenticated/performance/team': typeof AuthenticatedPerformanceTeamRoute
+  '/_authenticated/recognition/analytics': typeof AuthenticatedRecognitionAnalyticsRoute
   '/_authenticated/recognition/my': typeof AuthenticatedRecognitionMyRoute
   '/_authenticated/recognition/nominate': typeof AuthenticatedRecognitionNominateRoute
   '/_authenticated/recognition/queue': typeof AuthenticatedRecognitionQueueRoute
@@ -528,6 +547,7 @@ export interface FileRoutesById {
   '/_authenticated/learning/': typeof AuthenticatedLearningIndexRoute
   '/_authenticated/performance/': typeof AuthenticatedPerformanceIndexRoute
   '/_authenticated/recognition/': typeof AuthenticatedRecognitionIndexRoute
+  '/_authenticated/reports/': typeof AuthenticatedReportsIndexRoute
   '/_authenticated/succession/': typeof AuthenticatedSuccessionIndexRoute
   '/_authenticated/training/': typeof AuthenticatedTrainingIndexRoute
   '/_authenticated/competency/library/$id': typeof AuthenticatedCompetencyLibraryIdRoute
@@ -573,6 +593,7 @@ export interface FileRouteTypes {
     | '/performance/matrix'
     | '/performance/my'
     | '/performance/team'
+    | '/recognition/analytics'
     | '/recognition/my'
     | '/recognition/nominate'
     | '/recognition/queue'
@@ -585,6 +606,7 @@ export interface FileRouteTypes {
     | '/learning/'
     | '/performance/'
     | '/recognition/'
+    | '/reports/'
     | '/succession/'
     | '/training/'
     | '/competency/library/$id'
@@ -628,6 +650,7 @@ export interface FileRouteTypes {
     | '/performance/matrix'
     | '/performance/my'
     | '/performance/team'
+    | '/recognition/analytics'
     | '/recognition/my'
     | '/recognition/nominate'
     | '/recognition/queue'
@@ -640,6 +663,7 @@ export interface FileRouteTypes {
     | '/learning'
     | '/performance'
     | '/recognition'
+    | '/reports'
     | '/succession'
     | '/training'
     | '/competency/library/$id'
@@ -684,6 +708,7 @@ export interface FileRouteTypes {
     | '/_authenticated/performance/matrix'
     | '/_authenticated/performance/my'
     | '/_authenticated/performance/team'
+    | '/_authenticated/recognition/analytics'
     | '/_authenticated/recognition/my'
     | '/_authenticated/recognition/nominate'
     | '/_authenticated/recognition/queue'
@@ -696,6 +721,7 @@ export interface FileRouteTypes {
     | '/_authenticated/learning/'
     | '/_authenticated/performance/'
     | '/_authenticated/recognition/'
+    | '/_authenticated/reports/'
     | '/_authenticated/succession/'
     | '/_authenticated/training/'
     | '/_authenticated/competency/library/$id'
@@ -939,6 +965,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRecognitionIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/recognition/analytics': {
+      id: '/_authenticated/recognition/analytics'
+      path: '/recognition/analytics'
+      fullPath: '/recognition/analytics'
+      preLoaderRoute: typeof AuthenticatedRecognitionAnalyticsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/recognition/my': {
       id: '/_authenticated/recognition/my'
       path: '/recognition/my'
@@ -958,6 +991,13 @@ declare module '@tanstack/react-router' {
       path: '/recognition/queue'
       fullPath: '/recognition/queue'
       preLoaderRoute: typeof AuthenticatedRecognitionQueueRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reports/': {
+      id: '/_authenticated/reports/'
+      path: '/reports'
+      fullPath: '/reports/'
+      preLoaderRoute: typeof AuthenticatedReportsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/succession/': {
@@ -1128,6 +1168,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPerformanceMatrixRoute: typeof AuthenticatedPerformanceMatrixRoute
   AuthenticatedPerformanceMyRoute: typeof AuthenticatedPerformanceMyRoute
   AuthenticatedPerformanceTeamRoute: typeof AuthenticatedPerformanceTeamRoute
+  AuthenticatedRecognitionAnalyticsRoute: typeof AuthenticatedRecognitionAnalyticsRoute
   AuthenticatedRecognitionMyRoute: typeof AuthenticatedRecognitionMyRoute
   AuthenticatedRecognitionNominateRoute: typeof AuthenticatedRecognitionNominateRoute
   AuthenticatedRecognitionQueueRoute: typeof AuthenticatedRecognitionQueueRoute
@@ -1139,6 +1180,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedLearningIndexRoute: typeof AuthenticatedLearningIndexRoute
   AuthenticatedPerformanceIndexRoute: typeof AuthenticatedPerformanceIndexRoute
   AuthenticatedRecognitionIndexRoute: typeof AuthenticatedRecognitionIndexRoute
+  AuthenticatedReportsIndexRoute: typeof AuthenticatedReportsIndexRoute
   AuthenticatedSuccessionIndexRoute: typeof AuthenticatedSuccessionIndexRoute
   AuthenticatedTrainingIndexRoute: typeof AuthenticatedTrainingIndexRoute
   AuthenticatedCompetencyLibraryIdRoute: typeof AuthenticatedCompetencyLibraryIdRoute
@@ -1182,6 +1224,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPerformanceMatrixRoute: AuthenticatedPerformanceMatrixRoute,
   AuthenticatedPerformanceMyRoute: AuthenticatedPerformanceMyRoute,
   AuthenticatedPerformanceTeamRoute: AuthenticatedPerformanceTeamRoute,
+  AuthenticatedRecognitionAnalyticsRoute:
+    AuthenticatedRecognitionAnalyticsRoute,
   AuthenticatedRecognitionMyRoute: AuthenticatedRecognitionMyRoute,
   AuthenticatedRecognitionNominateRoute: AuthenticatedRecognitionNominateRoute,
   AuthenticatedRecognitionQueueRoute: AuthenticatedRecognitionQueueRoute,
@@ -1195,6 +1239,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedLearningIndexRoute: AuthenticatedLearningIndexRoute,
   AuthenticatedPerformanceIndexRoute: AuthenticatedPerformanceIndexRoute,
   AuthenticatedRecognitionIndexRoute: AuthenticatedRecognitionIndexRoute,
+  AuthenticatedReportsIndexRoute: AuthenticatedReportsIndexRoute,
   AuthenticatedSuccessionIndexRoute: AuthenticatedSuccessionIndexRoute,
   AuthenticatedTrainingIndexRoute: AuthenticatedTrainingIndexRoute,
   AuthenticatedCompetencyLibraryIdRoute: AuthenticatedCompetencyLibraryIdRoute,
