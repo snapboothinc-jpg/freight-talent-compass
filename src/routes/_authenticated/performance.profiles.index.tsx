@@ -23,7 +23,7 @@ export const Route = createFileRoute("/_authenticated/performance/profiles/")({
 
 type P = { id: string; name: string; position_id: string; description: string | null; position: { title: string } | null; versions: { id: string; version_number: number; status: string }[] };
 
-export const fetchProfiles = async () =>
+const fetchProfiles = async () =>
   check(await supabase.from("evaluation_profiles").select("*, position:positions(title), versions:evaluation_profile_versions(id, version_number, status)").order("name")) as unknown as P[];
 
 function Page() {

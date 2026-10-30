@@ -43,7 +43,10 @@ export function useAction<TIn extends object, TOut>(
           window.location.href = `/auth?redirect=${encodeURIComponent(window.location.pathname)}`;
           return;
         }
-        toast.error(e.message, { description: `Reference: ${e.requestId.slice(0, 8)}` });
+        toast.error(e.message, {
+          description: `Reference: ${e.requestId.slice(0, 8)}`,
+          action: e.code === "CONFLICT" ? { label: "Reload", onClick: () => window.location.reload() } : undefined,
+        });
       } else {
         // Zod validation from the server shows as a generic message
         toast.error("Some input is invalid. Please check the form.");
