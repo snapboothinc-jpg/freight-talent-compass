@@ -43,7 +43,7 @@ export const aiItemSchema = z
 export const aiResponseSchema = z.object({ recommendations: z.array(aiItemSchema).max(20) }).strict();
 export type AiItem = z.infer<typeof aiItemSchema>;
 
-interface AiContext {
+export interface AiContext {
   employee: { id: string; name: string; position: string; department: string };
   gaps: {
     competency_id: string;
