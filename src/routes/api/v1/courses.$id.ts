@@ -53,22 +53,27 @@ export const Route = createFileRoute("/api/v1/courses/$id")({
         if (!parsed.success) return apiError(400, "INVALID", "Request body failed validation");
 
         // Idempotent replay: same key + same body returns the stored result.
-        const bodyHash = JSON.stringify(parsed.data);
+        // idempotency_keys.key is a UUID; the request hash detects replays with a different body.
+        const bodyHash = await sha256Hex(JSON.stringify(parsed.data));
         const { data: prior } = await auth.supabase
           .from("idempotency_keys")
-          .select("response")
+          .select("request_hash, response")
           .eq("key", idem)
           .eq("user_id", auth.userId)
+          .eq("operation", "api_v1_course_patch")
           .maybeSingle();
-        if (prior?.response && typeof prior.response === "object" && (prior.response as { body_hash?: string }).body_hash === bodyHash) {
-          return withEtag(Response.json((prior.response as { result: unknown }).result), current.id, current.version + 1);
+        if (prior) {
+          if (prior.request_hash !== bodyHash) {
+            return apiError(409, "IDEMPOTENCY_CONFLICT", "This Idempotency-Key was already used with a different request body");
+          }
+          return withEtag(Response.json(prior.response), current.id, current.version);
         }
 
         // Updates go through the self-authorizing database operation (permission + audit in one transaction).
-        const { data: result, error } = await auth.supabase.rpc("save_course", {
+        const { data: result, error } = await auth.supabase.rpc("upsert_course", {
           _id: current.id,
+          _d: parsed.data,
           _version: current.version,
-          _data: parsed.data,
         });
         if (error) {
           const msg = error.message ?? "";
@@ -80,7 +85,9 @@ export const Route = createFileRoute("/api/v1/courses/$id")({
         await auth.supabase.from("idempotency_keys").insert({
           key: idem,
           user_id: auth.userId,
-          response: { body_hash: bodyHash, result: { data: result } },
+          operation: "api_v1_course_patch",
+          request_hash: bodyHash,
+          response: { data: result },
         });
 
         return withEtag(Response.json({ data: result }), current.id, current.version + 1);
