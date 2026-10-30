@@ -68,7 +68,8 @@ function Page() {
       const r = await logExport({ data: { kind: "gaps_csv", filters: Object.fromEntries(Object.entries(f).filter(([, v]) => v)) as Record<string, string> } });
       if (!r.ok) throw new Error(r.error.message);
     } catch {
-      return toast.error("Export could not be recorded, so it was not created.");
+      toast.error("Export could not be recorded, so it was not created.");
+      return;
     }
     const blob = new Blob([[header.map(csvCell).join(","), ...lines].join("\n")], { type: "text/csv" });
     const a = document.createElement("a");

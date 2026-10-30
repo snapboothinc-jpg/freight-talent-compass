@@ -73,7 +73,7 @@ function AssignDialog({ cycleId, existing, onClose }: { cycleId: string; existin
     invalidate: [qk.perf.all],
     onSuccess: (r) => {
       toast.success(`${r.created} assignment(s) created`);
-      if (r.skipped.length) toast.warning(`${r.skipped.length} skipped`, { description: r.skipped.map((s) => `${empName(emps.data?.find((e) => e.id === s.employee_id))}: ${s.reason}`).join("; ") });
+      if (r.skipped.length) toast.warning(`${r.skipped.length} skipped`, { description: r.skipped.map((s: { employee_id: string; reason: string }) => `${empName(emps.data?.find((e) => e.id === s.employee_id))}: ${s.reason}`).join("; ") });
       onClose();
     },
   });
