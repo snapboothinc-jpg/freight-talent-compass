@@ -3296,6 +3296,10 @@ export type Database = {
         Args: { _hash: string; _key: string; _op: string; _resp: Json }
         Returns: Json
       }
+      _maybe_complete_course: {
+        Args: { _enrollment: string }
+        Returns: undefined
+      }
       _notify: {
         Args: {
           _body: string
@@ -3342,6 +3346,7 @@ export type Database = {
         Args: { _role: Database["public"]["Enums"]["app_role"]; _user: string }
         Returns: Json
       }
+      archive_course: { Args: { _id: string }; Returns: Json }
       assert_transition: {
         Args: { _entity: string; _from: string; _to: string }
         Returns: undefined
@@ -3410,6 +3415,18 @@ export type Database = {
         Args: never
         Returns: Database["public"]["Enums"]["app_role"]
       }
+      enroll_course: {
+        Args: {
+          _course: string
+          _employee: string
+          _hash: string
+          _idem: string
+          _plan_item: string
+          _source: string
+        }
+        Returns: Json
+      }
+      get_quiz_questions: { Args: { _quiz: string }; Returns: Json }
       global_search: {
         Args: { _q: string }
         Returns: {
@@ -3430,6 +3447,26 @@ export type Database = {
       }
       is_dept_head_of: { Args: { _emp: string }; Returns: boolean }
       is_supervisor_of: { Args: { _emp: string }; Returns: boolean }
+      link_reassessment: {
+        Args: {
+          _assessment: string
+          _competency: string
+          _employee: string
+          _notes: string
+          _session: string
+        }
+        Returns: Json
+      }
+      log_ai_generation: {
+        Args: {
+          _employee: string
+          _error: string
+          _latency: number
+          _model: string
+          _status: string
+        }
+        Returns: Json
+      }
       log_audit: {
         Args: {
           _action: string
@@ -3443,6 +3480,8 @@ export type Database = {
       my_context: { Args: never; Returns: Json }
       my_employee_id: { Args: never; Returns: string }
       new_profile_version: { Args: { _profile: string }; Returns: Json }
+      prepare_ai_context: { Args: { _employee: string }; Returns: Json }
+      process_outbox: { Args: { _limit?: number }; Returns: Json }
       profile_weight_total: { Args: { _version_id: string }; Returns: number }
       register_file: {
         Args: {
@@ -3452,6 +3491,10 @@ export type Database = {
           _path: string
           _size: number
         }
+        Returns: Json
+      }
+      register_participant: {
+        Args: { _employee: string; _plan_item: string; _session: string }
         Returns: Json
       }
       remove_demo_data: { Args: never; Returns: Json }
@@ -3464,7 +3507,28 @@ export type Database = {
         }
         Returns: Json
       }
+      review_ai_recommendation: {
+        Args: {
+          _comments: string
+          _decision: string
+          _edited: Json
+          _hash: string
+          _id: string
+          _idem: string
+        }
+        Returns: Json
+      }
       review_assessment: {
+        Args: {
+          _comments: string
+          _decision: string
+          _hash: string
+          _id: string
+          _idem: string
+        }
+        Returns: Json
+      }
+      review_course: {
         Args: {
           _comments: string
           _decision: string
@@ -3484,6 +3548,16 @@ export type Database = {
         }
         Returns: Json
       }
+      save_ai_recommendations: {
+        Args: {
+          _employee: string
+          _hash: string
+          _idem: string
+          _items: Json
+          _model: string
+        }
+        Returns: Json
+      }
       save_assessment: {
         Args: {
           _comments: string
@@ -3497,6 +3571,23 @@ export type Database = {
         }
         Returns: Json
       }
+      save_attendance: {
+        Args: { _hash: string; _idem: string; _rows: Json; _session: string }
+        Returns: Json
+      }
+      save_course_content: {
+        Args: { _course: string; _sections: Json; _version: number }
+        Returns: Json
+      }
+      save_effectiveness_review: {
+        Args: {
+          _follow_up: boolean
+          _notes: string
+          _session: string
+          _summary: string
+        }
+        Returns: Json
+      }
       save_evaluation: {
         Args: {
           _assignment: string
@@ -3507,12 +3598,36 @@ export type Database = {
         }
         Returns: Json
       }
+      save_lesson_progress: {
+        Args: { _completed: boolean; _enrollment: string; _lesson: string }
+        Returns: Json
+      }
+      save_plan_item: {
+        Args: { _d: Json; _id: string; _plan: string; _version: number }
+        Returns: Json
+      }
       save_profile_version: {
         Args: { _c: Json; _expected: number; _version_id: string }
         Returns: Json
       }
+      save_training_result: {
+        Args: { _d: Json; _employee: string; _session: string }
+        Returns: Json
+      }
+      set_course_competencies: {
+        Args: { _course: string; _mappings: Json }
+        Returns: Json
+      }
       set_cycle_status: {
         Args: { _id: string; _status: string }
+        Returns: Json
+      }
+      set_path_courses: {
+        Args: { _course_ids: Json; _path: string }
+        Returns: Json
+      }
+      set_plan_item_status: {
+        Args: { _evidence: string; _item: string; _status: string }
         Returns: Json
       }
       set_position_requirement: {
@@ -3527,12 +3642,20 @@ export type Database = {
         }
         Returns: Json
       }
+      set_session_status: {
+        Args: { _id: string; _status: string }
+        Returns: Json
+      }
       set_supervisor: {
         Args: { _emp: string; _from: string; _sup: string }
         Returns: Json
       }
       snapshot_gaps: { Args: { _employee: string }; Returns: Json }
       submit_assessment: {
+        Args: { _hash: string; _id: string; _idem: string }
+        Returns: Json
+      }
+      submit_course: {
         Args: { _hash: string; _id: string; _idem: string }
         Returns: Json
       }
@@ -3543,6 +3666,20 @@ export type Database = {
           _idem: string
           _respondent: string
         }
+        Returns: Json
+      }
+      submit_quiz_attempt: {
+        Args: {
+          _answers: Json
+          _enrollment: string
+          _hash: string
+          _idem: string
+          _quiz: string
+        }
+        Returns: Json
+      }
+      update_ai_settings: {
+        Args: { _model: string; _provider: string; _version: number }
         Returns: Json
       }
       update_my_contact: {
@@ -3570,6 +3707,10 @@ export type Database = {
         Args: { _d: Json; _id: string; _version: number }
         Returns: Json
       }
+      upsert_course: {
+        Args: { _d: Json; _id: string; _version: number }
+        Returns: Json
+      }
       upsert_cycle: {
         Args: { _d: Json; _id: string; _version: number }
         Returns: Json
@@ -3586,7 +3727,15 @@ export type Database = {
         }
         Returns: Json
       }
+      upsert_development_plan: {
+        Args: { _d: Json; _id: string; _version: number }
+        Returns: Json
+      }
       upsert_employee: {
+        Args: { _d: Json; _id: string; _version: number }
+        Returns: Json
+      }
+      upsert_learning_path: {
         Args: { _d: Json; _id: string; _version: number }
         Returns: Json
       }
@@ -3600,6 +3749,14 @@ export type Database = {
           _title: string
           _version: number
         }
+        Returns: Json
+      }
+      upsert_trainer: {
+        Args: { _d: Json; _id: string; _version: number }
+        Returns: Json
+      }
+      upsert_training_session: {
+        Args: { _d: Json; _id: string; _version: number }
         Returns: Json
       }
     }
