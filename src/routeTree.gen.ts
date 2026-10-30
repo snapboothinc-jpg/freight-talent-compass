@@ -27,6 +27,9 @@ import { Route as AuthenticatedCompetencyRequirementsRouteImport } from './route
 import { Route as AuthenticatedLearningIndexRouteImport } from './routes/_authenticated/learning.index'
 import { Route as AuthenticatedLearningCatalogRouteImport } from './routes/_authenticated/learning.catalog'
 import { Route as AuthenticatedLearningManageRouteImport } from './routes/_authenticated/learning.manage'
+import { Route as AuthenticatedLearningMyRouteImport } from './routes/_authenticated/learning.my'
+import { Route as AuthenticatedLearningPathsRouteImport } from './routes/_authenticated/learning.paths'
+import { Route as AuthenticatedLearningProgressRouteImport } from './routes/_authenticated/learning.progress'
 import { Route as AuthenticatedOrgDepartmentsRouteImport } from './routes/_authenticated/org.departments'
 import { Route as AuthenticatedOrgPositionsRouteImport } from './routes/_authenticated/org.positions'
 import { Route as AuthenticatedPerformanceIndexRouteImport } from './routes/_authenticated/performance.index'
@@ -144,6 +147,23 @@ const AuthenticatedLearningManageRoute =
   AuthenticatedLearningManageRouteImport.update({
     id: '/learning/manage',
     path: '/learning/manage',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedLearningMyRoute = AuthenticatedLearningMyRouteImport.update({
+  id: '/learning/my',
+  path: '/learning/my',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedLearningPathsRoute =
+  AuthenticatedLearningPathsRouteImport.update({
+    id: '/learning/paths',
+    path: '/learning/paths',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedLearningProgressRoute =
+  AuthenticatedLearningProgressRouteImport.update({
+    id: '/learning/progress',
+    path: '/learning/progress',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedOrgDepartmentsRoute =
@@ -270,6 +290,9 @@ export interface FileRoutesByFullPath {
   '/competency/requirements': typeof AuthenticatedCompetencyRequirementsRoute
   '/learning/catalog': typeof AuthenticatedLearningCatalogRoute
   '/learning/manage': typeof AuthenticatedLearningManageRoute
+  '/learning/my': typeof AuthenticatedLearningMyRoute
+  '/learning/paths': typeof AuthenticatedLearningPathsRoute
+  '/learning/progress': typeof AuthenticatedLearningProgressRoute
   '/org/departments': typeof AuthenticatedOrgDepartmentsRoute
   '/org/positions': typeof AuthenticatedOrgPositionsRoute
   '/performance/history': typeof AuthenticatedPerformanceHistoryRoute
@@ -307,6 +330,9 @@ export interface FileRoutesByTo {
   '/competency/requirements': typeof AuthenticatedCompetencyRequirementsRoute
   '/learning/catalog': typeof AuthenticatedLearningCatalogRoute
   '/learning/manage': typeof AuthenticatedLearningManageRoute
+  '/learning/my': typeof AuthenticatedLearningMyRoute
+  '/learning/paths': typeof AuthenticatedLearningPathsRoute
+  '/learning/progress': typeof AuthenticatedLearningProgressRoute
   '/org/departments': typeof AuthenticatedOrgDepartmentsRoute
   '/org/positions': typeof AuthenticatedOrgPositionsRoute
   '/performance/history': typeof AuthenticatedPerformanceHistoryRoute
@@ -346,6 +372,9 @@ export interface FileRoutesById {
   '/_authenticated/competency/requirements': typeof AuthenticatedCompetencyRequirementsRoute
   '/_authenticated/learning/catalog': typeof AuthenticatedLearningCatalogRoute
   '/_authenticated/learning/manage': typeof AuthenticatedLearningManageRoute
+  '/_authenticated/learning/my': typeof AuthenticatedLearningMyRoute
+  '/_authenticated/learning/paths': typeof AuthenticatedLearningPathsRoute
+  '/_authenticated/learning/progress': typeof AuthenticatedLearningProgressRoute
   '/_authenticated/org/departments': typeof AuthenticatedOrgDepartmentsRoute
   '/_authenticated/org/positions': typeof AuthenticatedOrgPositionsRoute
   '/_authenticated/performance/history': typeof AuthenticatedPerformanceHistoryRoute
@@ -385,6 +414,9 @@ export interface FileRouteTypes {
     | '/competency/requirements'
     | '/learning/catalog'
     | '/learning/manage'
+    | '/learning/my'
+    | '/learning/paths'
+    | '/learning/progress'
     | '/org/departments'
     | '/org/positions'
     | '/performance/history'
@@ -422,6 +454,9 @@ export interface FileRouteTypes {
     | '/competency/requirements'
     | '/learning/catalog'
     | '/learning/manage'
+    | '/learning/my'
+    | '/learning/paths'
+    | '/learning/progress'
     | '/org/departments'
     | '/org/positions'
     | '/performance/history'
@@ -460,6 +495,9 @@ export interface FileRouteTypes {
     | '/_authenticated/competency/requirements'
     | '/_authenticated/learning/catalog'
     | '/_authenticated/learning/manage'
+    | '/_authenticated/learning/my'
+    | '/_authenticated/learning/paths'
+    | '/_authenticated/learning/progress'
     | '/_authenticated/org/departments'
     | '/_authenticated/org/positions'
     | '/_authenticated/performance/history'
@@ -617,6 +655,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedLearningManageRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/learning/my': {
+      id: '/_authenticated/learning/my'
+      path: '/learning/my'
+      fullPath: '/learning/my'
+      preLoaderRoute: typeof AuthenticatedLearningMyRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/learning/paths': {
+      id: '/_authenticated/learning/paths'
+      path: '/learning/paths'
+      fullPath: '/learning/paths'
+      preLoaderRoute: typeof AuthenticatedLearningPathsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/learning/progress': {
+      id: '/_authenticated/learning/progress'
+      path: '/learning/progress'
+      fullPath: '/learning/progress'
+      preLoaderRoute: typeof AuthenticatedLearningProgressRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/org/departments': {
       id: '/_authenticated/org/departments'
       path: '/org/departments'
@@ -760,6 +819,9 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedCompetencyRequirementsRoute: typeof AuthenticatedCompetencyRequirementsRoute
   AuthenticatedLearningCatalogRoute: typeof AuthenticatedLearningCatalogRoute
   AuthenticatedLearningManageRoute: typeof AuthenticatedLearningManageRoute
+  AuthenticatedLearningMyRoute: typeof AuthenticatedLearningMyRoute
+  AuthenticatedLearningPathsRoute: typeof AuthenticatedLearningPathsRoute
+  AuthenticatedLearningProgressRoute: typeof AuthenticatedLearningProgressRoute
   AuthenticatedOrgDepartmentsRoute: typeof AuthenticatedOrgDepartmentsRoute
   AuthenticatedOrgPositionsRoute: typeof AuthenticatedOrgPositionsRoute
   AuthenticatedPerformanceHistoryRoute: typeof AuthenticatedPerformanceHistoryRoute
@@ -796,6 +858,9 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
     AuthenticatedCompetencyRequirementsRoute,
   AuthenticatedLearningCatalogRoute: AuthenticatedLearningCatalogRoute,
   AuthenticatedLearningManageRoute: AuthenticatedLearningManageRoute,
+  AuthenticatedLearningMyRoute: AuthenticatedLearningMyRoute,
+  AuthenticatedLearningPathsRoute: AuthenticatedLearningPathsRoute,
+  AuthenticatedLearningProgressRoute: AuthenticatedLearningProgressRoute,
   AuthenticatedOrgDepartmentsRoute: AuthenticatedOrgDepartmentsRoute,
   AuthenticatedOrgPositionsRoute: AuthenticatedOrgPositionsRoute,
   AuthenticatedPerformanceHistoryRoute: AuthenticatedPerformanceHistoryRoute,
