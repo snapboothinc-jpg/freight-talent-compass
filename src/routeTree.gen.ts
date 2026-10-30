@@ -40,7 +40,9 @@ import { Route as AuthenticatedPerformanceMatrixRouteImport } from './routes/_au
 import { Route as AuthenticatedPerformanceMyRouteImport } from './routes/_authenticated/performance.my'
 import { Route as AuthenticatedPerformanceTeamRouteImport } from './routes/_authenticated/performance.team'
 import { Route as AuthenticatedRecognitionIndexRouteImport } from './routes/_authenticated/recognition.index'
+import { Route as AuthenticatedRecognitionMyRouteImport } from './routes/_authenticated/recognition.my'
 import { Route as AuthenticatedRecognitionNominateRouteImport } from './routes/_authenticated/recognition.nominate'
+import { Route as AuthenticatedRecognitionQueueRouteImport } from './routes/_authenticated/recognition.queue'
 import { Route as AuthenticatedSuccessionIndexRouteImport } from './routes/_authenticated/succession.index'
 import { Route as AuthenticatedSuccessionCandidatesRouteImport } from './routes/_authenticated/succession.candidates'
 import { Route as AuthenticatedSuccessionPositionsRouteImport } from './routes/_authenticated/succession.positions'
@@ -237,10 +239,22 @@ const AuthenticatedRecognitionIndexRoute =
     path: '/recognition/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedRecognitionMyRoute =
+  AuthenticatedRecognitionMyRouteImport.update({
+    id: '/recognition/my',
+    path: '/recognition/my',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedRecognitionNominateRoute =
   AuthenticatedRecognitionNominateRouteImport.update({
     id: '/recognition/nominate',
     path: '/recognition/nominate',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedRecognitionQueueRoute =
+  AuthenticatedRecognitionQueueRouteImport.update({
+    id: '/recognition/queue',
+    path: '/recognition/queue',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedSuccessionIndexRoute =
@@ -390,7 +404,9 @@ export interface FileRoutesByFullPath {
   '/performance/matrix': typeof AuthenticatedPerformanceMatrixRoute
   '/performance/my': typeof AuthenticatedPerformanceMyRoute
   '/performance/team': typeof AuthenticatedPerformanceTeamRoute
+  '/recognition/my': typeof AuthenticatedRecognitionMyRoute
   '/recognition/nominate': typeof AuthenticatedRecognitionNominateRoute
+  '/recognition/queue': typeof AuthenticatedRecognitionQueueRoute
   '/succession/candidates': typeof AuthenticatedSuccessionCandidatesRoute
   '/succession/positions': typeof AuthenticatedSuccessionPositionsRoute
   '/training/calendar': typeof AuthenticatedTrainingCalendarRoute
@@ -443,7 +459,9 @@ export interface FileRoutesByTo {
   '/performance/matrix': typeof AuthenticatedPerformanceMatrixRoute
   '/performance/my': typeof AuthenticatedPerformanceMyRoute
   '/performance/team': typeof AuthenticatedPerformanceTeamRoute
+  '/recognition/my': typeof AuthenticatedRecognitionMyRoute
   '/recognition/nominate': typeof AuthenticatedRecognitionNominateRoute
+  '/recognition/queue': typeof AuthenticatedRecognitionQueueRoute
   '/succession/candidates': typeof AuthenticatedSuccessionCandidatesRoute
   '/succession/positions': typeof AuthenticatedSuccessionPositionsRoute
   '/training/calendar': typeof AuthenticatedTrainingCalendarRoute
@@ -498,7 +516,9 @@ export interface FileRoutesById {
   '/_authenticated/performance/matrix': typeof AuthenticatedPerformanceMatrixRoute
   '/_authenticated/performance/my': typeof AuthenticatedPerformanceMyRoute
   '/_authenticated/performance/team': typeof AuthenticatedPerformanceTeamRoute
+  '/_authenticated/recognition/my': typeof AuthenticatedRecognitionMyRoute
   '/_authenticated/recognition/nominate': typeof AuthenticatedRecognitionNominateRoute
+  '/_authenticated/recognition/queue': typeof AuthenticatedRecognitionQueueRoute
   '/_authenticated/succession/candidates': typeof AuthenticatedSuccessionCandidatesRoute
   '/_authenticated/succession/positions': typeof AuthenticatedSuccessionPositionsRoute
   '/_authenticated/training/calendar': typeof AuthenticatedTrainingCalendarRoute
@@ -553,7 +573,9 @@ export interface FileRouteTypes {
     | '/performance/matrix'
     | '/performance/my'
     | '/performance/team'
+    | '/recognition/my'
     | '/recognition/nominate'
+    | '/recognition/queue'
     | '/succession/candidates'
     | '/succession/positions'
     | '/training/calendar'
@@ -606,7 +628,9 @@ export interface FileRouteTypes {
     | '/performance/matrix'
     | '/performance/my'
     | '/performance/team'
+    | '/recognition/my'
     | '/recognition/nominate'
+    | '/recognition/queue'
     | '/succession/candidates'
     | '/succession/positions'
     | '/training/calendar'
@@ -660,7 +684,9 @@ export interface FileRouteTypes {
     | '/_authenticated/performance/matrix'
     | '/_authenticated/performance/my'
     | '/_authenticated/performance/team'
+    | '/_authenticated/recognition/my'
     | '/_authenticated/recognition/nominate'
+    | '/_authenticated/recognition/queue'
     | '/_authenticated/succession/candidates'
     | '/_authenticated/succession/positions'
     | '/_authenticated/training/calendar'
@@ -913,11 +939,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRecognitionIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/recognition/my': {
+      id: '/_authenticated/recognition/my'
+      path: '/recognition/my'
+      fullPath: '/recognition/my'
+      preLoaderRoute: typeof AuthenticatedRecognitionMyRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/recognition/nominate': {
       id: '/_authenticated/recognition/nominate'
       path: '/recognition/nominate'
       fullPath: '/recognition/nominate'
       preLoaderRoute: typeof AuthenticatedRecognitionNominateRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/recognition/queue': {
+      id: '/_authenticated/recognition/queue'
+      path: '/recognition/queue'
+      fullPath: '/recognition/queue'
+      preLoaderRoute: typeof AuthenticatedRecognitionQueueRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/succession/': {
@@ -1088,7 +1128,9 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPerformanceMatrixRoute: typeof AuthenticatedPerformanceMatrixRoute
   AuthenticatedPerformanceMyRoute: typeof AuthenticatedPerformanceMyRoute
   AuthenticatedPerformanceTeamRoute: typeof AuthenticatedPerformanceTeamRoute
+  AuthenticatedRecognitionMyRoute: typeof AuthenticatedRecognitionMyRoute
   AuthenticatedRecognitionNominateRoute: typeof AuthenticatedRecognitionNominateRoute
+  AuthenticatedRecognitionQueueRoute: typeof AuthenticatedRecognitionQueueRoute
   AuthenticatedSuccessionCandidatesRoute: typeof AuthenticatedSuccessionCandidatesRoute
   AuthenticatedSuccessionPositionsRoute: typeof AuthenticatedSuccessionPositionsRoute
   AuthenticatedTrainingCalendarRoute: typeof AuthenticatedTrainingCalendarRoute
@@ -1140,7 +1182,9 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPerformanceMatrixRoute: AuthenticatedPerformanceMatrixRoute,
   AuthenticatedPerformanceMyRoute: AuthenticatedPerformanceMyRoute,
   AuthenticatedPerformanceTeamRoute: AuthenticatedPerformanceTeamRoute,
+  AuthenticatedRecognitionMyRoute: AuthenticatedRecognitionMyRoute,
   AuthenticatedRecognitionNominateRoute: AuthenticatedRecognitionNominateRoute,
+  AuthenticatedRecognitionQueueRoute: AuthenticatedRecognitionQueueRoute,
   AuthenticatedSuccessionCandidatesRoute:
     AuthenticatedSuccessionCandidatesRoute,
   AuthenticatedSuccessionPositionsRoute: AuthenticatedSuccessionPositionsRoute,
