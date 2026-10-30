@@ -64,10 +64,16 @@ export const fetchEmployee = async (id: string) => {
 };
 
 export const fetchCurrentSupervisors = async () =>
-  check(await supabase.from("reporting_relationships").select("employee_id, supervisor_id, effective_from").eq("is_current", true)) as {
+  check(
+    await supabase
+      .from("reporting_relationships")
+      .select("employee_id, supervisor_id, effective_from, supervisor:employees!reporting_relationships_supervisor_id_fkey(first_name,last_name)")
+      .eq("is_current", true),
+  ) as unknown as {
     employee_id: string;
     supervisor_id: string;
     effective_from: string;
+    supervisor: { first_name: string; last_name: string } | null;
   }[];
 
 export const empName = (e?: { first_name: string; last_name: string } | null) => (e ? `${e.first_name} ${e.last_name}` : "—");
