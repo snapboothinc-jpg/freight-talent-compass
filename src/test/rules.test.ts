@@ -12,7 +12,7 @@ describe("gap calculation", () => {
   });
   it("not assessed is distinct and never level 0", () => {
     expect(computeGap(3, null)).toEqual({ gap: null, status: "not_assessed" });
-    expect(computeGap(3, null).status).not.toBe(computeGap(3, 0).status === "gap" ? "not_assessed" : "x");
+    expect(computeGap(3, 0)).toEqual({ gap: 3, status: "gap" });
   });
 });
 
