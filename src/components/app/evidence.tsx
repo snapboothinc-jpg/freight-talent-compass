@@ -14,8 +14,14 @@ export function EvidenceUpload({ employeeId, onUploaded, disabled }: { employeeI
   const [busy, setBusy] = useState(false);
   const register = useServerFn(registerFile);
   async function onFile(f: File) {
-    if (f.size > MAX_FILE_BYTES) return toast.error("File is larger than 10 MB");
-    if (!(ALLOWED_MIME as readonly string[]).includes(f.type)) return toast.error("Allowed: PDF, PNG, JPEG, DOCX or plain text");
+    if (f.size > MAX_FILE_BYTES) {
+      toast.error("File is larger than 10 MB");
+      return;
+    }
+    if (!(ALLOWED_MIME as readonly string[]).includes(f.type)) {
+      toast.error("Allowed: PDF, PNG, JPEG, DOCX or plain text");
+      return;
+    }
     setBusy(true);
     try {
       const { data: u } = await supabase.auth.getUser();

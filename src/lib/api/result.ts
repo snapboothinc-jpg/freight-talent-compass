@@ -14,7 +14,7 @@ export interface ApiErrorBody {
   code: ErrorCode;
   message: string;
   request_id: string;
-  details?: unknown;
+  details?: Record<string, string>;
 }
 
 export type ApiResult<T> = { ok: true; data: T; request_id: string } | { ok: false; error: ApiErrorBody };
@@ -22,7 +22,7 @@ export type ApiResult<T> = { ok: true; data: T; request_id: string } | { ok: fal
 export class ApiError extends Error {
   code: ErrorCode;
   requestId: string;
-  details?: unknown;
+  details?: Record<string, string>;
   constructor(body: ApiErrorBody) {
     super(body.message);
     this.code = body.code;

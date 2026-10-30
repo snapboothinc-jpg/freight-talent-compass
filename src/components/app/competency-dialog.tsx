@@ -36,7 +36,10 @@ export function CompetencyDialog({ competency, indicators = [], onClose }: { com
   const addCat = useAction(useServerFn(saveCategory), { invalidate: [qk.comp.all], success: "Category added", onSuccess: (c) => { setF((x) => ({ ...x, category_id: (c as { id: string }).id })); setNewCat(""); } });
   const submit = () => {
     const p = competencyFields.safeParse(f);
-    if (!p.success) return toast.error(`${p.error.issues[0]?.path.join(".")}: ${p.error.issues[0]?.message}`);
+    if (!p.success) {
+      toast.error(`${p.error.issues[0]?.path.join(".")}: ${p.error.issues[0]?.message}`);
+      return;
+    }
     save.mutate({ id: competency?.id ?? null, version: competency?.version ?? null, data: p.data });
   };
   return (
