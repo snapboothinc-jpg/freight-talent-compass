@@ -1,5 +1,13 @@
 {
   "version": "7",
   "dialect": "postgresql",
-  "entries": []
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1793376182829,
+      "tag": "0000_foundation_identity_org_shared",
+      "breakpoints": true
+    }
+  ]
 }
