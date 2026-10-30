@@ -20,6 +20,9 @@ import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authen
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
 import { Route as AuthenticatedOrgDepartmentsRouteImport } from './routes/_authenticated/org.departments'
 import { Route as AuthenticatedOrgPositionsRouteImport } from './routes/_authenticated/org.positions'
+import { Route as AuthenticatedPerformanceHistoryRouteImport } from './routes/_authenticated/performance.history'
+import { Route as AuthenticatedPerformanceMyRouteImport } from './routes/_authenticated/performance.my'
+import { Route as AuthenticatedPerformanceTeamRouteImport } from './routes/_authenticated/performance.team'
 import { Route as AuthenticatedPeopleEmployeesIndexRouteImport } from './routes/_authenticated/people.employees.index'
 import { Route as AuthenticatedPeopleEmployeesIdRouteImport } from './routes/_authenticated/people.employees.$id'
 
@@ -81,6 +84,24 @@ const AuthenticatedOrgPositionsRoute =
     path: '/org/positions',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedPerformanceHistoryRoute =
+  AuthenticatedPerformanceHistoryRouteImport.update({
+    id: '/performance/history',
+    path: '/performance/history',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedPerformanceMyRoute =
+  AuthenticatedPerformanceMyRouteImport.update({
+    id: '/performance/my',
+    path: '/performance/my',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedPerformanceTeamRoute =
+  AuthenticatedPerformanceTeamRouteImport.update({
+    id: '/performance/team',
+    path: '/performance/team',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedPeopleEmployeesIndexRoute =
   AuthenticatedPeopleEmployeesIndexRouteImport.update({
     id: '/people/employees/',
@@ -105,6 +126,9 @@ export interface FileRoutesByFullPath {
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/org/departments': typeof AuthenticatedOrgDepartmentsRoute
   '/org/positions': typeof AuthenticatedOrgPositionsRoute
+  '/performance/history': typeof AuthenticatedPerformanceHistoryRoute
+  '/performance/my': typeof AuthenticatedPerformanceMyRoute
+  '/performance/team': typeof AuthenticatedPerformanceTeamRoute
   '/people/employees/$id': typeof AuthenticatedPeopleEmployeesIdRoute
   '/people/employees/': typeof AuthenticatedPeopleEmployeesIndexRoute
 }
@@ -119,6 +143,9 @@ export interface FileRoutesByTo {
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/org/departments': typeof AuthenticatedOrgDepartmentsRoute
   '/org/positions': typeof AuthenticatedOrgPositionsRoute
+  '/performance/history': typeof AuthenticatedPerformanceHistoryRoute
+  '/performance/my': typeof AuthenticatedPerformanceMyRoute
+  '/performance/team': typeof AuthenticatedPerformanceTeamRoute
   '/people/employees/$id': typeof AuthenticatedPeopleEmployeesIdRoute
   '/people/employees': typeof AuthenticatedPeopleEmployeesIndexRoute
 }
@@ -135,6 +162,9 @@ export interface FileRoutesById {
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/org/departments': typeof AuthenticatedOrgDepartmentsRoute
   '/_authenticated/org/positions': typeof AuthenticatedOrgPositionsRoute
+  '/_authenticated/performance/history': typeof AuthenticatedPerformanceHistoryRoute
+  '/_authenticated/performance/my': typeof AuthenticatedPerformanceMyRoute
+  '/_authenticated/performance/team': typeof AuthenticatedPerformanceTeamRoute
   '/_authenticated/people/employees/$id': typeof AuthenticatedPeopleEmployeesIdRoute
   '/_authenticated/people/employees/': typeof AuthenticatedPeopleEmployeesIndexRoute
 }
@@ -151,6 +181,9 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/org/departments'
     | '/org/positions'
+    | '/performance/history'
+    | '/performance/my'
+    | '/performance/team'
     | '/people/employees/$id'
     | '/people/employees/'
   fileRoutesByTo: FileRoutesByTo
@@ -165,6 +198,9 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/org/departments'
     | '/org/positions'
+    | '/performance/history'
+    | '/performance/my'
+    | '/performance/team'
     | '/people/employees/$id'
     | '/people/employees'
   id:
@@ -180,6 +216,9 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/users'
     | '/_authenticated/org/departments'
     | '/_authenticated/org/positions'
+    | '/_authenticated/performance/history'
+    | '/_authenticated/performance/my'
+    | '/_authenticated/performance/team'
     | '/_authenticated/people/employees/$id'
     | '/_authenticated/people/employees/'
   fileRoutesById: FileRoutesById
@@ -269,6 +308,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOrgPositionsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/performance/history': {
+      id: '/_authenticated/performance/history'
+      path: '/performance/history'
+      fullPath: '/performance/history'
+      preLoaderRoute: typeof AuthenticatedPerformanceHistoryRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/performance/my': {
+      id: '/_authenticated/performance/my'
+      path: '/performance/my'
+      fullPath: '/performance/my'
+      preLoaderRoute: typeof AuthenticatedPerformanceMyRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/performance/team': {
+      id: '/_authenticated/performance/team'
+      path: '/performance/team'
+      fullPath: '/performance/team'
+      preLoaderRoute: typeof AuthenticatedPerformanceTeamRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/people/employees/': {
       id: '/_authenticated/people/employees/'
       path: '/people/employees'
@@ -295,6 +355,9 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
   AuthenticatedOrgDepartmentsRoute: typeof AuthenticatedOrgDepartmentsRoute
   AuthenticatedOrgPositionsRoute: typeof AuthenticatedOrgPositionsRoute
+  AuthenticatedPerformanceHistoryRoute: typeof AuthenticatedPerformanceHistoryRoute
+  AuthenticatedPerformanceMyRoute: typeof AuthenticatedPerformanceMyRoute
+  AuthenticatedPerformanceTeamRoute: typeof AuthenticatedPerformanceTeamRoute
   AuthenticatedPeopleEmployeesIdRoute: typeof AuthenticatedPeopleEmployeesIdRoute
   AuthenticatedPeopleEmployeesIndexRoute: typeof AuthenticatedPeopleEmployeesIndexRoute
 }
@@ -308,6 +371,9 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
   AuthenticatedOrgDepartmentsRoute: AuthenticatedOrgDepartmentsRoute,
   AuthenticatedOrgPositionsRoute: AuthenticatedOrgPositionsRoute,
+  AuthenticatedPerformanceHistoryRoute: AuthenticatedPerformanceHistoryRoute,
+  AuthenticatedPerformanceMyRoute: AuthenticatedPerformanceMyRoute,
+  AuthenticatedPerformanceTeamRoute: AuthenticatedPerformanceTeamRoute,
   AuthenticatedPeopleEmployeesIdRoute: AuthenticatedPeopleEmployeesIdRoute,
   AuthenticatedPeopleEmployeesIndexRoute:
     AuthenticatedPeopleEmployeesIndexRoute,
