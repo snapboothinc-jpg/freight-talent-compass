@@ -8,7 +8,8 @@ import { fetchDepartments } from "@/lib/data";
 import { getReport, logExport } from "@/lib/api/succession.functions";
 import { unwrap, ApiError } from "@/lib/api/result";
 import { qk } from "@/lib/query-keys";
-import { PageHeader, Panel, Field, NativeSelect, Input, DefaultNote } from "@/components/app/kit";
+import { PageHeader, Panel, Field, NativeSelect, DefaultNote } from "@/components/app/kit";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/reports/")({

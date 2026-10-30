@@ -6,7 +6,8 @@ import { toast } from "sonner";
 import { getAiStatus, updateAiSettings } from "@/lib/api/development.functions";
 import { unwrap, ApiError } from "@/lib/api/result";
 import { qk } from "@/lib/query-keys";
-import { PageHeader, Panel, StatusBadge, Field, NativeSelect, Input, DefaultNote, fmtDateTime } from "@/components/app/kit";
+import { PageHeader, Panel, StatusBadge, Field, NativeSelect, DefaultNote, fmtDateTime } from "@/components/app/kit";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/admin/ai")({

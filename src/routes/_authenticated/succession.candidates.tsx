@@ -13,7 +13,8 @@ import { saveCandidate, saveReadinessAssessment, saveSuccessionActivity, grantSu
 import { unwrap, ApiError } from "@/lib/api/result";
 import { usePermissions } from "@/hooks/use-me";
 import { qk } from "@/lib/query-keys";
-import { PageHeader, Panel, StatusBadge, LoadingRows, ErrorState, Field, NativeSelect, Input, fmtDate, DefaultNote } from "@/components/app/kit";
+import { PageHeader, Panel, StatusBadge, LoadingRows, ErrorState, Field, NativeSelect, fmtDate, DefaultNote } from "@/components/app/kit";
+import { Input } from "@/components/ui/input";
 import { DataTable } from "@/components/app/data-table";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
