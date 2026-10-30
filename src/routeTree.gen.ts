@@ -38,6 +38,7 @@ import { Route as AuthenticatedPerformanceMatrixRouteImport } from './routes/_au
 import { Route as AuthenticatedPerformanceMyRouteImport } from './routes/_authenticated/performance.my'
 import { Route as AuthenticatedPerformanceTeamRouteImport } from './routes/_authenticated/performance.team'
 import { Route as AuthenticatedTrainingIndexRouteImport } from './routes/_authenticated/training.index'
+import { Route as AuthenticatedTrainingCalendarRouteImport } from './routes/_authenticated/training.calendar'
 import { Route as ApiPublicHealthRouteImport } from './routes/api/public/health'
 import { Route as AuthenticatedCompetencyLibraryIndexRouteImport } from './routes/_authenticated/competency.library.index'
 import { Route as AuthenticatedCompetencyLibraryIdRouteImport } from './routes/_authenticated/competency.library.$id'
@@ -216,6 +217,12 @@ const AuthenticatedTrainingIndexRoute =
     path: '/training/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedTrainingCalendarRoute =
+  AuthenticatedTrainingCalendarRouteImport.update({
+    id: '/training/calendar',
+    path: '/training/calendar',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const ApiPublicHealthRoute = ApiPublicHealthRouteImport.update({
   id: '/api/public/health',
   path: '/api/public/health',
@@ -313,6 +320,7 @@ export interface FileRoutesByFullPath {
   '/performance/matrix': typeof AuthenticatedPerformanceMatrixRoute
   '/performance/my': typeof AuthenticatedPerformanceMyRoute
   '/performance/team': typeof AuthenticatedPerformanceTeamRoute
+  '/training/calendar': typeof AuthenticatedTrainingCalendarRoute
   '/api/public/health': typeof ApiPublicHealthRoute
   '/competency/': typeof AuthenticatedCompetencyIndexRoute
   '/learning/': typeof AuthenticatedLearningIndexRoute
@@ -355,6 +363,7 @@ export interface FileRoutesByTo {
   '/performance/matrix': typeof AuthenticatedPerformanceMatrixRoute
   '/performance/my': typeof AuthenticatedPerformanceMyRoute
   '/performance/team': typeof AuthenticatedPerformanceTeamRoute
+  '/training/calendar': typeof AuthenticatedTrainingCalendarRoute
   '/api/public/health': typeof ApiPublicHealthRoute
   '/competency': typeof AuthenticatedCompetencyIndexRoute
   '/learning': typeof AuthenticatedLearningIndexRoute
@@ -399,6 +408,7 @@ export interface FileRoutesById {
   '/_authenticated/performance/matrix': typeof AuthenticatedPerformanceMatrixRoute
   '/_authenticated/performance/my': typeof AuthenticatedPerformanceMyRoute
   '/_authenticated/performance/team': typeof AuthenticatedPerformanceTeamRoute
+  '/_authenticated/training/calendar': typeof AuthenticatedTrainingCalendarRoute
   '/api/public/health': typeof ApiPublicHealthRoute
   '/_authenticated/competency/': typeof AuthenticatedCompetencyIndexRoute
   '/_authenticated/learning/': typeof AuthenticatedLearningIndexRoute
@@ -443,6 +453,7 @@ export interface FileRouteTypes {
     | '/performance/matrix'
     | '/performance/my'
     | '/performance/team'
+    | '/training/calendar'
     | '/api/public/health'
     | '/competency/'
     | '/learning/'
@@ -485,6 +496,7 @@ export interface FileRouteTypes {
     | '/performance/matrix'
     | '/performance/my'
     | '/performance/team'
+    | '/training/calendar'
     | '/api/public/health'
     | '/competency'
     | '/learning'
@@ -528,6 +540,7 @@ export interface FileRouteTypes {
     | '/_authenticated/performance/matrix'
     | '/_authenticated/performance/my'
     | '/_authenticated/performance/team'
+    | '/_authenticated/training/calendar'
     | '/api/public/health'
     | '/_authenticated/competency/'
     | '/_authenticated/learning/'
@@ -758,6 +771,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTrainingIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/training/calendar': {
+      id: '/_authenticated/training/calendar'
+      path: '/training/calendar'
+      fullPath: '/training/calendar'
+      preLoaderRoute: typeof AuthenticatedTrainingCalendarRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/api/public/health': {
       id: '/api/public/health'
       path: '/api/public/health'
@@ -868,6 +888,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPerformanceMatrixRoute: typeof AuthenticatedPerformanceMatrixRoute
   AuthenticatedPerformanceMyRoute: typeof AuthenticatedPerformanceMyRoute
   AuthenticatedPerformanceTeamRoute: typeof AuthenticatedPerformanceTeamRoute
+  AuthenticatedTrainingCalendarRoute: typeof AuthenticatedTrainingCalendarRoute
   AuthenticatedCompetencyIndexRoute: typeof AuthenticatedCompetencyIndexRoute
   AuthenticatedLearningIndexRoute: typeof AuthenticatedLearningIndexRoute
   AuthenticatedPerformanceIndexRoute: typeof AuthenticatedPerformanceIndexRoute
@@ -909,6 +930,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPerformanceMatrixRoute: AuthenticatedPerformanceMatrixRoute,
   AuthenticatedPerformanceMyRoute: AuthenticatedPerformanceMyRoute,
   AuthenticatedPerformanceTeamRoute: AuthenticatedPerformanceTeamRoute,
+  AuthenticatedTrainingCalendarRoute: AuthenticatedTrainingCalendarRoute,
   AuthenticatedCompetencyIndexRoute: AuthenticatedCompetencyIndexRoute,
   AuthenticatedLearningIndexRoute: AuthenticatedLearningIndexRoute,
   AuthenticatedPerformanceIndexRoute: AuthenticatedPerformanceIndexRoute,
