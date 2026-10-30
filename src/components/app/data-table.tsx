@@ -58,7 +58,7 @@ export function DataTable<T>({
   return (
     <div className="space-y-3">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-        <div className="relative max-w-sm flex-1">
+        <div className="relative min-w-56 max-w-sm flex-1">
           <Search className="pointer-events-none absolute left-2.5 top-2.5 size-4 text-muted-foreground" aria-hidden />
           <Input
             aria-label={searchPlaceholder}
