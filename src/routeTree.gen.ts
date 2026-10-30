@@ -53,6 +53,9 @@ import { Route as AuthenticatedTrainingIndexRouteImport } from './routes/_authen
 import { Route as AuthenticatedTrainingCalendarRouteImport } from './routes/_authenticated/training.calendar'
 import { Route as AuthenticatedTrainingEffectivenessRouteImport } from './routes/_authenticated/training.effectiveness'
 import { Route as ApiPublicHealthRouteImport } from './routes/api/public/health'
+import { Route as ApiV1CoursesRouteImport } from './routes/api/v1/courses'
+import { Route as ApiV1EmployeesRouteImport } from './routes/api/v1/employees'
+import { Route as ApiV1GapsRouteImport } from './routes/api/v1/gaps'
 import { Route as AuthenticatedCompetencyLibraryIndexRouteImport } from './routes/_authenticated/competency.library.index'
 import { Route as AuthenticatedCompetencyLibraryIdRouteImport } from './routes/_authenticated/competency.library.$id'
 import { Route as AuthenticatedLearningCourseIdRouteImport } from './routes/_authenticated/learning.course.$id'
@@ -320,6 +323,21 @@ const ApiPublicHealthRoute = ApiPublicHealthRouteImport.update({
   path: '/api/public/health',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiV1CoursesRoute = ApiV1CoursesRouteImport.update({
+  id: '/api/v1/courses',
+  path: '/api/v1/courses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1EmployeesRoute = ApiV1EmployeesRouteImport.update({
+  id: '/api/v1/employees',
+  path: '/api/v1/employees',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1GapsRoute = ApiV1GapsRouteImport.update({
+  id: '/api/v1/gaps',
+  path: '/api/v1/gaps',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedCompetencyLibraryIndexRoute =
   AuthenticatedCompetencyLibraryIndexRouteImport.update({
     id: '/competency/library/',
@@ -441,6 +459,9 @@ export interface FileRoutesByFullPath {
   '/training/calendar': typeof AuthenticatedTrainingCalendarRoute
   '/training/effectiveness': typeof AuthenticatedTrainingEffectivenessRoute
   '/api/public/health': typeof ApiPublicHealthRoute
+  '/api/v1/courses': typeof ApiV1CoursesRoute
+  '/api/v1/employees': typeof ApiV1EmployeesRoute
+  '/api/v1/gaps': typeof ApiV1GapsRoute
   '/competency/': typeof AuthenticatedCompetencyIndexRoute
   '/learning/': typeof AuthenticatedLearningIndexRoute
   '/performance/': typeof AuthenticatedPerformanceIndexRoute
@@ -500,6 +521,9 @@ export interface FileRoutesByTo {
   '/training/calendar': typeof AuthenticatedTrainingCalendarRoute
   '/training/effectiveness': typeof AuthenticatedTrainingEffectivenessRoute
   '/api/public/health': typeof ApiPublicHealthRoute
+  '/api/v1/courses': typeof ApiV1CoursesRoute
+  '/api/v1/employees': typeof ApiV1EmployeesRoute
+  '/api/v1/gaps': typeof ApiV1GapsRoute
   '/competency': typeof AuthenticatedCompetencyIndexRoute
   '/learning': typeof AuthenticatedLearningIndexRoute
   '/performance': typeof AuthenticatedPerformanceIndexRoute
@@ -561,6 +585,9 @@ export interface FileRoutesById {
   '/_authenticated/training/calendar': typeof AuthenticatedTrainingCalendarRoute
   '/_authenticated/training/effectiveness': typeof AuthenticatedTrainingEffectivenessRoute
   '/api/public/health': typeof ApiPublicHealthRoute
+  '/api/v1/courses': typeof ApiV1CoursesRoute
+  '/api/v1/employees': typeof ApiV1EmployeesRoute
+  '/api/v1/gaps': typeof ApiV1GapsRoute
   '/_authenticated/competency/': typeof AuthenticatedCompetencyIndexRoute
   '/_authenticated/learning/': typeof AuthenticatedLearningIndexRoute
   '/_authenticated/performance/': typeof AuthenticatedPerformanceIndexRoute
@@ -622,6 +649,9 @@ export interface FileRouteTypes {
     | '/training/calendar'
     | '/training/effectiveness'
     | '/api/public/health'
+    | '/api/v1/courses'
+    | '/api/v1/employees'
+    | '/api/v1/gaps'
     | '/competency/'
     | '/learning/'
     | '/performance/'
@@ -681,6 +711,9 @@ export interface FileRouteTypes {
     | '/training/calendar'
     | '/training/effectiveness'
     | '/api/public/health'
+    | '/api/v1/courses'
+    | '/api/v1/employees'
+    | '/api/v1/gaps'
     | '/competency'
     | '/learning'
     | '/performance'
@@ -741,6 +774,9 @@ export interface FileRouteTypes {
     | '/_authenticated/training/calendar'
     | '/_authenticated/training/effectiveness'
     | '/api/public/health'
+    | '/api/v1/courses'
+    | '/api/v1/employees'
+    | '/api/v1/gaps'
     | '/_authenticated/competency/'
     | '/_authenticated/learning/'
     | '/_authenticated/performance/'
@@ -769,6 +805,9 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   ApiPublicHealthRoute: typeof ApiPublicHealthRoute
+  ApiV1CoursesRoute: typeof ApiV1CoursesRoute
+  ApiV1EmployeesRoute: typeof ApiV1EmployeesRoute
+  ApiV1GapsRoute: typeof ApiV1GapsRoute
   ApiPublicOutboxProcessRoute: typeof ApiPublicOutboxProcessRoute
 }
 
@@ -1082,6 +1121,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicHealthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/v1/courses': {
+      id: '/api/v1/courses'
+      path: '/api/v1/courses'
+      fullPath: '/api/v1/courses'
+      preLoaderRoute: typeof ApiV1CoursesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/employees': {
+      id: '/api/v1/employees'
+      path: '/api/v1/employees'
+      fullPath: '/api/v1/employees'
+      preLoaderRoute: typeof ApiV1EmployeesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/gaps': {
+      id: '/api/v1/gaps'
+      path: '/api/v1/gaps'
+      fullPath: '/api/v1/gaps'
+      preLoaderRoute: typeof ApiV1GapsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/competency/library/': {
       id: '/_authenticated/competency/library/'
       path: '/competency/library'
@@ -1313,6 +1373,9 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   ApiPublicHealthRoute: ApiPublicHealthRoute,
+  ApiV1CoursesRoute: ApiV1CoursesRoute,
+  ApiV1EmployeesRoute: ApiV1EmployeesRoute,
+  ApiV1GapsRoute: ApiV1GapsRoute,
   ApiPublicOutboxProcessRoute: ApiPublicOutboxProcessRoute,
 }
 export const routeTree = rootRouteImport
