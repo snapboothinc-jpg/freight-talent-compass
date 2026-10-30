@@ -1,9 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { authenticate, pageParams, paginate, pickSort, pickFilters, apiError } from "@/lib/api/v1.server";
+import { authenticate, pageParams, pickFilters, apiError } from "@/lib/api/v1.server";
 
-const SORTABLE = ["created_at", "gap", "status"] as const;
-const FILTERABLE = ["employee_id", "competency_id", "status"] as const;
+const FILTERABLE = ["employee_id", "status"] as const;
 
+/**
+ * Gaps are computed by the scoped database function public.competency_gaps
+ * (gap = max(0, required - current); Not Assessed stays distinct). The cursor
+ * is the row offset, since the function orders deterministically.
+ */
 export const Route = createFileRoute("/api/v1/gaps")({
   server: {
     handlers: {
@@ -12,21 +16,22 @@ export const Route = createFileRoute("/api/v1/gaps")({
         if (auth instanceof Response) return auth;
         const url = new URL(request.url);
         const { cursor, limit } = pageParams(url);
-        const sort = pickSort(url, SORTABLE, "created_at");
         const filters = pickFilters(url, FILTERABLE);
+        const offset = cursor ? Number(cursor) : 0;
+        if (!Number.isInteger(offset) || offset < 0) return apiError(400, "INVALID", "Invalid cursor");
 
-        let q = auth.supabase
-          .from("competency_gaps")
-          .select("id, employee_id, competency_id, required_level, current_level, gap, status, created_at, version")
-          .order(sort.column, { ascending: sort.ascending })
-          .order("id")
-          .limit(limit + 1);
-        for (const [k, v] of Object.entries(filters)) q = q.eq(k, v);
-        if (cursor) q = q.gt("id", cursor);
-
-        const { data, error } = await q;
+        const { data, error } = await auth.supabase.rpc("competency_gaps", {
+          _employee: filters["employee_id"] || undefined,
+          _status: filters["status"] || undefined,
+          _limit: limit + 1,
+          _offset: offset,
+        });
         if (error) return apiError(403, "FORBIDDEN", "You do not have access to this resource");
-        return Response.json(paginate(data ?? [], limit));
+
+        const rows = (data ?? []) as Record<string, unknown>[];
+        const page = rows.slice(0, limit);
+        const nextCursor = rows.length > limit ? String(offset + limit) : null;
+        return Response.json({ data: page, next_cursor: nextCursor });
       },
     },
   },
