@@ -130,4 +130,24 @@ run("role access", () => {
     const stale = await c.hr.rpc("upsert_employee", { _id: PAOLO, _d: body, _version: e!.version } as never);
     expect(stale.error?.message).toMatch(/CONFLICT/);
   });
+
+  it("gap closes only after an approved reassessment with evidence", async () => {
+    const before = (await c.supervisor.rpc("competency_gaps", { _employee: PAOLO } as never)).data as { competency_id: string; gap_status: string; current_level: number | null }[];
+    expect(before.find((g) => g.competency_id === SAFETY)?.gap_status).toBe("gap");
+    const noEvidence = await c.supervisor.rpc("save_assessment", { _id: null, _employee: PAOLO, _competency: SAFETY, _level: 3, _evidence: null, _comments: null, _reassess: true, _version: null } as never);
+    expect(noEvidence.error).toBeNull();
+    const id = (noEvidence.data as { id: string }).id;
+    const sub1 = await c.supervisor.rpc("submit_assessment", { _id: id, _idem: null, _hash: "" } as never);
+    expect(sub1.error?.message).toMatch(/evidence is required/);
+    const v = (noEvidence.data as { version: number }).version;
+    await c.supervisor.rpc("save_assessment", { _id: id, _employee: PAOLO, _competency: SAFETY, _level: 3, _evidence: "Observed 5 compliant load checks after refresher", _comments: null, _reassess: true, _version: v } as never);
+    const sub = await c.supervisor.rpc("submit_assessment", { _id: id, _idem: null, _hash: "" } as never);
+    expect(sub.error).toBeNull();
+    const still = (await c.supervisor.rpc("competency_gaps", { _employee: PAOLO } as never)).data as { competency_id: string; gap_status: string }[];
+    expect(still.find((g) => g.competency_id === SAFETY)?.gap_status).toBe("gap");
+    const ap = await c.depthead.rpc("review_assessment", { _id: id, _decision: "approve", _comments: "Verified", _idem: null, _hash: "" } as never);
+    expect(ap.error).toBeNull();
+    const after = (await c.supervisor.rpc("competency_gaps", { _employee: PAOLO } as never)).data as { competency_id: string; gap_status: string; current_level: number }[];
+    expect(after.find((g) => g.competency_id === SAFETY)).toMatchObject({ gap_status: "met", current_level: 3 });
+  });
 });
