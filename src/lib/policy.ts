@@ -65,7 +65,15 @@ export type Permission =
   | "comp.view_all"
   | "team.view"
   | "reports.hr"
-  | "self.service";
+  | "self.service"
+  | "learn.manage"
+  | "learn.approve"
+  | "train.manage"
+  | "ai.generate"
+  | "ai.review"
+  | "succession.manage"
+  | "succession.dept"
+  | "recognition.review";
 
 export interface NavItem {
   to: string;
