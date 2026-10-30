@@ -19,6 +19,10 @@ import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
 import { Route as AuthenticatedCompetencyIndexRouteImport } from './routes/_authenticated/competency.index'
+import { Route as AuthenticatedCompetencyAssessRouteImport } from './routes/_authenticated/competency.assess'
+import { Route as AuthenticatedCompetencyGapsRouteImport } from './routes/_authenticated/competency.gaps'
+import { Route as AuthenticatedCompetencyHistoryRouteImport } from './routes/_authenticated/competency.history'
+import { Route as AuthenticatedCompetencyMatrixRouteImport } from './routes/_authenticated/competency.matrix'
 import { Route as AuthenticatedCompetencyRequirementsRouteImport } from './routes/_authenticated/competency.requirements'
 import { Route as AuthenticatedOrgDepartmentsRouteImport } from './routes/_authenticated/org.departments'
 import { Route as AuthenticatedOrgPositionsRouteImport } from './routes/_authenticated/org.positions'
@@ -87,6 +91,30 @@ const AuthenticatedCompetencyIndexRoute =
   AuthenticatedCompetencyIndexRouteImport.update({
     id: '/competency/',
     path: '/competency/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedCompetencyAssessRoute =
+  AuthenticatedCompetencyAssessRouteImport.update({
+    id: '/competency/assess',
+    path: '/competency/assess',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedCompetencyGapsRoute =
+  AuthenticatedCompetencyGapsRouteImport.update({
+    id: '/competency/gaps',
+    path: '/competency/gaps',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedCompetencyHistoryRoute =
+  AuthenticatedCompetencyHistoryRouteImport.update({
+    id: '/competency/history',
+    path: '/competency/history',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedCompetencyMatrixRoute =
+  AuthenticatedCompetencyMatrixRouteImport.update({
+    id: '/competency/matrix',
+    path: '/competency/matrix',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedCompetencyRequirementsRoute =
@@ -201,6 +229,10 @@ export interface FileRoutesByFullPath {
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/competency/assess': typeof AuthenticatedCompetencyAssessRoute
+  '/competency/gaps': typeof AuthenticatedCompetencyGapsRoute
+  '/competency/history': typeof AuthenticatedCompetencyHistoryRoute
+  '/competency/matrix': typeof AuthenticatedCompetencyMatrixRoute
   '/competency/requirements': typeof AuthenticatedCompetencyRequirementsRoute
   '/org/departments': typeof AuthenticatedOrgDepartmentsRoute
   '/org/positions': typeof AuthenticatedOrgPositionsRoute
@@ -229,6 +261,10 @@ export interface FileRoutesByTo {
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/competency/assess': typeof AuthenticatedCompetencyAssessRoute
+  '/competency/gaps': typeof AuthenticatedCompetencyGapsRoute
+  '/competency/history': typeof AuthenticatedCompetencyHistoryRoute
+  '/competency/matrix': typeof AuthenticatedCompetencyMatrixRoute
   '/competency/requirements': typeof AuthenticatedCompetencyRequirementsRoute
   '/org/departments': typeof AuthenticatedOrgDepartmentsRoute
   '/org/positions': typeof AuthenticatedOrgPositionsRoute
@@ -259,6 +295,10 @@ export interface FileRoutesById {
   '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/_authenticated/competency/assess': typeof AuthenticatedCompetencyAssessRoute
+  '/_authenticated/competency/gaps': typeof AuthenticatedCompetencyGapsRoute
+  '/_authenticated/competency/history': typeof AuthenticatedCompetencyHistoryRoute
+  '/_authenticated/competency/matrix': typeof AuthenticatedCompetencyMatrixRoute
   '/_authenticated/competency/requirements': typeof AuthenticatedCompetencyRequirementsRoute
   '/_authenticated/org/departments': typeof AuthenticatedOrgDepartmentsRoute
   '/_authenticated/org/positions': typeof AuthenticatedOrgPositionsRoute
@@ -289,6 +329,10 @@ export interface FileRouteTypes {
     | '/admin/audit'
     | '/admin/settings'
     | '/admin/users'
+    | '/competency/assess'
+    | '/competency/gaps'
+    | '/competency/history'
+    | '/competency/matrix'
     | '/competency/requirements'
     | '/org/departments'
     | '/org/positions'
@@ -317,6 +361,10 @@ export interface FileRouteTypes {
     | '/admin/audit'
     | '/admin/settings'
     | '/admin/users'
+    | '/competency/assess'
+    | '/competency/gaps'
+    | '/competency/history'
+    | '/competency/matrix'
     | '/competency/requirements'
     | '/org/departments'
     | '/org/positions'
@@ -346,6 +394,10 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/audit'
     | '/_authenticated/admin/settings'
     | '/_authenticated/admin/users'
+    | '/_authenticated/competency/assess'
+    | '/_authenticated/competency/gaps'
+    | '/_authenticated/competency/history'
+    | '/_authenticated/competency/matrix'
     | '/_authenticated/competency/requirements'
     | '/_authenticated/org/departments'
     | '/_authenticated/org/positions'
@@ -442,6 +494,34 @@ declare module '@tanstack/react-router' {
       path: '/competency'
       fullPath: '/competency/'
       preLoaderRoute: typeof AuthenticatedCompetencyIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/competency/assess': {
+      id: '/_authenticated/competency/assess'
+      path: '/competency/assess'
+      fullPath: '/competency/assess'
+      preLoaderRoute: typeof AuthenticatedCompetencyAssessRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/competency/gaps': {
+      id: '/_authenticated/competency/gaps'
+      path: '/competency/gaps'
+      fullPath: '/competency/gaps'
+      preLoaderRoute: typeof AuthenticatedCompetencyGapsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/competency/history': {
+      id: '/_authenticated/competency/history'
+      path: '/competency/history'
+      fullPath: '/competency/history'
+      preLoaderRoute: typeof AuthenticatedCompetencyHistoryRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/competency/matrix': {
+      id: '/_authenticated/competency/matrix'
+      path: '/competency/matrix'
+      fullPath: '/competency/matrix'
+      preLoaderRoute: typeof AuthenticatedCompetencyMatrixRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/competency/requirements': {
@@ -573,6 +653,10 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminAuditRoute: typeof AuthenticatedAdminAuditRoute
   AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
+  AuthenticatedCompetencyAssessRoute: typeof AuthenticatedCompetencyAssessRoute
+  AuthenticatedCompetencyGapsRoute: typeof AuthenticatedCompetencyGapsRoute
+  AuthenticatedCompetencyHistoryRoute: typeof AuthenticatedCompetencyHistoryRoute
+  AuthenticatedCompetencyMatrixRoute: typeof AuthenticatedCompetencyMatrixRoute
   AuthenticatedCompetencyRequirementsRoute: typeof AuthenticatedCompetencyRequirementsRoute
   AuthenticatedOrgDepartmentsRoute: typeof AuthenticatedOrgDepartmentsRoute
   AuthenticatedOrgPositionsRoute: typeof AuthenticatedOrgPositionsRoute
@@ -600,6 +684,10 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminAuditRoute: AuthenticatedAdminAuditRoute,
   AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
+  AuthenticatedCompetencyAssessRoute: AuthenticatedCompetencyAssessRoute,
+  AuthenticatedCompetencyGapsRoute: AuthenticatedCompetencyGapsRoute,
+  AuthenticatedCompetencyHistoryRoute: AuthenticatedCompetencyHistoryRoute,
+  AuthenticatedCompetencyMatrixRoute: AuthenticatedCompetencyMatrixRoute,
   AuthenticatedCompetencyRequirementsRoute:
     AuthenticatedCompetencyRequirementsRoute,
   AuthenticatedOrgDepartmentsRoute: AuthenticatedOrgDepartmentsRoute,
