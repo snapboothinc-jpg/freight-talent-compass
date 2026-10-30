@@ -44,7 +44,8 @@ export async function runOp<T>(action: string, userId: string, fn: () => Promise
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function rpc<T = unknown>(sb: SupabaseClient<any>, name: string, args: Record<string, unknown>): Promise<T> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function rpc<T = any>(sb: SupabaseClient<any>, name: string, args: Record<string, unknown>): Promise<T> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { data, error } = await (sb.rpc as any)(name, args);
   if (error) throw new Error(error.message);
