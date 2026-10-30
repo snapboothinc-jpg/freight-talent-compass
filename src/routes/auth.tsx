@@ -79,7 +79,7 @@ function AuthPage() {
         <div className="w-full max-w-sm">
           <h2 className="text-title font-bold">Sign in</h2>
           <p className="mb-6 text-sm text-muted-foreground">Accounts are created by your administrator.</p>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" noValidate>
+          <form method="post" onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" noValidate>
             <Field label="Email" htmlFor="email" error={form.formState.errors.email?.message} required>
               <Input id="email" type="email" autoComplete="email" {...form.register("email")} />
             </Field>
