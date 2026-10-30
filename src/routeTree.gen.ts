@@ -39,6 +39,8 @@ import { Route as AuthenticatedPerformanceHistoryRouteImport } from './routes/_a
 import { Route as AuthenticatedPerformanceMatrixRouteImport } from './routes/_authenticated/performance.matrix'
 import { Route as AuthenticatedPerformanceMyRouteImport } from './routes/_authenticated/performance.my'
 import { Route as AuthenticatedPerformanceTeamRouteImport } from './routes/_authenticated/performance.team'
+import { Route as AuthenticatedRecognitionIndexRouteImport } from './routes/_authenticated/recognition.index'
+import { Route as AuthenticatedRecognitionNominateRouteImport } from './routes/_authenticated/recognition.nominate'
 import { Route as AuthenticatedSuccessionIndexRouteImport } from './routes/_authenticated/succession.index'
 import { Route as AuthenticatedSuccessionCandidatesRouteImport } from './routes/_authenticated/succession.candidates'
 import { Route as AuthenticatedSuccessionPositionsRouteImport } from './routes/_authenticated/succession.positions'
@@ -229,6 +231,18 @@ const AuthenticatedPerformanceTeamRoute =
     path: '/performance/team',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedRecognitionIndexRoute =
+  AuthenticatedRecognitionIndexRouteImport.update({
+    id: '/recognition/',
+    path: '/recognition/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedRecognitionNominateRoute =
+  AuthenticatedRecognitionNominateRouteImport.update({
+    id: '/recognition/nominate',
+    path: '/recognition/nominate',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedSuccessionIndexRoute =
   AuthenticatedSuccessionIndexRouteImport.update({
     id: '/succession/',
@@ -376,6 +390,7 @@ export interface FileRoutesByFullPath {
   '/performance/matrix': typeof AuthenticatedPerformanceMatrixRoute
   '/performance/my': typeof AuthenticatedPerformanceMyRoute
   '/performance/team': typeof AuthenticatedPerformanceTeamRoute
+  '/recognition/nominate': typeof AuthenticatedRecognitionNominateRoute
   '/succession/candidates': typeof AuthenticatedSuccessionCandidatesRoute
   '/succession/positions': typeof AuthenticatedSuccessionPositionsRoute
   '/training/calendar': typeof AuthenticatedTrainingCalendarRoute
@@ -384,6 +399,7 @@ export interface FileRoutesByFullPath {
   '/competency/': typeof AuthenticatedCompetencyIndexRoute
   '/learning/': typeof AuthenticatedLearningIndexRoute
   '/performance/': typeof AuthenticatedPerformanceIndexRoute
+  '/recognition/': typeof AuthenticatedRecognitionIndexRoute
   '/succession/': typeof AuthenticatedSuccessionIndexRoute
   '/training/': typeof AuthenticatedTrainingIndexRoute
   '/competency/library/$id': typeof AuthenticatedCompetencyLibraryIdRoute
@@ -427,6 +443,7 @@ export interface FileRoutesByTo {
   '/performance/matrix': typeof AuthenticatedPerformanceMatrixRoute
   '/performance/my': typeof AuthenticatedPerformanceMyRoute
   '/performance/team': typeof AuthenticatedPerformanceTeamRoute
+  '/recognition/nominate': typeof AuthenticatedRecognitionNominateRoute
   '/succession/candidates': typeof AuthenticatedSuccessionCandidatesRoute
   '/succession/positions': typeof AuthenticatedSuccessionPositionsRoute
   '/training/calendar': typeof AuthenticatedTrainingCalendarRoute
@@ -435,6 +452,7 @@ export interface FileRoutesByTo {
   '/competency': typeof AuthenticatedCompetencyIndexRoute
   '/learning': typeof AuthenticatedLearningIndexRoute
   '/performance': typeof AuthenticatedPerformanceIndexRoute
+  '/recognition': typeof AuthenticatedRecognitionIndexRoute
   '/succession': typeof AuthenticatedSuccessionIndexRoute
   '/training': typeof AuthenticatedTrainingIndexRoute
   '/competency/library/$id': typeof AuthenticatedCompetencyLibraryIdRoute
@@ -480,6 +498,7 @@ export interface FileRoutesById {
   '/_authenticated/performance/matrix': typeof AuthenticatedPerformanceMatrixRoute
   '/_authenticated/performance/my': typeof AuthenticatedPerformanceMyRoute
   '/_authenticated/performance/team': typeof AuthenticatedPerformanceTeamRoute
+  '/_authenticated/recognition/nominate': typeof AuthenticatedRecognitionNominateRoute
   '/_authenticated/succession/candidates': typeof AuthenticatedSuccessionCandidatesRoute
   '/_authenticated/succession/positions': typeof AuthenticatedSuccessionPositionsRoute
   '/_authenticated/training/calendar': typeof AuthenticatedTrainingCalendarRoute
@@ -488,6 +507,7 @@ export interface FileRoutesById {
   '/_authenticated/competency/': typeof AuthenticatedCompetencyIndexRoute
   '/_authenticated/learning/': typeof AuthenticatedLearningIndexRoute
   '/_authenticated/performance/': typeof AuthenticatedPerformanceIndexRoute
+  '/_authenticated/recognition/': typeof AuthenticatedRecognitionIndexRoute
   '/_authenticated/succession/': typeof AuthenticatedSuccessionIndexRoute
   '/_authenticated/training/': typeof AuthenticatedTrainingIndexRoute
   '/_authenticated/competency/library/$id': typeof AuthenticatedCompetencyLibraryIdRoute
@@ -533,6 +553,7 @@ export interface FileRouteTypes {
     | '/performance/matrix'
     | '/performance/my'
     | '/performance/team'
+    | '/recognition/nominate'
     | '/succession/candidates'
     | '/succession/positions'
     | '/training/calendar'
@@ -541,6 +562,7 @@ export interface FileRouteTypes {
     | '/competency/'
     | '/learning/'
     | '/performance/'
+    | '/recognition/'
     | '/succession/'
     | '/training/'
     | '/competency/library/$id'
@@ -584,6 +606,7 @@ export interface FileRouteTypes {
     | '/performance/matrix'
     | '/performance/my'
     | '/performance/team'
+    | '/recognition/nominate'
     | '/succession/candidates'
     | '/succession/positions'
     | '/training/calendar'
@@ -592,6 +615,7 @@ export interface FileRouteTypes {
     | '/competency'
     | '/learning'
     | '/performance'
+    | '/recognition'
     | '/succession'
     | '/training'
     | '/competency/library/$id'
@@ -636,6 +660,7 @@ export interface FileRouteTypes {
     | '/_authenticated/performance/matrix'
     | '/_authenticated/performance/my'
     | '/_authenticated/performance/team'
+    | '/_authenticated/recognition/nominate'
     | '/_authenticated/succession/candidates'
     | '/_authenticated/succession/positions'
     | '/_authenticated/training/calendar'
@@ -644,6 +669,7 @@ export interface FileRouteTypes {
     | '/_authenticated/competency/'
     | '/_authenticated/learning/'
     | '/_authenticated/performance/'
+    | '/_authenticated/recognition/'
     | '/_authenticated/succession/'
     | '/_authenticated/training/'
     | '/_authenticated/competency/library/$id'
@@ -880,6 +906,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPerformanceTeamRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/recognition/': {
+      id: '/_authenticated/recognition/'
+      path: '/recognition'
+      fullPath: '/recognition/'
+      preLoaderRoute: typeof AuthenticatedRecognitionIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/recognition/nominate': {
+      id: '/_authenticated/recognition/nominate'
+      path: '/recognition/nominate'
+      fullPath: '/recognition/nominate'
+      preLoaderRoute: typeof AuthenticatedRecognitionNominateRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/succession/': {
       id: '/_authenticated/succession/'
       path: '/succession'
@@ -1048,6 +1088,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPerformanceMatrixRoute: typeof AuthenticatedPerformanceMatrixRoute
   AuthenticatedPerformanceMyRoute: typeof AuthenticatedPerformanceMyRoute
   AuthenticatedPerformanceTeamRoute: typeof AuthenticatedPerformanceTeamRoute
+  AuthenticatedRecognitionNominateRoute: typeof AuthenticatedRecognitionNominateRoute
   AuthenticatedSuccessionCandidatesRoute: typeof AuthenticatedSuccessionCandidatesRoute
   AuthenticatedSuccessionPositionsRoute: typeof AuthenticatedSuccessionPositionsRoute
   AuthenticatedTrainingCalendarRoute: typeof AuthenticatedTrainingCalendarRoute
@@ -1055,6 +1096,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedCompetencyIndexRoute: typeof AuthenticatedCompetencyIndexRoute
   AuthenticatedLearningIndexRoute: typeof AuthenticatedLearningIndexRoute
   AuthenticatedPerformanceIndexRoute: typeof AuthenticatedPerformanceIndexRoute
+  AuthenticatedRecognitionIndexRoute: typeof AuthenticatedRecognitionIndexRoute
   AuthenticatedSuccessionIndexRoute: typeof AuthenticatedSuccessionIndexRoute
   AuthenticatedTrainingIndexRoute: typeof AuthenticatedTrainingIndexRoute
   AuthenticatedCompetencyLibraryIdRoute: typeof AuthenticatedCompetencyLibraryIdRoute
@@ -1098,6 +1140,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPerformanceMatrixRoute: AuthenticatedPerformanceMatrixRoute,
   AuthenticatedPerformanceMyRoute: AuthenticatedPerformanceMyRoute,
   AuthenticatedPerformanceTeamRoute: AuthenticatedPerformanceTeamRoute,
+  AuthenticatedRecognitionNominateRoute: AuthenticatedRecognitionNominateRoute,
   AuthenticatedSuccessionCandidatesRoute:
     AuthenticatedSuccessionCandidatesRoute,
   AuthenticatedSuccessionPositionsRoute: AuthenticatedSuccessionPositionsRoute,
@@ -1107,6 +1150,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedCompetencyIndexRoute: AuthenticatedCompetencyIndexRoute,
   AuthenticatedLearningIndexRoute: AuthenticatedLearningIndexRoute,
   AuthenticatedPerformanceIndexRoute: AuthenticatedPerformanceIndexRoute,
+  AuthenticatedRecognitionIndexRoute: AuthenticatedRecognitionIndexRoute,
   AuthenticatedSuccessionIndexRoute: AuthenticatedSuccessionIndexRoute,
   AuthenticatedTrainingIndexRoute: AuthenticatedTrainingIndexRoute,
   AuthenticatedCompetencyLibraryIdRoute: AuthenticatedCompetencyLibraryIdRoute,
