@@ -15,6 +15,8 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedApprovalsRouteImport } from './routes/_authenticated/approvals'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
+import { Route as AuthenticatedOrgDepartmentsRouteImport } from './routes/_authenticated/org.departments'
+import { Route as AuthenticatedOrgPositionsRouteImport } from './routes/_authenticated/org.positions'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +48,18 @@ const AuthenticatedNotificationsRoute =
     path: '/notifications',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedOrgDepartmentsRoute =
+  AuthenticatedOrgDepartmentsRouteImport.update({
+    id: '/org/departments',
+    path: '/org/departments',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedOrgPositionsRoute =
+  AuthenticatedOrgPositionsRouteImport.update({
+    id: '/org/positions',
+    path: '/org/positions',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -53,6 +67,8 @@ export interface FileRoutesByFullPath {
   '/approvals': typeof AuthenticatedApprovalsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
+  '/org/departments': typeof AuthenticatedOrgDepartmentsRoute
+  '/org/positions': typeof AuthenticatedOrgPositionsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -60,6 +76,8 @@ export interface FileRoutesByTo {
   '/approvals': typeof AuthenticatedApprovalsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
+  '/org/departments': typeof AuthenticatedOrgDepartmentsRoute
+  '/org/positions': typeof AuthenticatedOrgPositionsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -69,12 +87,28 @@ export interface FileRoutesById {
   '/_authenticated/approvals': typeof AuthenticatedApprovalsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
+  '/_authenticated/org/departments': typeof AuthenticatedOrgDepartmentsRoute
+  '/_authenticated/org/positions': typeof AuthenticatedOrgPositionsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/approvals' | '/dashboard' | '/notifications'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/approvals'
+    | '/dashboard'
+    | '/notifications'
+    | '/org/departments'
+    | '/org/positions'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/approvals' | '/dashboard' | '/notifications'
+  to:
+    | '/'
+    | '/auth'
+    | '/approvals'
+    | '/dashboard'
+    | '/notifications'
+    | '/org/departments'
+    | '/org/positions'
   id:
     | '__root__'
     | '/'
@@ -83,6 +117,8 @@ export interface FileRouteTypes {
     | '/_authenticated/approvals'
     | '/_authenticated/dashboard'
     | '/_authenticated/notifications'
+    | '/_authenticated/org/departments'
+    | '/_authenticated/org/positions'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -135,6 +171,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedNotificationsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/org/departments': {
+      id: '/_authenticated/org/departments'
+      path: '/org/departments'
+      fullPath: '/org/departments'
+      preLoaderRoute: typeof AuthenticatedOrgDepartmentsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/org/positions': {
+      id: '/_authenticated/org/positions'
+      path: '/org/positions'
+      fullPath: '/org/positions'
+      preLoaderRoute: typeof AuthenticatedOrgPositionsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -142,12 +192,16 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedApprovalsRoute: typeof AuthenticatedApprovalsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
+  AuthenticatedOrgDepartmentsRoute: typeof AuthenticatedOrgDepartmentsRoute
+  AuthenticatedOrgPositionsRoute: typeof AuthenticatedOrgPositionsRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedApprovalsRoute: AuthenticatedApprovalsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
+  AuthenticatedOrgDepartmentsRoute: AuthenticatedOrgDepartmentsRoute,
+  AuthenticatedOrgPositionsRoute: AuthenticatedOrgPositionsRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
