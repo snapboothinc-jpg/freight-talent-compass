@@ -15,6 +15,9 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedApprovalsRouteImport } from './routes/_authenticated/approvals'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
+import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
+import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
 import { Route as AuthenticatedOrgDepartmentsRouteImport } from './routes/_authenticated/org.departments'
 import { Route as AuthenticatedOrgPositionsRouteImport } from './routes/_authenticated/org.positions'
 import { Route as AuthenticatedPeopleEmployeesIndexRouteImport } from './routes/_authenticated/people.employees.index'
@@ -50,6 +53,22 @@ const AuthenticatedNotificationsRoute =
     path: '/notifications',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminAuditRoute = AuthenticatedAdminAuditRouteImport.update({
+  id: '/admin/audit',
+  path: '/admin/audit',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminSettingsRoute =
+  AuthenticatedAdminSettingsRouteImport.update({
+    id: '/admin/settings',
+    path: '/admin/settings',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedOrgDepartmentsRoute =
   AuthenticatedOrgDepartmentsRouteImport.update({
     id: '/org/departments',
@@ -81,6 +100,9 @@ export interface FileRoutesByFullPath {
   '/approvals': typeof AuthenticatedApprovalsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
+  '/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/org/departments': typeof AuthenticatedOrgDepartmentsRoute
   '/org/positions': typeof AuthenticatedOrgPositionsRoute
   '/people/employees/$id': typeof AuthenticatedPeopleEmployeesIdRoute
@@ -92,6 +114,9 @@ export interface FileRoutesByTo {
   '/approvals': typeof AuthenticatedApprovalsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
+  '/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/org/departments': typeof AuthenticatedOrgDepartmentsRoute
   '/org/positions': typeof AuthenticatedOrgPositionsRoute
   '/people/employees/$id': typeof AuthenticatedPeopleEmployeesIdRoute
@@ -105,6 +130,9 @@ export interface FileRoutesById {
   '/_authenticated/approvals': typeof AuthenticatedApprovalsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
+  '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/org/departments': typeof AuthenticatedOrgDepartmentsRoute
   '/_authenticated/org/positions': typeof AuthenticatedOrgPositionsRoute
   '/_authenticated/people/employees/$id': typeof AuthenticatedPeopleEmployeesIdRoute
@@ -118,6 +146,9 @@ export interface FileRouteTypes {
     | '/approvals'
     | '/dashboard'
     | '/notifications'
+    | '/admin/audit'
+    | '/admin/settings'
+    | '/admin/users'
     | '/org/departments'
     | '/org/positions'
     | '/people/employees/$id'
@@ -129,6 +160,9 @@ export interface FileRouteTypes {
     | '/approvals'
     | '/dashboard'
     | '/notifications'
+    | '/admin/audit'
+    | '/admin/settings'
+    | '/admin/users'
     | '/org/departments'
     | '/org/positions'
     | '/people/employees/$id'
@@ -141,6 +175,9 @@ export interface FileRouteTypes {
     | '/_authenticated/approvals'
     | '/_authenticated/dashboard'
     | '/_authenticated/notifications'
+    | '/_authenticated/admin/audit'
+    | '/_authenticated/admin/settings'
+    | '/_authenticated/admin/users'
     | '/_authenticated/org/departments'
     | '/_authenticated/org/positions'
     | '/_authenticated/people/employees/$id'
@@ -197,6 +234,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedNotificationsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/audit': {
+      id: '/_authenticated/admin/audit'
+      path: '/admin/audit'
+      fullPath: '/admin/audit'
+      preLoaderRoute: typeof AuthenticatedAdminAuditRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/settings': {
+      id: '/_authenticated/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/users': {
+      id: '/_authenticated/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/org/departments': {
       id: '/_authenticated/org/departments'
       path: '/org/departments'
@@ -232,6 +290,9 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedApprovalsRoute: typeof AuthenticatedApprovalsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
+  AuthenticatedAdminAuditRoute: typeof AuthenticatedAdminAuditRoute
+  AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
+  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
   AuthenticatedOrgDepartmentsRoute: typeof AuthenticatedOrgDepartmentsRoute
   AuthenticatedOrgPositionsRoute: typeof AuthenticatedOrgPositionsRoute
   AuthenticatedPeopleEmployeesIdRoute: typeof AuthenticatedPeopleEmployeesIdRoute
@@ -242,6 +303,9 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedApprovalsRoute: AuthenticatedApprovalsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
+  AuthenticatedAdminAuditRoute: AuthenticatedAdminAuditRoute,
+  AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
+  AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
   AuthenticatedOrgDepartmentsRoute: AuthenticatedOrgDepartmentsRoute,
   AuthenticatedOrgPositionsRoute: AuthenticatedOrgPositionsRoute,
   AuthenticatedPeopleEmployeesIdRoute: AuthenticatedPeopleEmployeesIdRoute,
