@@ -1702,6 +1702,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      _build_snapshot: { Args: { _version_id: string }; Returns: Json }
       _idem_get: {
         Args: { _hash: string; _key: string; _op: string }
         Returns: Json
@@ -1729,17 +1730,105 @@ export type Database = {
         }
         Returns: undefined
       }
+      _snapshot_gaps: { Args: { _employee: string }; Returns: undefined }
+      activate_profile_version: { Args: { _version_id: string }; Returns: Json }
+      add_assessment_evidence: {
+        Args: { _assessment: string; _file: string; _note: string }
+        Returns: Json
+      }
+      add_evaluation_evidence: {
+        Args: {
+          _assignment: string
+          _file: string
+          _item: string
+          _note: string
+        }
+        Returns: Json
+      }
+      admin_link_employee: {
+        Args: { _employee: string; _user: string }
+        Returns: Json
+      }
+      admin_set_active: {
+        Args: { _active: boolean; _user: string }
+        Returns: Json
+      }
+      admin_set_role: {
+        Args: { _role: Database["public"]["Enums"]["app_role"]; _user: string }
+        Returns: Json
+      }
       assert_transition: {
         Args: { _entity: string; _from: string; _to: string }
         Returns: undefined
       }
+      can_access_file: { Args: { _file: string }; Returns: boolean }
       can_manage_team_member: { Args: { _emp: string }; Returns: boolean }
       can_view_comp: { Args: { _emp: string }; Returns: boolean }
       can_view_employee: { Args: { _emp: string }; Returns: boolean }
       can_view_perf: { Args: { _emp: string }; Returns: boolean }
+      competency_gaps: {
+        Args: {
+          _category?: string
+          _department?: string
+          _employee?: string
+          _limit?: number
+          _offset?: number
+          _position?: string
+          _status?: string
+        }
+        Returns: {
+          assessment_date: string
+          assessment_id: string
+          category_id: string
+          category_name: string
+          competency_id: string
+          competency_name: string
+          current_level: number
+          department_id: string
+          department_name: string
+          employee_code: string
+          employee_id: string
+          employee_name: string
+          evidence_summary: string
+          gap: number
+          gap_status: string
+          is_mandatory: boolean
+          is_safety_critical: boolean
+          position_id: string
+          position_title: string
+          required_level: number
+        }[]
+      }
+      compute_evaluation_score: {
+        Args: { _assignment: string }
+        Returns: number
+      }
+      create_assignments: {
+        Args: {
+          _cycle: string
+          _employees: string[]
+          _hash: string
+          _idem: string
+        }
+        Returns: Json
+      }
+      create_profile: {
+        Args: { _desc: string; _name: string; _position: string }
+        Returns: Json
+      }
       current_role_name: {
         Args: never
         Returns: Database["public"]["Enums"]["app_role"]
+      }
+      global_search: {
+        Args: { _q: string }
+        Returns: {
+          id: string
+          kind: string
+          label: string
+          link: string
+          sublabel: string
+        }[]
       }
       has_perm: { Args: { _perm: string }; Returns: boolean }
       has_role: {
@@ -1760,7 +1849,168 @@ export type Database = {
         }
         Returns: undefined
       }
+      mark_notifications_read: { Args: { _ids: string[] }; Returns: Json }
+      my_context: { Args: never; Returns: Json }
       my_employee_id: { Args: never; Returns: string }
+      new_profile_version: { Args: { _profile: string }; Returns: Json }
+      profile_weight_total: { Args: { _version_id: string }; Returns: number }
+      register_file: {
+        Args: {
+          _employee: string
+          _mime: string
+          _name: string
+          _path: string
+          _size: number
+        }
+        Returns: Json
+      }
+      reopen_evaluation: {
+        Args: {
+          _assignment: string
+          _hash: string
+          _idem: string
+          _reason: string
+        }
+        Returns: Json
+      }
+      review_assessment: {
+        Args: {
+          _comments: string
+          _decision: string
+          _hash: string
+          _id: string
+          _idem: string
+        }
+        Returns: Json
+      }
+      review_evaluation: {
+        Args: {
+          _assignment: string
+          _comments: string
+          _decision: string
+          _hash: string
+          _idem: string
+        }
+        Returns: Json
+      }
+      save_assessment: {
+        Args: {
+          _comments: string
+          _competency: string
+          _employee: string
+          _evidence: string
+          _id: string
+          _level: number
+          _reassess: boolean
+          _version: number
+        }
+        Returns: Json
+      }
+      save_evaluation: {
+        Args: {
+          _assignment: string
+          _expected: number
+          _overall_comment: string
+          _respondent: string
+          _responses: Json
+        }
+        Returns: Json
+      }
+      save_profile_version: {
+        Args: { _c: Json; _expected: number; _version_id: string }
+        Returns: Json
+      }
+      set_cycle_status: {
+        Args: { _id: string; _status: string }
+        Returns: Json
+      }
+      set_position_requirement: {
+        Args: {
+          _competency: string
+          _level: number
+          _mandatory: boolean
+          _position: string
+          _reason: string
+          _remove: boolean
+          _safety: boolean
+        }
+        Returns: Json
+      }
+      set_supervisor: {
+        Args: { _emp: string; _from: string; _sup: string }
+        Returns: Json
+      }
+      snapshot_gaps: { Args: { _employee: string }; Returns: Json }
+      submit_assessment: {
+        Args: { _hash: string; _id: string; _idem: string }
+        Returns: Json
+      }
+      submit_evaluation: {
+        Args: {
+          _assignment: string
+          _hash: string
+          _idem: string
+          _respondent: string
+        }
+        Returns: Json
+      }
+      update_my_contact: {
+        Args: { _phone: string; _version: number }
+        Returns: Json
+      }
+      update_proficiency_level: {
+        Args: {
+          _desc: string
+          _label: string
+          _level: number
+          _version: number
+        }
+        Returns: Json
+      }
+      update_setting: {
+        Args: { _key: string; _value: Json; _version: number }
+        Returns: Json
+      }
+      upsert_category: {
+        Args: { _desc: string; _id: string; _name: string }
+        Returns: Json
+      }
+      upsert_competency: {
+        Args: { _d: Json; _id: string; _version: number }
+        Returns: Json
+      }
+      upsert_cycle: {
+        Args: { _d: Json; _id: string; _version: number }
+        Returns: Json
+      }
+      upsert_department: {
+        Args: {
+          _code: string
+          _head: string
+          _id: string
+          _name: string
+          _parent: string
+          _status: string
+          _version: number
+        }
+        Returns: Json
+      }
+      upsert_employee: {
+        Args: { _d: Json; _id: string; _version: number }
+        Returns: Json
+      }
+      upsert_position: {
+        Args: {
+          _code: string
+          _dept: string
+          _desc: string
+          _id: string
+          _status: string
+          _title: string
+          _version: number
+        }
+        Returns: Json
+      }
     }
     Enums: {
       app_role:
