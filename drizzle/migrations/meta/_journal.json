@@ -78,6 +78,13 @@
       "when": 1793380710042,
       "tag": "0010_phase6_succession_recognition_schema",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1793380783896,
+      "tag": "0011_phase6_demo_data_and_demo_lifecycle",
+      "breakpoints": true
     }
   ]
 }

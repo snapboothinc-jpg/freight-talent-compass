@@ -4098,6 +4098,7 @@ export type Database = {
         }
         Returns: Json
       }
+      reset_demo_data: { Args: never; Returns: Json }
       review_ai_recommendation: {
         Args: {
           _comments: string
