@@ -15,9 +15,7 @@ export const Route = createFileRoute("/api/public/outbox/process")({
           return Response.json({ error: { code: "NOT_CONFIGURED", message: "Outbox processor secret is not configured" } }, { status: 503 });
         }
         const provided = request.headers.get("authorization")?.replace(/^Bearer\s+/i, "") ?? "";
-        const a = Buffer.from(provided);
-        const b = Buffer.from(secret);
-        if (a.length !== b.length || !timingSafeEqual(a, b)) {
+        if (!timingSafeEqual(provided, secret)) {
           return Response.json({ error: { code: "UNAUTHENTICATED", message: "Invalid credentials" } }, { status: 401 });
         }
 

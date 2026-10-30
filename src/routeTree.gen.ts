@@ -66,6 +66,7 @@ import { Route as AuthenticatedPerformanceProfilesIdRouteImport } from './routes
 import { Route as AuthenticatedTrainingPlansIndexRouteImport } from './routes/_authenticated/training.plans.index'
 import { Route as AuthenticatedTrainingPlansIdRouteImport } from './routes/_authenticated/training.plans.$id'
 import { Route as AuthenticatedTrainingSessionsIdRouteImport } from './routes/_authenticated/training.sessions.$id'
+import { Route as ApiPublicOutboxProcessRouteImport } from './routes/api/public/outbox/process'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -397,6 +398,11 @@ const AuthenticatedTrainingSessionsIdRoute =
     path: '/training/sessions/$id',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const ApiPublicOutboxProcessRoute = ApiPublicOutboxProcessRouteImport.update({
+  id: '/api/public/outbox/process',
+  path: '/api/public/outbox/process',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -450,6 +456,7 @@ export interface FileRoutesByFullPath {
   '/performance/profiles/$id': typeof AuthenticatedPerformanceProfilesIdRoute
   '/training/plans/$id': typeof AuthenticatedTrainingPlansIdRoute
   '/training/sessions/$id': typeof AuthenticatedTrainingSessionsIdRoute
+  '/api/public/outbox/process': typeof ApiPublicOutboxProcessRoute
   '/competency/library/': typeof AuthenticatedCompetencyLibraryIndexRoute
   '/people/employees/': typeof AuthenticatedPeopleEmployeesIndexRoute
   '/performance/cycles/': typeof AuthenticatedPerformanceCyclesIndexRoute
@@ -508,6 +515,7 @@ export interface FileRoutesByTo {
   '/performance/profiles/$id': typeof AuthenticatedPerformanceProfilesIdRoute
   '/training/plans/$id': typeof AuthenticatedTrainingPlansIdRoute
   '/training/sessions/$id': typeof AuthenticatedTrainingSessionsIdRoute
+  '/api/public/outbox/process': typeof ApiPublicOutboxProcessRoute
   '/competency/library': typeof AuthenticatedCompetencyLibraryIndexRoute
   '/people/employees': typeof AuthenticatedPeopleEmployeesIndexRoute
   '/performance/cycles': typeof AuthenticatedPerformanceCyclesIndexRoute
@@ -568,6 +576,7 @@ export interface FileRoutesById {
   '/_authenticated/performance/profiles/$id': typeof AuthenticatedPerformanceProfilesIdRoute
   '/_authenticated/training/plans/$id': typeof AuthenticatedTrainingPlansIdRoute
   '/_authenticated/training/sessions/$id': typeof AuthenticatedTrainingSessionsIdRoute
+  '/api/public/outbox/process': typeof ApiPublicOutboxProcessRoute
   '/_authenticated/competency/library/': typeof AuthenticatedCompetencyLibraryIndexRoute
   '/_authenticated/people/employees/': typeof AuthenticatedPeopleEmployeesIndexRoute
   '/_authenticated/performance/cycles/': typeof AuthenticatedPerformanceCyclesIndexRoute
@@ -628,6 +637,7 @@ export interface FileRouteTypes {
     | '/performance/profiles/$id'
     | '/training/plans/$id'
     | '/training/sessions/$id'
+    | '/api/public/outbox/process'
     | '/competency/library/'
     | '/people/employees/'
     | '/performance/cycles/'
@@ -686,6 +696,7 @@ export interface FileRouteTypes {
     | '/performance/profiles/$id'
     | '/training/plans/$id'
     | '/training/sessions/$id'
+    | '/api/public/outbox/process'
     | '/competency/library'
     | '/people/employees'
     | '/performance/cycles'
@@ -745,6 +756,7 @@ export interface FileRouteTypes {
     | '/_authenticated/performance/profiles/$id'
     | '/_authenticated/training/plans/$id'
     | '/_authenticated/training/sessions/$id'
+    | '/api/public/outbox/process'
     | '/_authenticated/competency/library/'
     | '/_authenticated/people/employees/'
     | '/_authenticated/performance/cycles/'
@@ -757,6 +769,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   ApiPublicHealthRoute: typeof ApiPublicHealthRoute
+  ApiPublicOutboxProcessRoute: typeof ApiPublicOutboxProcessRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1160,6 +1173,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTrainingSessionsIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/outbox/process': {
+      id: '/api/public/outbox/process'
+      path: '/api/public/outbox/process'
+      fullPath: '/api/public/outbox/process'
+      preLoaderRoute: typeof ApiPublicOutboxProcessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -1293,6 +1313,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   ApiPublicHealthRoute: ApiPublicHealthRoute,
+  ApiPublicOutboxProcessRoute: ApiPublicOutboxProcessRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
