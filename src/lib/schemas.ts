@@ -209,3 +209,301 @@ export const ALLOWED_MIME = [
   "text/plain",
 ] as const;
 export const MAX_FILE_BYTES = 10 * 1024 * 1024;
+
+// ---------------- Phase 5: learning, training, AI ----------------
+export const courseFields = z
+  .object({
+    code: z.string().trim().min(1).max(20),
+    title: z.string().trim().min(3).max(160),
+    description: z.string().max(4000).optional(),
+    category: z.string().max(80).optional(),
+    objectives: z.string().max(4000).optional(),
+    owner_id: z.union([uuid, z.literal("")]).optional(),
+    duration_minutes: z.coerce.number().int().min(1).max(100000).optional(),
+    difficulty: z.enum(["beginner", "intermediate", "advanced"]),
+    enrollment_open: z.boolean(),
+    completion_rule: z.enum(["all_lessons", "quiz_pass", "all_lessons_and_quiz"]),
+  })
+  .strict();
+export const courseSchema = z.object({ id: uuid.nullable(), version: z.number().int().nullable(), data: courseFields }).strict();
+
+export const courseContentSchema = z
+  .object({
+    course_id: uuid,
+    version: z.number().int(),
+    sections: z
+      .array(
+        z
+          .object({
+            title: z.string().trim().min(1).max(160),
+            description: z.string().max(2000).optional(),
+            lessons: z
+              .array(
+                z
+                  .object({
+                    title: z.string().trim().min(1).max(200),
+                    content: z.string().max(20000).optional(),
+                    duration_minutes: z.coerce.number().int().min(1).max(10000).optional(),
+                  })
+                  .strict(),
+              )
+              .max(100),
+          })
+          .strict(),
+      )
+      .max(50),
+  })
+  .strict();
+
+export const courseMappingsSchema = z
+  .object({
+    course_id: uuid,
+    mappings: z.array(z.object({ competency_id: uuid, target_level: z.number().int().min(1).max(5) }).strict()).max(50),
+  })
+  .strict();
+
+export const idemAction = z.object({ id: uuid, ...idem }).strict();
+export const reviewCourseSchema = z
+  .object({ id: uuid, decision: z.enum(["approve", "return"]), comments: z.string().max(4000), ...idem })
+  .strict();
+export const enrollSchema = z
+  .object({
+    course_id: uuid,
+    employee_id: uuid,
+    source: z.enum(["direct", "development_plan", "learning_path"]),
+    plan_item_id: uuid.nullable(),
+    ...idem,
+  })
+  .strict();
+export const lessonProgressSchema = z.object({ enrollment_id: uuid, lesson_id: uuid, completed: z.boolean() }).strict();
+export const quizAttemptSchema = z
+  .object({ quiz_id: uuid, enrollment_id: uuid, answers: z.record(uuid, z.number().int().min(0).max(19)), ...idem })
+  .strict();
+
+export const pathFields = z
+  .object({
+    title: z.string().trim().min(3).max(160),
+    description: z.string().max(4000).optional(),
+    competency_id: z.union([uuid, z.literal("")]).optional(),
+    status: z.enum(["draft", "active", "archived"]),
+  })
+  .strict();
+export const pathSchema = z.object({ id: uuid.nullable(), version: z.number().int().nullable(), data: pathFields }).strict();
+export const pathCoursesSchema = z.object({ path_id: uuid, course_ids: z.array(uuid).max(50) }).strict();
+
+export const planFields = z
+  .object({
+    employee_id: z.union([uuid, z.literal("")]).optional(),
+    title: z.string().trim().min(3).max(160),
+    objectives: z.string().max(4000).optional(),
+    responsible_id: z.union([uuid, z.literal("")]).optional(),
+    target_date: z.string().max(10).optional(),
+    status: z.enum(["draft", "active", "completed", "cancelled"]),
+    notes: z.string().max(4000).optional(),
+  })
+  .strict();
+export const planSchema = z.object({ id: uuid.nullable(), version: z.number().int().nullable(), data: planFields }).strict();
+
+export const planItemFields = z
+  .object({
+    item_type: z.enum(["course", "learning_path", "training", "other"]),
+    title: z.string().trim().min(3).max(200),
+    description: z.string().max(4000).optional(),
+    competency_id: z.union([uuid, z.literal("")]).optional(),
+    course_id: z.union([uuid, z.literal("")]).optional(),
+    learning_path_id: z.union([uuid, z.literal("")]).optional(),
+    training_session_id: z.union([uuid, z.literal("")]).optional(),
+    priority: z.enum(["high", "medium", "low"]),
+    target_date: z.string().max(10).optional(),
+  })
+  .strict();
+export const planItemSchema = z
+  .object({ id: uuid.nullable(), plan_id: uuid, version: z.number().int().nullable(), data: planItemFields })
+  .strict();
+export const planItemStatusSchema = z
+  .object({ item_id: uuid, status: z.enum(["in_progress", "completed", "cancelled"]), evidence: z.string().max(4000).optional() })
+  .strict();
+
+export const trainerFields = z
+  .object({
+    name: z.string().trim().min(2).max(160),
+    email: z.string().max(200).optional(),
+    specialty: z.string().max(200).optional(),
+    is_external: z.boolean(),
+    status: z.enum(["active", "inactive"]).optional(),
+  })
+  .strict();
+export const trainerSchema = z.object({ id: uuid.nullable(), version: z.number().int().nullable(), data: trainerFields }).strict();
+
+export const sessionFields = z
+  .object({
+    code: z.string().trim().min(1).max(20),
+    title: z.string().trim().min(3).max(160),
+    type: z.enum(["workshop", "seminar", "on_the_job", "e_learning", "drill"]),
+    starts_at: z.string().min(10).max(40),
+    ends_at: z.string().min(10).max(40),
+    venue: z.string().max(200).optional(),
+    delivery_method: z.enum(["in_person", "virtual", "hybrid"]),
+    trainer_id: z.union([uuid, z.literal("")]).optional(),
+    capacity: z.coerce.number().int().min(1).max(10000).optional(),
+    related_competency_id: z.union([uuid, z.literal("")]).optional(),
+  })
+  .strict();
+export const sessionSchema = z.object({ id: uuid.nullable(), version: z.number().int().nullable(), data: sessionFields }).strict();
+export const sessionStatusSchema = z
+  .object({ id: uuid, status: z.enum(["planned", "in_progress", "completed", "cancelled"]) })
+  .strict();
+export const registerParticipantSchema = z
+  .object({ session_id: uuid, employee_id: uuid, plan_item_id: uuid.nullable() })
+  .strict();
+export const attendanceSchema = z
+  .object({
+    session_id: uuid,
+    rows: z
+      .array(
+        z
+          .object({
+            employee_id: uuid,
+            status: z.enum(["present", "absent", "late", "excused"]),
+            remarks: z.string().max(2000).optional(),
+          })
+          .strict(),
+      )
+      .min(1)
+      .max(500),
+    ...idem,
+  })
+  .strict();
+export const trainingResultSchema = z
+  .object({
+    session_id: uuid,
+    employee_id: uuid,
+    score: z.coerce.number().min(0).max(100).nullable().optional(),
+    outcome: z.enum(["passed", "failed", "completed", "incomplete"]),
+    feedback: z.string().max(4000).optional(),
+    evidence: z.string().max(4000).optional(),
+  })
+  .strict();
+export const effectivenessSchema = z
+  .object({
+    session_id: uuid,
+    summary: z.string().trim().min(3).max(4000),
+    follow_up_required: z.boolean(),
+    notes: z.string().max(4000).optional(),
+  })
+  .strict();
+export const reassessLinkSchema = z
+  .object({
+    employee_id: uuid,
+    competency_id: uuid,
+    session_id: uuid.nullable(),
+    assessment_id: uuid,
+    notes: z.string().max(2000).optional(),
+  })
+  .strict();
+
+export const aiGenerateSchema = z.object({ employee_id: uuid, ...idem }).strict();
+export const aiReviewSchema = z
+  .object({
+    id: uuid,
+    decision: z.enum(["accept", "edit", "reject"]),
+    comments: z.string().max(4000),
+    edited: z
+      .object({
+        priority: z.enum(["high", "medium", "low"]).optional(),
+        expected_outcome: z.string().max(4000).optional(),
+        title: z.string().max(200).optional(),
+      })
+      .strict()
+      .optional(),
+    ...idem,
+  })
+  .strict();
+export const aiSettingsSchema = z
+  .object({ provider: z.enum(["lovable", "gemini"]), model: z.string().trim().min(1).max(120), version: z.number().int() })
+  .strict();
+
+// ---------------- Phase 6: succession, recognition, reports ----------------
+export const criticalPositionFields = z
+  .object({
+    position_id: uuid,
+    department_id: uuid,
+    criticality: z.enum(["low", "medium", "high", "critical"]),
+    business_impact: z.string().max(4000).optional(),
+    incumbent_employee_id: z.union([uuid, z.literal("")]).optional(),
+    status: z.enum(["active", "monitoring", "closed"]),
+    review_date: z.string().max(10).optional(),
+  })
+  .strict();
+export const criticalPositionSchema = z
+  .object({ id: uuid.nullable(), version: z.number().int().nullable(), data: criticalPositionFields })
+  .strict();
+
+export const candidateFields = z
+  .object({
+    critical_position_id: z.union([uuid, z.literal("")]).optional(),
+    employee_id: z.union([uuid, z.literal("")]).optional(),
+    readiness_class_id: z.union([uuid, z.literal("")]).optional(),
+    notes: z.string().max(4000).optional(),
+    status: z.enum(["active", "withdrawn", "appointed"]).optional(),
+  })
+  .strict();
+export const candidateSchema = z.object({ id: uuid.nullable(), version: z.number().int().nullable(), data: candidateFields }).strict();
+export const readinessAssessmentSchema = z
+  .object({ candidate_id: uuid, summary: z.string().trim().min(3).max(4000), readiness_class_id: uuid.nullable() })
+  .strict();
+export const successionActivitySchema = z
+  .object({
+    id: uuid.nullable(),
+    candidate_id: uuid.nullable(),
+    title: z.string().trim().min(3).max(200),
+    description: z.string().max(4000).optional(),
+    status: z.enum(["planned", "in_progress", "completed", "cancelled"]),
+    target_date: z.string().max(10).optional(),
+  })
+  .strict();
+export const grantAccessSchema = z.object({ user_id: uuid, department_id: uuid }).strict();
+export const readinessClassFields = z
+  .object({
+    code: z.string().trim().min(1).max(30),
+    label: z.string().trim().min(2).max(80),
+    description: z.string().max(1000).optional(),
+    sort_order: z.coerce.number().int().min(0).max(100),
+  })
+  .strict();
+export const readinessClassSchema = z
+  .object({ id: uuid.nullable(), version: z.number().int().nullable(), data: readinessClassFields })
+  .strict();
+
+export const nominationSchema = z
+  .object({
+    recipient_id: uuid,
+    category_id: uuid,
+    message: z.string().trim().min(1).max(4000),
+    supporting_info: z.string().max(4000).optional(),
+    ...idem,
+  })
+  .strict();
+export const nominationReviewSchema = z
+  .object({
+    id: uuid,
+    decision: z.enum(["approve", "reject"]),
+    comments: z.string().max(4000),
+    visibility: z.enum(["company", "department"]),
+    show_nominator: z.boolean(),
+    ...idem,
+  })
+  .strict();
+export const categoryFields = z
+  .object({ name: z.string().trim().min(2).max(80), description: z.string().max(1000).optional(), active: z.boolean().optional() })
+  .strict();
+export const categorySchema = z.object({ id: uuid.nullable(), version: z.number().int().nullable(), data: categoryFields }).strict();
+
+export const reportSchema = z
+  .object({
+    kind: z.enum(["performance", "gaps", "learning", "training", "recognition", "succession"]),
+    from: z.string().max(10).optional(),
+    to: z.string().max(10).optional(),
+    department: uuid.optional(),
+  })
+  .strict();

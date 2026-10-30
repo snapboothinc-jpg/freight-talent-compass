@@ -214,3 +214,275 @@ export const fetchAssessments = async (f: { employee?: string; competency?: stri
 };
 
 export { check };
+
+// ---------------- Phase 5: learning ----------------
+export type CourseRow = {
+  id: string; code: string; title: string; description: string | null; category: string | null;
+  objectives: string | null; duration_minutes: number | null; difficulty: string; status: string;
+  enrollment_open: boolean; completion_rule: string; version: number; created_by: string | null;
+  owner: { first_name: string; last_name: string } | null;
+};
+export const fetchCourses = async (status?: string) => {
+  let q = supabase.from("courses").select("*, owner:employees!courses_owner_id_fkey(first_name,last_name)").order("title");
+  if (status) q = q.eq("status", status);
+  return check(await q) as unknown as CourseRow[];
+};
+export const fetchCourse = async (id: string) =>
+  check(await supabase.from("courses").select("*, owner:employees!courses_owner_id_fkey(first_name,last_name)").eq("id", id).maybeSingle()) as unknown as CourseRow | null;
+export const fetchCourseContent = async (courseId: string) =>
+  check(
+    await supabase.from("course_sections").select("*, lessons(*)").eq("course_id", courseId).order("sort_order"),
+  ) as unknown as { id: string; title: string; description: string | null; sort_order: number; lessons: { id: string; title: string; content: string | null; duration_minutes: number | null; sort_order: number }[] }[];
+export const fetchCourseMappings = async (courseId: string) =>
+  check(await supabase.from("course_competency_mappings").select("*, competency:competencies(name,code)").eq("course_id", courseId)) as unknown as {
+    id: string; competency_id: string; target_level: number; competency: { name: string; code: string } | null;
+  }[];
+export type EnrollmentRow = {
+  id: string; course_id: string; employee_id: string; source: string; status: string;
+  assigned_at: string; completed_at: string | null;
+  course: { title: string; code: string } | null;
+  employee: { first_name: string; last_name: string; employee_code: string } | null;
+};
+export const fetchEnrollments = async (f: { course?: string; employee?: string } = {}) => {
+  let q = supabase
+    .from("course_enrollments")
+    .select("*, course:courses(title,code), employee:employees(first_name,last_name,employee_code)")
+    .order("assigned_at", { ascending: false });
+  if (f.course) q = q.eq("course_id", f.course);
+  if (f.employee) q = q.eq("employee_id", f.employee);
+  return check(await q) as unknown as EnrollmentRow[];
+};
+export const fetchLessonProgress = async (enrollmentId: string) =>
+  check(await supabase.from("lesson_progress").select("*").eq("enrollment_id", enrollmentId)) as {
+    id: string; lesson_id: string; completed_at: string | null;
+  }[];
+export const fetchCourseQuiz = async (courseId: string) =>
+  check(await supabase.from("quizzes").select("*").eq("course_id", courseId).order("created_at").limit(1).maybeSingle()) as {
+    id: string; course_id: string; title: string; pass_score: number; max_attempts: number;
+  } | null;
+export const fetchQuizAttempts = async (quizId: string, employeeId?: string) => {
+  let q = supabase.from("quiz_attempts").select("*").eq("quiz_id", quizId).order("attempt_no", { ascending: false });
+  if (employeeId) q = q.eq("employee_id", employeeId);
+  return check(await q) as unknown as {
+    id: string; attempt_no: number; score: number; passed: boolean; submitted_at: string; employee_id: string;
+  }[];
+};
+export type PathRow = {
+  id: string; title: string; description: string | null; competency_id: string | null; status: string; version: number;
+  competency: { name: string } | null;
+};
+export const fetchLearningPaths = async () =>
+  check(await supabase.from("learning_paths").select("*, competency:competencies(name)").order("title")) as unknown as PathRow[];
+export const fetchPathCourses = async (pathId: string) =>
+  check(await supabase.from("learning_path_courses").select("*, course:courses(id,title,code,status)").eq("path_id", pathId).order("sort_order")) as unknown as {
+    id: string; course_id: string; sort_order: number; course: { id: string; title: string; code: string; status: string } | null;
+  }[];
+
+// ---------------- Phase 5: training & development ----------------
+export type PlanRow = {
+  id: string; employee_id: string; title: string; objectives: string | null; status: string;
+  target_date: string | null; notes: string | null; version: number;
+  employee: { first_name: string; last_name: string; employee_code: string } | null;
+  responsible: { first_name: string; last_name: string } | null;
+};
+export const fetchPlans = async (employee?: string) => {
+  let q = supabase
+    .from("development_plans")
+    .select("*, employee:employees!development_plans_employee_id_fkey(first_name,last_name,employee_code), responsible:employees!development_plans_responsible_id_fkey(first_name,last_name)")
+    .order("created_at", { ascending: false });
+  if (employee) q = q.eq("employee_id", employee);
+  return check(await q) as unknown as PlanRow[];
+};
+export const fetchPlan = async (id: string) =>
+  check(
+    await supabase
+      .from("development_plans")
+      .select("*, employee:employees!development_plans_employee_id_fkey(first_name,last_name,employee_code), responsible:employees!development_plans_responsible_id_fkey(first_name,last_name)")
+      .eq("id", id)
+      .maybeSingle(),
+  ) as unknown as PlanRow | null;
+export type PlanItemRow = {
+  id: string; plan_id: string; item_type: string; title: string; description: string | null;
+  competency_id: string | null; course_id: string | null; learning_path_id: string | null; training_session_id: string | null;
+  ai_recommendation_id: string | null; priority: string; target_date: string | null; status: string;
+  completed_at: string | null; evidence: string | null; version: number;
+  competency: { name: string } | null; course: { title: string } | null;
+};
+export const fetchPlanItems = async (planId: string) =>
+  check(
+    await supabase
+      .from("development_plan_items")
+      .select("*, competency:competencies(name), course:courses(title)")
+      .eq("plan_id", planId)
+      .order("created_at"),
+  ) as unknown as PlanItemRow[];
+export const fetchTrainers = async () =>
+  check(await supabase.from("trainers").select("*").order("name")) as {
+    id: string; name: string; email: string | null; specialty: string | null; is_external: boolean; status: string;
+  }[];
+export type SessionRow = {
+  id: string; code: string; title: string; type: string; starts_at: string; ends_at: string; venue: string | null;
+  delivery_method: string; capacity: number | null; status: string; version: number;
+  trainer: { name: string } | null; related_competency: { name: string } | null;
+};
+export const fetchSessions = async (status?: string) => {
+  let q = supabase
+    .from("training_sessions")
+    .select("*, trainer:trainers(name), related_competency:competencies(name)")
+    .order("starts_at", { ascending: false });
+  if (status) q = q.eq("status", status);
+  return check(await q) as unknown as SessionRow[];
+};
+export const fetchSession = async (id: string) =>
+  check(
+    await supabase.from("training_sessions").select("*, trainer:trainers(name), related_competency:competencies(name)").eq("id", id).maybeSingle(),
+  ) as unknown as SessionRow | null;
+export const fetchParticipants = async (sessionId: string) =>
+  check(
+    await supabase
+      .from("training_participants")
+      .select("*, employee:employees(first_name,last_name,employee_code)")
+      .eq("session_id", sessionId),
+  ) as unknown as {
+    id: string; employee_id: string; status: string;
+    employee: { first_name: string; last_name: string; employee_code: string } | null;
+  }[];
+export const fetchAttendance = async (sessionId: string) =>
+  check(await supabase.from("training_attendance").select("*").eq("session_id", sessionId)) as {
+    id: string; employee_id: string; status: string; remarks: string | null; recorded_at: string;
+  }[];
+export const fetchTrainingResults = async (sessionId: string) =>
+  check(
+    await supabase.from("training_results").select("*, employee:employees(first_name,last_name)").eq("session_id", sessionId),
+  ) as unknown as {
+    id: string; employee_id: string; score: number | null; outcome: string; feedback: string | null;
+    employee: { first_name: string; last_name: string } | null;
+  }[];
+export const fetchEffectiveness = async (sessionId?: string) => {
+  let q = supabase
+    .from("training_effectiveness_reviews")
+    .select("*, session:training_sessions(title,code)")
+    .order("created_at", { ascending: false });
+  if (sessionId) q = q.eq("session_id", sessionId);
+  return check(await q) as unknown as {
+    id: string; session_id: string; summary: string; follow_up_required: boolean; follow_up_notes: string | null; created_at: string;
+    session: { title: string; code: string } | null;
+  }[];
+};
+
+// ---------------- Phase 5: AI ----------------
+export type AiRecRow = {
+  id: string; employee_id: string; competency_id: string; required_level: number; current_level: number | null;
+  gap: number; recommendation_type: string; resource_id: string; rationale: string; expected_outcome: string | null;
+  priority: string; status: string; model: string; created_at: string; generated_by: string;
+  employee: { first_name: string; last_name: string; employee_code: string } | null;
+  competency: { name: string; code: string } | null;
+};
+export const fetchAiRecommendations = async (status?: string) => {
+  let q = supabase
+    .from("ai_recommendations")
+    .select("*, employee:employees(first_name,last_name,employee_code), competency:competencies(name,code)")
+    .order("created_at", { ascending: false });
+  if (status) q = q.eq("status", status);
+  return check(await q) as unknown as AiRecRow[];
+};
+export const fetchAiReviews = async (recId: string) =>
+  check(await supabase.from("ai_recommendation_reviews").select("*").eq("recommendation_id", recId).order("created_at")) as {
+    id: string; decision: string; comments: string | null; created_at: string; reviewer_id: string;
+  }[];
+export const fetchAiLogs = async () =>
+  check(await supabase.from("ai_generation_logs").select("*").order("created_at", { ascending: false }).limit(50)) as {
+    id: string; model: string; status: string; error: string | null; latency_ms: number | null; created_at: string;
+  }[];
+
+// ---------------- Phase 6: succession ----------------
+export type CriticalPositionRow = {
+  id: string; position_id: string; department_id: string; criticality: string; business_impact: string | null;
+  incumbent_employee_id: string | null; status: string; review_date: string | null; version: number;
+  position: { title: string } | null; department: { name: string } | null;
+  incumbent: { first_name: string; last_name: string } | null;
+};
+export const fetchCriticalPositions = async () =>
+  check(
+    await supabase
+      .from("critical_positions")
+      .select("*, position:positions(title), department:departments(name), incumbent:employees!critical_positions_incumbent_employee_id_fkey(first_name,last_name)")
+      .order("created_at", { ascending: false }),
+  ) as unknown as CriticalPositionRow[];
+export type CandidateRow = {
+  id: string; critical_position_id: string; employee_id: string; readiness_class_id: string | null;
+  notes: string | null; status: string; version: number;
+  employee: { first_name: string; last_name: string; employee_code: string } | null;
+  readiness_class: { label: string; code: string } | null;
+  critical_position: { id: string; position: { title: string } | null; department: { name: string } | null } | null;
+};
+export const fetchCandidates = async (positionId?: string) => {
+  let q = supabase
+    .from("succession_candidates")
+    .select("*, employee:employees(first_name,last_name,employee_code), readiness_class:readiness_classes(label,code), critical_position:critical_positions(id, position:positions(title), department:departments(name))")
+    .order("created_at", { ascending: false });
+  if (positionId) q = q.eq("critical_position_id", positionId);
+  return check(await q) as unknown as CandidateRow[];
+};
+export const fetchReadinessClasses = async () =>
+  check(await supabase.from("readiness_classes").select("*").order("sort_order")) as {
+    id: string; code: string; label: string; description: string | null; sort_order: number; requires_validation: boolean; version: number;
+  }[];
+export const fetchReadinessAssessments = async (candidateId: string) =>
+  check(
+    await supabase
+      .from("succession_readiness_assessments")
+      .select("*, readiness_class:readiness_classes(label), assessor:employees!succession_readiness_assessments_assessor_id_fkey(first_name,last_name)")
+      .eq("candidate_id", candidateId)
+      .order("assessment_date", { ascending: false }),
+  ) as unknown as {
+    id: string; assessment_date: string; summary: string;
+    readiness_class: { label: string } | null; assessor: { first_name: string; last_name: string } | null;
+  }[];
+export const fetchSuccessionActivities = async (candidateId: string) =>
+  check(await supabase.from("succession_development_activities").select("*").eq("candidate_id", candidateId).order("created_at")) as {
+    id: string; title: string; description: string | null; status: string; target_date: string | null;
+  }[];
+export const fetchAccessGrants = async () =>
+  check(
+    await supabase.from("succession_access_grants").select("*, department:departments(name), profile:profiles!succession_access_grants_user_id_fkey(full_name,email)"),
+  ) as unknown as {
+    id: string; department_id: string; user_id: string;
+    department: { name: string } | null; profile: { full_name: string | null; email: string } | null;
+  }[];
+
+// ---------------- Phase 6: recognition ----------------
+export const fetchRecognitionCategories = async () =>
+  check(await supabase.from("recognition_categories").select("*").order("name")) as {
+    id: string; name: string; description: string | null; active: boolean; version: number;
+  }[];
+export type NominationRow = {
+  id: string; nominator_id: string; recipient_id: string; category_id: string; message: string;
+  supporting_info: string | null; status: string; review_comments: string | null; visibility: string;
+  show_nominator: boolean; created_at: string; version: number;
+  nominator: { first_name: string; last_name: string } | null;
+  recipient: { first_name: string; last_name: string; department_id: string } | null;
+  category: { name: string } | null;
+};
+const NOM_SELECT =
+  "*, nominator:employees!recognition_nominations_nominator_id_fkey(first_name,last_name), recipient:employees!recognition_nominations_recipient_id_fkey(first_name,last_name,department_id), category:recognition_categories(name)";
+export const fetchNominations = async (status?: string) => {
+  let q = supabase.from("recognition_nominations").select(NOM_SELECT).order("created_at", { ascending: false });
+  if (status) q = q.eq("status", status);
+  return check(await q) as unknown as NominationRow[];
+};
+export const fetchRecognitionFeed = async () =>
+  check(
+    await supabase
+      .from("recognition_publications")
+      .select("id, visibility, published_at, nomination:recognition_nominations(id, message, show_nominator, category:recognition_categories(name), nominator:employees!recognition_nominations_nominator_id_fkey(first_name,last_name), recipient:employees!recognition_nominations_recipient_id_fkey(first_name,last_name))")
+      .order("published_at", { ascending: false }),
+  ) as unknown as {
+    id: string; visibility: string; published_at: string;
+    nomination: {
+      id: string; message: string; show_nominator: boolean;
+      category: { name: string } | null;
+      nominator: { first_name: string; last_name: string } | null;
+      recipient: { first_name: string; last_name: string } | null;
+    } | null;
+  }[];

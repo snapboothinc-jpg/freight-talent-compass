@@ -27,6 +27,9 @@ import {
   UserCheck,
   ListChecks,
   BarChart3,
+  Sparkles,
+  GraduationCap,
+  Award,
 } from "lucide-react";
 
 export type AppRole =
@@ -65,7 +68,15 @@ export type Permission =
   | "comp.view_all"
   | "team.view"
   | "reports.hr"
-  | "self.service";
+  | "self.service"
+  | "learn.manage"
+  | "learn.approve"
+  | "train.manage"
+  | "ai.generate"
+  | "ai.review"
+  | "succession.manage"
+  | "succession.dept"
+  | "recognition.review";
 
 export interface NavItem {
   to: string;
@@ -115,6 +126,49 @@ export const NAV: NavGroup[] = [
     ],
   },
   {
+    label: "Development",
+    items: [
+      { to: "/ai/queue", label: "AI recommendations", icon: Sparkles, anyOf: ["ai.review", "ai.generate"] },
+      { to: "/learning", label: "Learning dashboard", icon: GraduationCap, anyOf: ["learn.manage", "train.manage", "team.view"] },
+      { to: "/learning/catalog", label: "Course catalog", icon: BookOpen, anyOf: [] },
+      { to: "/learning/my", label: "My learning", icon: ClipboardCheck, anyOf: [], needsEmployee: true },
+      { to: "/learning/manage", label: "Course management", icon: FileStack, anyOf: ["learn.manage", "learn.approve"] },
+      { to: "/learning/paths", label: "Learning paths", icon: ListChecks, anyOf: [] },
+      { to: "/learning/progress", label: "Learner progress", icon: BarChart3, anyOf: ["learn.manage", "train.manage", "team.view"] },
+    ],
+  },
+  {
+    label: "Training",
+    items: [
+      { to: "/training", label: "Training dashboard", icon: CalendarRange, anyOf: ["train.manage", "team.view"] },
+      { to: "/training/plans", label: "Development plans", icon: Target, anyOf: [] },
+      { to: "/training/calendar", label: "Training calendar", icon: CalendarRange, anyOf: [] },
+      { to: "/training/effectiveness", label: "Effectiveness", icon: TrendingDown, anyOf: ["train.manage"] },
+    ],
+  },
+  {
+    label: "Succession",
+    items: [
+      { to: "/succession", label: "Succession dashboard", icon: ShieldCheck, anyOf: ["succession.manage", "succession.dept"] },
+      { to: "/succession/positions", label: "Critical positions", icon: Briefcase, anyOf: ["succession.manage", "succession.dept"] },
+      { to: "/succession/candidates", label: "Candidates", icon: Users, anyOf: ["succession.manage", "succession.dept"] },
+    ],
+  },
+  {
+    label: "Recognition",
+    items: [
+      { to: "/recognition", label: "Recognition feed", icon: Award, anyOf: [] },
+      { to: "/recognition/nominate", label: "Nominate a colleague", icon: Award, anyOf: [], needsEmployee: true },
+      { to: "/recognition/queue", label: "Approval queue", icon: Inbox, anyOf: ["recognition.review"] },
+      { to: "/recognition/my", label: "My recognition", icon: History, anyOf: [], needsEmployee: true },
+      { to: "/recognition/analytics", label: "Analytics", icon: BarChart3, anyOf: ["recognition.review", "reports.hr"] },
+    ],
+  },
+  {
+    label: "Reports",
+    items: [{ to: "/reports", label: "Reports & exports", icon: BarChart3, anyOf: ["reports.hr", "train.manage", "learn.manage", "team.view"] }],
+  },
+  {
     label: "People & organization",
     items: [
       { to: "/people/employees", label: "Employees", icon: Users, anyOf: ["employees.view_all", "admin.org", "team.view"] },
@@ -128,6 +182,7 @@ export const NAV: NavGroup[] = [
       { to: "/admin/users", label: "Users & roles", icon: ShieldCheck, anyOf: ["admin.users"] },
       { to: "/admin/audit", label: "Audit log", icon: ScrollText, anyOf: ["admin.audit"] },
       { to: "/admin/settings", label: "Settings", icon: Settings, anyOf: ["admin.settings", "comp.manage", "perf.manage"] },
+      { to: "/admin/ai", label: "AI settings", icon: Sparkles, anyOf: ["admin.settings", "ai.review"] },
     ],
   },
 ];

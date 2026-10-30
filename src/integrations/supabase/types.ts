@@ -14,6 +14,221 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_generation_logs: {
+        Row: {
+          created_at: string
+          employee_id: string | null
+          error: string | null
+          id: string
+          latency_ms: number | null
+          model: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          employee_id?: string | null
+          error?: string | null
+          id?: string
+          latency_ms?: number | null
+          model: string
+          status: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          employee_id?: string | null
+          error?: string | null
+          id?: string
+          latency_ms?: number | null
+          model?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      ai_integration_settings: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          last_checked_at: string | null
+          last_error: string | null
+          last_status: string | null
+          model: string
+          provider: string
+          updated_at: string
+          updated_by: string | null
+          version: number
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          last_checked_at?: string | null
+          last_error?: string | null
+          last_status?: string | null
+          model?: string
+          provider?: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          last_checked_at?: string | null
+          last_error?: string | null
+          last_status?: string | null
+          model?: string
+          provider?: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Relationships: []
+      }
+      ai_recommendation_reviews: {
+        Row: {
+          comments: string | null
+          created_at: string
+          created_by: string | null
+          decision: string
+          edited: Json | null
+          id: string
+          is_demo: boolean
+          recommendation_id: string
+          reviewer_id: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          comments?: string | null
+          created_at?: string
+          created_by?: string | null
+          decision: string
+          edited?: Json | null
+          id?: string
+          is_demo?: boolean
+          recommendation_id: string
+          reviewer_id: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          comments?: string | null
+          created_at?: string
+          created_by?: string | null
+          decision?: string
+          edited?: Json | null
+          id?: string
+          is_demo?: boolean
+          recommendation_id?: string
+          reviewer_id?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_recommendation_reviews_recommendation_id_fkey"
+            columns: ["recommendation_id"]
+            isOneToOne: false
+            referencedRelation: "ai_recommendations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_recommendations: {
+        Row: {
+          competency_id: string
+          created_at: string
+          created_by: string | null
+          current_level: number | null
+          employee_id: string
+          expected_outcome: string | null
+          gap: number
+          gap_snapshot_id: string | null
+          generated_by: string
+          id: string
+          is_demo: boolean
+          model: string
+          priority: string
+          rationale: string
+          recommendation_type: string
+          required_level: number
+          resource_id: string
+          sources: Json
+          status: string
+          updated_at: string
+          updated_by: string | null
+          version: number
+        }
+        Insert: {
+          competency_id: string
+          created_at?: string
+          created_by?: string | null
+          current_level?: number | null
+          employee_id: string
+          expected_outcome?: string | null
+          gap: number
+          gap_snapshot_id?: string | null
+          generated_by: string
+          id?: string
+          is_demo?: boolean
+          model: string
+          priority?: string
+          rationale: string
+          recommendation_type: string
+          required_level: number
+          resource_id: string
+          sources?: Json
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Update: {
+          competency_id?: string
+          created_at?: string
+          created_by?: string | null
+          current_level?: number | null
+          employee_id?: string
+          expected_outcome?: string | null
+          gap?: number
+          gap_snapshot_id?: string | null
+          generated_by?: string
+          id?: string
+          is_demo?: boolean
+          model?: string
+          priority?: string
+          rationale?: string
+          recommendation_type?: string
+          required_level?: number
+          resource_id?: string
+          sources?: Json
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_recommendations_competency_id_fkey"
+            columns: ["competency_id"]
+            isOneToOne: false
+            referencedRelation: "competencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_recommendations_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       approval_tasks: {
         Row: {
           assignee_role: Database["public"]["Enums"]["app_role"] | null
@@ -476,6 +691,77 @@ export type Database = {
           },
         ]
       }
+      competency_reassessments: {
+        Row: {
+          assessment_id: string
+          competency_id: string
+          created_at: string
+          created_by: string | null
+          employee_id: string
+          id: string
+          is_demo: boolean
+          notes: string | null
+          session_id: string | null
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          assessment_id: string
+          competency_id: string
+          created_at?: string
+          created_by?: string | null
+          employee_id: string
+          id?: string
+          is_demo?: boolean
+          notes?: string | null
+          session_id?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          assessment_id?: string
+          competency_id?: string
+          created_at?: string
+          created_by?: string | null
+          employee_id?: string
+          id?: string
+          is_demo?: boolean
+          notes?: string | null
+          session_id?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "competency_reassessments_assessment_id_fkey"
+            columns: ["assessment_id"]
+            isOneToOne: false
+            referencedRelation: "competency_assessments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "competency_reassessments_competency_id_fkey"
+            columns: ["competency_id"]
+            isOneToOne: false
+            referencedRelation: "competencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "competency_reassessments_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "competency_reassessments_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "training_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       course_competency_mappings: {
         Row: {
           competency_id: string
@@ -778,6 +1064,79 @@ export type Database = {
           },
         ]
       }
+      critical_positions: {
+        Row: {
+          business_impact: string | null
+          created_at: string
+          created_by: string | null
+          criticality: string
+          department_id: string
+          id: string
+          incumbent_employee_id: string | null
+          is_demo: boolean
+          position_id: string
+          review_date: string | null
+          status: string
+          updated_at: string
+          updated_by: string | null
+          version: number
+        }
+        Insert: {
+          business_impact?: string | null
+          created_at?: string
+          created_by?: string | null
+          criticality?: string
+          department_id: string
+          id?: string
+          incumbent_employee_id?: string | null
+          is_demo?: boolean
+          position_id: string
+          review_date?: string | null
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Update: {
+          business_impact?: string | null
+          created_at?: string
+          created_by?: string | null
+          criticality?: string
+          department_id?: string
+          id?: string
+          incumbent_employee_id?: string | null
+          is_demo?: boolean
+          position_id?: string
+          review_date?: string | null
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "critical_positions_department_id_fkey"
+            columns: ["department_id"]
+            isOneToOne: false
+            referencedRelation: "departments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "critical_positions_incumbent_employee_id_fkey"
+            columns: ["incumbent_employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "critical_positions_position_id_fkey"
+            columns: ["position_id"]
+            isOneToOne: false
+            referencedRelation: "positions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       departments: {
         Row: {
           code: string
@@ -834,6 +1193,176 @@ export type Database = {
             columns: ["parent_id"]
             isOneToOne: false
             referencedRelation: "departments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      development_plan_items: {
+        Row: {
+          ai_recommendation_id: string | null
+          competency_id: string | null
+          completed_at: string | null
+          course_id: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          evidence: string | null
+          gap_snapshot_id: string | null
+          id: string
+          is_demo: boolean
+          item_type: string
+          learning_path_id: string | null
+          plan_id: string
+          priority: string
+          status: string
+          target_date: string | null
+          title: string
+          training_session_id: string | null
+          updated_at: string
+          updated_by: string | null
+          version: number
+        }
+        Insert: {
+          ai_recommendation_id?: string | null
+          competency_id?: string | null
+          completed_at?: string | null
+          course_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          evidence?: string | null
+          gap_snapshot_id?: string | null
+          id?: string
+          is_demo?: boolean
+          item_type: string
+          learning_path_id?: string | null
+          plan_id: string
+          priority?: string
+          status?: string
+          target_date?: string | null
+          title: string
+          training_session_id?: string | null
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Update: {
+          ai_recommendation_id?: string | null
+          competency_id?: string | null
+          completed_at?: string | null
+          course_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          evidence?: string | null
+          gap_snapshot_id?: string | null
+          id?: string
+          is_demo?: boolean
+          item_type?: string
+          learning_path_id?: string | null
+          plan_id?: string
+          priority?: string
+          status?: string
+          target_date?: string | null
+          title?: string
+          training_session_id?: string | null
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "development_plan_items_competency_id_fkey"
+            columns: ["competency_id"]
+            isOneToOne: false
+            referencedRelation: "competencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "development_plan_items_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "development_plan_items_learning_path_id_fkey"
+            columns: ["learning_path_id"]
+            isOneToOne: false
+            referencedRelation: "learning_paths"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "development_plan_items_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "development_plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      development_plans: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          employee_id: string
+          id: string
+          is_demo: boolean
+          notes: string | null
+          objectives: string | null
+          responsible_id: string | null
+          status: string
+          target_date: string | null
+          title: string
+          updated_at: string
+          updated_by: string | null
+          version: number
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          employee_id: string
+          id?: string
+          is_demo?: boolean
+          notes?: string | null
+          objectives?: string | null
+          responsible_id?: string | null
+          status?: string
+          target_date?: string | null
+          title: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          employee_id?: string
+          id?: string
+          is_demo?: boolean
+          notes?: string | null
+          objectives?: string | null
+          responsible_id?: string | null
+          status?: string
+          target_date?: string | null
+          title?: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "development_plans_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "development_plans_responsible_id_fkey"
+            columns: ["responsible_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
             referencedColumns: ["id"]
           },
         ]
@@ -1867,6 +2396,51 @@ export type Database = {
           },
         ]
       }
+      outbox_events: {
+        Row: {
+          attempts: number
+          created_at: string
+          created_by: string | null
+          id: string
+          kind: string
+          last_error: string | null
+          next_retry_at: string
+          payload: Json
+          processed_at: string | null
+          status: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          attempts?: number
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          kind: string
+          last_error?: string | null
+          next_retry_at?: string
+          payload: Json
+          processed_at?: string | null
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          attempts?: number
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          kind?: string
+          last_error?: string | null
+          next_retry_at?: string
+          payload?: Json
+          processed_at?: string | null
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
       position_competency_requirements: {
         Row: {
           change_reason: string | null
@@ -2231,6 +2805,263 @@ export type Database = {
           },
         ]
       }
+      readiness_classes: {
+        Row: {
+          code: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          label: string
+          requires_validation: boolean
+          sort_order: number
+          updated_at: string
+          updated_by: string | null
+          version: number
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          label: string
+          requires_validation?: boolean
+          sort_order?: number
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          label?: string
+          requires_validation?: boolean
+          sort_order?: number
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Relationships: []
+      }
+      recognition_categories: {
+        Row: {
+          active: boolean
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          name: string
+          updated_at: string
+          updated_by: string | null
+          version: number
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          name: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          name?: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Relationships: []
+      }
+      recognition_nominations: {
+        Row: {
+          category_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_demo: boolean
+          message: string
+          nominator_id: string
+          recipient_id: string
+          review_comments: string | null
+          reviewed_at: string | null
+          reviewer_id: string | null
+          show_nominator: boolean
+          status: string
+          supporting_info: string | null
+          updated_at: string
+          updated_by: string | null
+          version: number
+          visibility: string
+        }
+        Insert: {
+          category_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_demo?: boolean
+          message: string
+          nominator_id: string
+          recipient_id: string
+          review_comments?: string | null
+          reviewed_at?: string | null
+          reviewer_id?: string | null
+          show_nominator?: boolean
+          status?: string
+          supporting_info?: string | null
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+          visibility?: string
+        }
+        Update: {
+          category_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_demo?: boolean
+          message?: string
+          nominator_id?: string
+          recipient_id?: string
+          review_comments?: string | null
+          reviewed_at?: string | null
+          reviewer_id?: string | null
+          show_nominator?: boolean
+          status?: string
+          supporting_info?: string | null
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+          visibility?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "recognition_nominations_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "recognition_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "recognition_nominations_nominator_id_fkey"
+            columns: ["nominator_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "recognition_nominations_recipient_id_fkey"
+            columns: ["recipient_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      recognition_publications: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          is_demo: boolean
+          nomination_id: string
+          published_at: string
+          published_by: string | null
+          updated_at: string
+          updated_by: string | null
+          visibility: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_demo?: boolean
+          nomination_id: string
+          published_at?: string
+          published_by?: string | null
+          updated_at?: string
+          updated_by?: string | null
+          visibility: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_demo?: boolean
+          nomination_id?: string
+          published_at?: string
+          published_by?: string | null
+          updated_at?: string
+          updated_by?: string | null
+          visibility?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "recognition_publications_nomination_id_fkey"
+            columns: ["nomination_id"]
+            isOneToOne: true
+            referencedRelation: "recognition_nominations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      recognition_reviews: {
+        Row: {
+          comments: string | null
+          created_at: string
+          created_by: string | null
+          decision: string
+          id: string
+          is_demo: boolean
+          nomination_id: string
+          reviewer_id: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          comments?: string | null
+          created_at?: string
+          created_by?: string | null
+          decision: string
+          id?: string
+          is_demo?: boolean
+          nomination_id: string
+          reviewer_id: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          comments?: string | null
+          created_at?: string
+          created_by?: string | null
+          decision?: string
+          id?: string
+          is_demo?: boolean
+          nomination_id?: string
+          reviewer_id?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "recognition_reviews_nomination_id_fkey"
+            columns: ["nomination_id"]
+            isOneToOne: false
+            referencedRelation: "recognition_nominations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       reporting_relationships: {
         Row: {
           created_at: string
@@ -2351,6 +3182,248 @@ export type Database = {
         }
         Relationships: []
       }
+      succession_access_grants: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          department_id: string
+          granted_by: string | null
+          id: string
+          is_demo: boolean
+          updated_at: string
+          updated_by: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          department_id: string
+          granted_by?: string | null
+          id?: string
+          is_demo?: boolean
+          updated_at?: string
+          updated_by?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          department_id?: string
+          granted_by?: string | null
+          id?: string
+          is_demo?: boolean
+          updated_at?: string
+          updated_by?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "succession_access_grants_department_id_fkey"
+            columns: ["department_id"]
+            isOneToOne: false
+            referencedRelation: "departments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "succession_access_grants_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      succession_candidates: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          critical_position_id: string
+          employee_id: string
+          id: string
+          is_demo: boolean
+          notes: string | null
+          readiness_class_id: string | null
+          status: string
+          updated_at: string
+          updated_by: string | null
+          version: number
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          critical_position_id: string
+          employee_id: string
+          id?: string
+          is_demo?: boolean
+          notes?: string | null
+          readiness_class_id?: string | null
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          critical_position_id?: string
+          employee_id?: string
+          id?: string
+          is_demo?: boolean
+          notes?: string | null
+          readiness_class_id?: string | null
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "succession_candidates_critical_position_id_fkey"
+            columns: ["critical_position_id"]
+            isOneToOne: false
+            referencedRelation: "critical_positions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "succession_candidates_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "succession_candidates_readiness_class_id_fkey"
+            columns: ["readiness_class_id"]
+            isOneToOne: false
+            referencedRelation: "readiness_classes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      succession_development_activities: {
+        Row: {
+          candidate_id: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          development_plan_item_id: string | null
+          id: string
+          is_demo: boolean
+          status: string
+          target_date: string | null
+          title: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          candidate_id: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          development_plan_item_id?: string | null
+          id?: string
+          is_demo?: boolean
+          status?: string
+          target_date?: string | null
+          title: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          candidate_id?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          development_plan_item_id?: string | null
+          id?: string
+          is_demo?: boolean
+          status?: string
+          target_date?: string | null
+          title?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "succession_development_activities_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "succession_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "succession_development_activities_development_plan_item_id_fkey"
+            columns: ["development_plan_item_id"]
+            isOneToOne: false
+            referencedRelation: "development_plan_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      succession_readiness_assessments: {
+        Row: {
+          assessment_date: string
+          assessor_id: string | null
+          candidate_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_demo: boolean
+          readiness_class_id: string | null
+          summary: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          assessment_date?: string
+          assessor_id?: string | null
+          candidate_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_demo?: boolean
+          readiness_class_id?: string | null
+          summary: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          assessment_date?: string
+          assessor_id?: string | null
+          candidate_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_demo?: boolean
+          readiness_class_id?: string | null
+          summary?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "succession_readiness_assessments_assessor_id_fkey"
+            columns: ["assessor_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "succession_readiness_assessments_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "succession_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "succession_readiness_assessments_readiness_class_id_fkey"
+            columns: ["readiness_class_id"]
+            isOneToOne: false
+            referencedRelation: "readiness_classes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       system_settings: {
         Row: {
           created_at: string
@@ -2390,6 +3463,367 @@ export type Database = {
         }
         Relationships: []
       }
+      trainers: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          email: string | null
+          id: string
+          is_demo: boolean
+          is_external: boolean
+          name: string
+          specialty: string | null
+          status: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          id?: string
+          is_demo?: boolean
+          is_external?: boolean
+          name: string
+          specialty?: string | null
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          id?: string
+          is_demo?: boolean
+          is_external?: boolean
+          name?: string
+          specialty?: string | null
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
+      training_attendance: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          employee_id: string
+          id: string
+          is_demo: boolean
+          recorded_at: string
+          recorded_by: string | null
+          remarks: string | null
+          session_id: string
+          status: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          employee_id: string
+          id?: string
+          is_demo?: boolean
+          recorded_at?: string
+          recorded_by?: string | null
+          remarks?: string | null
+          session_id: string
+          status: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          employee_id?: string
+          id?: string
+          is_demo?: boolean
+          recorded_at?: string
+          recorded_by?: string | null
+          remarks?: string | null
+          session_id?: string
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "training_attendance_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "training_attendance_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "training_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      training_effectiveness_reviews: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          follow_up_notes: string | null
+          follow_up_required: boolean
+          id: string
+          is_demo: boolean
+          reviewer_id: string | null
+          session_id: string
+          summary: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          follow_up_notes?: string | null
+          follow_up_required?: boolean
+          id?: string
+          is_demo?: boolean
+          reviewer_id?: string | null
+          session_id: string
+          summary: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          follow_up_notes?: string | null
+          follow_up_required?: boolean
+          id?: string
+          is_demo?: boolean
+          reviewer_id?: string | null
+          session_id?: string
+          summary?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "training_effectiveness_reviews_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "training_effectiveness_reviews_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "training_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      training_participants: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          development_plan_item_id: string | null
+          employee_id: string
+          id: string
+          is_demo: boolean
+          session_id: string
+          status: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          development_plan_item_id?: string | null
+          employee_id: string
+          id?: string
+          is_demo?: boolean
+          session_id: string
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          development_plan_item_id?: string | null
+          employee_id?: string
+          id?: string
+          is_demo?: boolean
+          session_id?: string
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "training_participants_development_plan_item_id_fkey"
+            columns: ["development_plan_item_id"]
+            isOneToOne: false
+            referencedRelation: "development_plan_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "training_participants_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "training_participants_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "training_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      training_results: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          employee_id: string
+          evidence: string | null
+          feedback: string | null
+          id: string
+          is_demo: boolean
+          outcome: string
+          recorded_by: string | null
+          score: number | null
+          session_id: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          employee_id: string
+          evidence?: string | null
+          feedback?: string | null
+          id?: string
+          is_demo?: boolean
+          outcome: string
+          recorded_by?: string | null
+          score?: number | null
+          session_id: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          employee_id?: string
+          evidence?: string | null
+          feedback?: string | null
+          id?: string
+          is_demo?: boolean
+          outcome?: string
+          recorded_by?: string | null
+          score?: number | null
+          session_id?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "training_results_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "training_results_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "training_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      training_sessions: {
+        Row: {
+          capacity: number | null
+          code: string
+          created_at: string
+          created_by: string | null
+          delivery_method: string
+          ends_at: string
+          id: string
+          is_demo: boolean
+          related_competency_id: string | null
+          starts_at: string
+          status: string
+          title: string
+          trainer_id: string | null
+          type: string
+          updated_at: string
+          updated_by: string | null
+          venue: string | null
+          version: number
+        }
+        Insert: {
+          capacity?: number | null
+          code: string
+          created_at?: string
+          created_by?: string | null
+          delivery_method?: string
+          ends_at: string
+          id?: string
+          is_demo?: boolean
+          related_competency_id?: string | null
+          starts_at: string
+          status?: string
+          title: string
+          trainer_id?: string | null
+          type?: string
+          updated_at?: string
+          updated_by?: string | null
+          venue?: string | null
+          version?: number
+        }
+        Update: {
+          capacity?: number | null
+          code?: string
+          created_at?: string
+          created_by?: string | null
+          delivery_method?: string
+          ends_at?: string
+          id?: string
+          is_demo?: boolean
+          related_competency_id?: string | null
+          starts_at?: string
+          status?: string
+          title?: string
+          trainer_id?: string | null
+          type?: string
+          updated_at?: string
+          updated_by?: string | null
+          venue?: string | null
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "training_sessions_related_competency_id_fkey"
+            columns: ["related_competency_id"]
+            isOneToOne: false
+            referencedRelation: "competencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "training_sessions_trainer_id_fkey"
+            columns: ["trainer_id"]
+            isOneToOne: false
+            referencedRelation: "trainers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -2425,6 +3859,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      _assert_succession_write: { Args: { _dept: string }; Returns: undefined }
       _build_snapshot: { Args: { _version_id: string }; Returns: Json }
       _idem_get: {
         Args: { _hash: string; _key: string; _op: string }
@@ -2433,6 +3868,10 @@ export type Database = {
       _idem_put: {
         Args: { _hash: string; _key: string; _op: string; _resp: Json }
         Returns: Json
+      }
+      _maybe_complete_course: {
+        Args: { _enrollment: string }
+        Returns: undefined
       }
       _notify: {
         Args: {
@@ -2480,6 +3919,7 @@ export type Database = {
         Args: { _role: Database["public"]["Enums"]["app_role"]; _user: string }
         Returns: Json
       }
+      archive_course: { Args: { _id: string }; Returns: Json }
       assert_transition: {
         Args: { _entity: string; _from: string; _to: string }
         Returns: undefined
@@ -2493,6 +3933,7 @@ export type Database = {
       can_view_development: { Args: { _emp: string }; Returns: boolean }
       can_view_employee: { Args: { _emp: string }; Returns: boolean }
       can_view_perf: { Args: { _emp: string }; Returns: boolean }
+      can_view_succession: { Args: { _dept: string }; Returns: boolean }
       competency_gaps: {
         Args: {
           _category?: string
@@ -2548,6 +3989,18 @@ export type Database = {
         Args: never
         Returns: Database["public"]["Enums"]["app_role"]
       }
+      enroll_course: {
+        Args: {
+          _course: string
+          _employee: string
+          _hash: string
+          _idem: string
+          _plan_item: string
+          _source: string
+        }
+        Returns: Json
+      }
+      get_quiz_questions: { Args: { _quiz: string }; Returns: Json }
       global_search: {
         Args: { _q: string }
         Returns: {
@@ -2557,6 +4010,10 @@ export type Database = {
           link: string
           sublabel: string
         }[]
+      }
+      grant_succession_access: {
+        Args: { _department: string; _user: string }
+        Returns: Json
       }
       has_perm: { Args: { _perm: string }; Returns: boolean }
       has_role: {
@@ -2568,6 +4025,26 @@ export type Database = {
       }
       is_dept_head_of: { Args: { _emp: string }; Returns: boolean }
       is_supervisor_of: { Args: { _emp: string }; Returns: boolean }
+      link_reassessment: {
+        Args: {
+          _assessment: string
+          _competency: string
+          _employee: string
+          _notes: string
+          _session: string
+        }
+        Returns: Json
+      }
+      log_ai_generation: {
+        Args: {
+          _employee: string
+          _error: string
+          _latency: number
+          _model: string
+          _status: string
+        }
+        Returns: Json
+      }
       log_audit: {
         Args: {
           _action: string
@@ -2577,10 +4054,16 @@ export type Database = {
         }
         Returns: undefined
       }
+      log_succession_view: {
+        Args: { _record: string; _record_type: string }
+        Returns: Json
+      }
       mark_notifications_read: { Args: { _ids: string[] }; Returns: Json }
       my_context: { Args: never; Returns: Json }
       my_employee_id: { Args: never; Returns: string }
       new_profile_version: { Args: { _profile: string }; Returns: Json }
+      prepare_ai_context: { Args: { _employee: string }; Returns: Json }
+      process_outbox: { Args: { _limit?: number }; Returns: Json }
       profile_weight_total: { Args: { _version_id: string }; Returns: number }
       register_file: {
         Args: {
@@ -2590,6 +4073,10 @@ export type Database = {
           _path: string
           _size: number
         }
+        Returns: Json
+      }
+      register_participant: {
+        Args: { _employee: string; _plan_item: string; _session: string }
         Returns: Json
       }
       remove_demo_data: { Args: never; Returns: Json }
@@ -2602,7 +4089,38 @@ export type Database = {
         }
         Returns: Json
       }
+      report_data: {
+        Args: {
+          _department?: string
+          _from?: string
+          _kind: string
+          _to?: string
+        }
+        Returns: Json
+      }
+      reset_demo_data: { Args: never; Returns: Json }
+      review_ai_recommendation: {
+        Args: {
+          _comments: string
+          _decision: string
+          _edited: Json
+          _hash: string
+          _id: string
+          _idem: string
+        }
+        Returns: Json
+      }
       review_assessment: {
+        Args: {
+          _comments: string
+          _decision: string
+          _hash: string
+          _id: string
+          _idem: string
+        }
+        Returns: Json
+      }
+      review_course: {
         Args: {
           _comments: string
           _decision: string
@@ -2622,6 +4140,29 @@ export type Database = {
         }
         Returns: Json
       }
+      review_nomination: {
+        Args: {
+          _comments: string
+          _decision: string
+          _hash: string
+          _id: string
+          _idem: string
+          _show_nominator: boolean
+          _visibility: string
+        }
+        Returns: Json
+      }
+      revoke_succession_access: { Args: { _grant: string }; Returns: Json }
+      save_ai_recommendations: {
+        Args: {
+          _employee: string
+          _hash: string
+          _idem: string
+          _items: Json
+          _model: string
+        }
+        Returns: Json
+      }
       save_assessment: {
         Args: {
           _comments: string
@@ -2635,6 +4176,23 @@ export type Database = {
         }
         Returns: Json
       }
+      save_attendance: {
+        Args: { _hash: string; _idem: string; _rows: Json; _session: string }
+        Returns: Json
+      }
+      save_course_content: {
+        Args: { _course: string; _sections: Json; _version: number }
+        Returns: Json
+      }
+      save_effectiveness_review: {
+        Args: {
+          _follow_up: boolean
+          _notes: string
+          _session: string
+          _summary: string
+        }
+        Returns: Json
+      }
       save_evaluation: {
         Args: {
           _assignment: string
@@ -2645,12 +4203,44 @@ export type Database = {
         }
         Returns: Json
       }
+      save_lesson_progress: {
+        Args: { _completed: boolean; _enrollment: string; _lesson: string }
+        Returns: Json
+      }
+      save_plan_item: {
+        Args: { _d: Json; _id: string; _plan: string; _version: number }
+        Returns: Json
+      }
       save_profile_version: {
         Args: { _c: Json; _expected: number; _version_id: string }
         Returns: Json
       }
+      save_readiness_assessment: {
+        Args: { _candidate: string; _class: string; _summary: string }
+        Returns: Json
+      }
+      save_succession_activity: {
+        Args: { _candidate: string; _d: Json; _id: string }
+        Returns: Json
+      }
+      save_training_result: {
+        Args: { _d: Json; _employee: string; _session: string }
+        Returns: Json
+      }
+      set_course_competencies: {
+        Args: { _course: string; _mappings: Json }
+        Returns: Json
+      }
       set_cycle_status: {
         Args: { _id: string; _status: string }
+        Returns: Json
+      }
+      set_path_courses: {
+        Args: { _course_ids: Json; _path: string }
+        Returns: Json
+      }
+      set_plan_item_status: {
+        Args: { _evidence: string; _item: string; _status: string }
         Returns: Json
       }
       set_position_requirement: {
@@ -2665,12 +4255,20 @@ export type Database = {
         }
         Returns: Json
       }
+      set_session_status: {
+        Args: { _id: string; _status: string }
+        Returns: Json
+      }
       set_supervisor: {
         Args: { _emp: string; _from: string; _sup: string }
         Returns: Json
       }
       snapshot_gaps: { Args: { _employee: string }; Returns: Json }
       submit_assessment: {
+        Args: { _hash: string; _id: string; _idem: string }
+        Returns: Json
+      }
+      submit_course: {
         Args: { _hash: string; _id: string; _idem: string }
         Returns: Json
       }
@@ -2681,6 +4279,31 @@ export type Database = {
           _idem: string
           _respondent: string
         }
+        Returns: Json
+      }
+      submit_nomination: {
+        Args: {
+          _category: string
+          _hash: string
+          _idem: string
+          _message: string
+          _recipient: string
+          _supporting: string
+        }
+        Returns: Json
+      }
+      submit_quiz_attempt: {
+        Args: {
+          _answers: Json
+          _enrollment: string
+          _hash: string
+          _idem: string
+          _quiz: string
+        }
+        Returns: Json
+      }
+      update_ai_settings: {
+        Args: { _model: string; _provider: string; _version: number }
         Returns: Json
       }
       update_my_contact: {
@@ -2708,6 +4331,14 @@ export type Database = {
         Args: { _d: Json; _id: string; _version: number }
         Returns: Json
       }
+      upsert_course: {
+        Args: { _d: Json; _id: string; _version: number }
+        Returns: Json
+      }
+      upsert_critical_position: {
+        Args: { _d: Json; _id: string; _version: number }
+        Returns: Json
+      }
       upsert_cycle: {
         Args: { _d: Json; _id: string; _version: number }
         Returns: Json
@@ -2724,7 +4355,15 @@ export type Database = {
         }
         Returns: Json
       }
+      upsert_development_plan: {
+        Args: { _d: Json; _id: string; _version: number }
+        Returns: Json
+      }
       upsert_employee: {
+        Args: { _d: Json; _id: string; _version: number }
+        Returns: Json
+      }
+      upsert_learning_path: {
         Args: { _d: Json; _id: string; _version: number }
         Returns: Json
       }
@@ -2738,6 +4377,26 @@ export type Database = {
           _title: string
           _version: number
         }
+        Returns: Json
+      }
+      upsert_readiness_class: {
+        Args: { _d: Json; _id: string; _version: number }
+        Returns: Json
+      }
+      upsert_recognition_category: {
+        Args: { _d: Json; _id: string; _version: number }
+        Returns: Json
+      }
+      upsert_succession_candidate: {
+        Args: { _d: Json; _id: string; _version: number }
+        Returns: Json
+      }
+      upsert_trainer: {
+        Args: { _d: Json; _id: string; _version: number }
+        Returns: Json
+      }
+      upsert_training_session: {
+        Args: { _d: Json; _id: string; _version: number }
         Returns: Json
       }
     }

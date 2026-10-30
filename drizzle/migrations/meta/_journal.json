@@ -50,6 +50,41 @@
       "when": 1793380009316,
       "tag": "0006_phase5_learning_schema",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1793380336895,
+      "tag": "0007_phase5_training_ai_outbox_schema",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1793380451144,
+      "tag": "0008_phase5_operations",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1793380498512,
+      "tag": "0009_phase5_demo_data",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1793380710042,
+      "tag": "0010_phase6_succession_recognition_schema",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1793380783896,
+      "tag": "0011_phase6_demo_data_and_demo_lifecycle",
+      "breakpoints": true
     }
   ]
 }

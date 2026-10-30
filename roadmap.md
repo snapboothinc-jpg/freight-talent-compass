@@ -8,12 +8,19 @@
 - [x] Phase 4: cycles, versioned profiles and builder, assignments, evaluation form with draft, submit, review and reopen; competency library, proficiency framework, requirements, assessments with evidence, gaps, Not Assessed, history
 
 ## In progress (Phases 5–6 session)
-- [~] Phase 5 database: stage 1 applied (learning tables, permissions, settings, RLS — migration 0006). Staged next: training/AI/outbox tables, then RPCs and demo data (full script at docs/pending/phase5_learning_training_ai.sql)
-- [ ] Phase 5 app: AI recommendations module + queue, learning pages (catalog, player, quizzes, paths), training pages (plans, calendar, sessions, attendance, results, effectiveness)
+- [x] Phase 5 database: learning, training, AI, outbox tables + RPCs + RLS + demo data (migrations 0006–0009)
+- [x] Phase 6 database: succession, recognition, readiness classes, report reader, remove/reset demo data (migrations 0010–0011)
+- [x] AI service module (env-switchable Lovable/Gemini provider, Zod-validated output, unknown resource IDs rejected)
+- [x] Server functions: learning, training, AI, succession, recognition, reports, PDF export
+- [~] Phase 5 pages: learning (dashboard, catalog, player+quiz, manage, my, paths, progress) and training (dashboard, plans, plan detail, calendar, session detail with attendance/results) done; effectiveness page pending
+- [ ] Phase 6 pages: AI queue, AI settings, succession (3), recognition (5), reports
+- [ ] Hardening: /api/v1 + OpenAPI, outbox processor route, server-side pagination, tests, security-functions doc
 
 ## Open (next sessions)
-- [ ] Phase 5: AI recommendations (Lovable default model), learning (courses, player, quizzes, paths), training (plans, sessions, attendance, results, reassessment link)
-- [ ] Phase 6: succession, recognition, reports with PDF export, integration settings
+- [ ] Phase 6 pages and remaining hardening (see In progress)
+- [ ] MFA for Admin/Super Admin, session idle timeout (not started)
+- [ ] Separate staging environment (needs a second Lovable Cloud project; document in runbook)
+- [ ] Strict tsconfig settings: kept relaxed (generated shadcn/TanStack typings incompatible) — documented in AGENTS.md
 - [ ] /api/v1 REST surface and OpenAPI contract tests
 - [ ] Outbox worker for email and AI side effects
 - [ ] MFA requirement for Super Admin and Admin, session idle timeout
