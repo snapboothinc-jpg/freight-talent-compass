@@ -1864,6 +1864,7 @@ export type Database = {
         }
         Returns: Json
       }
+      remove_demo_data: { Args: never; Returns: Json }
       reopen_evaluation: {
         Args: {
           _assignment: string
