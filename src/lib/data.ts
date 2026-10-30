@@ -43,7 +43,12 @@ export interface Page {
 }
 const pageOf = (p?: Page) => ({ limit: Math.min(p?.limit ?? 50, 200), offset: Math.max(p?.offset ?? 0, 0) });
 
-export const fetchEmployees = async (p?: Page) => {
+/** Full list for picker dropdowns (bounded by the 1,000-row safety cap). */
+export const fetchEmployees = async () =>
+  check(await supabase.from("employees").select(EMPLOYEE_SELECT).order("last_name").limit(1000)) as unknown as EmployeeRow[];
+
+/** Server-side paginated list for the employees page. */
+export const fetchEmployeesPage = async (p?: Page) => {
   const { limit, offset } = pageOf(p);
   return check(
     await supabase.from("employees").select(EMPLOYEE_SELECT).order("last_name").range(offset, offset + limit - 1),
