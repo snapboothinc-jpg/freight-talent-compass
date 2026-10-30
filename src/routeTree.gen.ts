@@ -51,6 +51,8 @@ import { Route as AuthenticatedPerformanceEvaluationsIdRouteImport } from './rou
 import { Route as AuthenticatedPerformanceProfilesIndexRouteImport } from './routes/_authenticated/performance.profiles.index'
 import { Route as AuthenticatedPerformanceProfilesIdRouteImport } from './routes/_authenticated/performance.profiles.$id'
 import { Route as AuthenticatedTrainingPlansIndexRouteImport } from './routes/_authenticated/training.plans.index'
+import { Route as AuthenticatedTrainingPlansIdRouteImport } from './routes/_authenticated/training.plans.$id'
+import { Route as AuthenticatedTrainingSessionsIdRouteImport } from './routes/_authenticated/training.sessions.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -294,6 +296,18 @@ const AuthenticatedTrainingPlansIndexRoute =
     path: '/training/plans/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedTrainingPlansIdRoute =
+  AuthenticatedTrainingPlansIdRouteImport.update({
+    id: '/training/plans/$id',
+    path: '/training/plans/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedTrainingSessionsIdRoute =
+  AuthenticatedTrainingSessionsIdRouteImport.update({
+    id: '/training/sessions/$id',
+    path: '/training/sessions/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -332,6 +346,8 @@ export interface FileRoutesByFullPath {
   '/performance/cycles/$id': typeof AuthenticatedPerformanceCyclesIdRoute
   '/performance/evaluations/$id': typeof AuthenticatedPerformanceEvaluationsIdRoute
   '/performance/profiles/$id': typeof AuthenticatedPerformanceProfilesIdRoute
+  '/training/plans/$id': typeof AuthenticatedTrainingPlansIdRoute
+  '/training/sessions/$id': typeof AuthenticatedTrainingSessionsIdRoute
   '/competency/library/': typeof AuthenticatedCompetencyLibraryIndexRoute
   '/people/employees/': typeof AuthenticatedPeopleEmployeesIndexRoute
   '/performance/cycles/': typeof AuthenticatedPerformanceCyclesIndexRoute
@@ -375,6 +391,8 @@ export interface FileRoutesByTo {
   '/performance/cycles/$id': typeof AuthenticatedPerformanceCyclesIdRoute
   '/performance/evaluations/$id': typeof AuthenticatedPerformanceEvaluationsIdRoute
   '/performance/profiles/$id': typeof AuthenticatedPerformanceProfilesIdRoute
+  '/training/plans/$id': typeof AuthenticatedTrainingPlansIdRoute
+  '/training/sessions/$id': typeof AuthenticatedTrainingSessionsIdRoute
   '/competency/library': typeof AuthenticatedCompetencyLibraryIndexRoute
   '/people/employees': typeof AuthenticatedPeopleEmployeesIndexRoute
   '/performance/cycles': typeof AuthenticatedPerformanceCyclesIndexRoute
@@ -420,6 +438,8 @@ export interface FileRoutesById {
   '/_authenticated/performance/cycles/$id': typeof AuthenticatedPerformanceCyclesIdRoute
   '/_authenticated/performance/evaluations/$id': typeof AuthenticatedPerformanceEvaluationsIdRoute
   '/_authenticated/performance/profiles/$id': typeof AuthenticatedPerformanceProfilesIdRoute
+  '/_authenticated/training/plans/$id': typeof AuthenticatedTrainingPlansIdRoute
+  '/_authenticated/training/sessions/$id': typeof AuthenticatedTrainingSessionsIdRoute
   '/_authenticated/competency/library/': typeof AuthenticatedCompetencyLibraryIndexRoute
   '/_authenticated/people/employees/': typeof AuthenticatedPeopleEmployeesIndexRoute
   '/_authenticated/performance/cycles/': typeof AuthenticatedPerformanceCyclesIndexRoute
@@ -465,6 +485,8 @@ export interface FileRouteTypes {
     | '/performance/cycles/$id'
     | '/performance/evaluations/$id'
     | '/performance/profiles/$id'
+    | '/training/plans/$id'
+    | '/training/sessions/$id'
     | '/competency/library/'
     | '/people/employees/'
     | '/performance/cycles/'
@@ -508,6 +530,8 @@ export interface FileRouteTypes {
     | '/performance/cycles/$id'
     | '/performance/evaluations/$id'
     | '/performance/profiles/$id'
+    | '/training/plans/$id'
+    | '/training/sessions/$id'
     | '/competency/library'
     | '/people/employees'
     | '/performance/cycles'
@@ -552,6 +576,8 @@ export interface FileRouteTypes {
     | '/_authenticated/performance/cycles/$id'
     | '/_authenticated/performance/evaluations/$id'
     | '/_authenticated/performance/profiles/$id'
+    | '/_authenticated/training/plans/$id'
+    | '/_authenticated/training/sessions/$id'
     | '/_authenticated/competency/library/'
     | '/_authenticated/people/employees/'
     | '/_authenticated/performance/cycles/'
@@ -862,6 +888,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTrainingPlansIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/training/plans/$id': {
+      id: '/_authenticated/training/plans/$id'
+      path: '/training/plans/$id'
+      fullPath: '/training/plans/$id'
+      preLoaderRoute: typeof AuthenticatedTrainingPlansIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/training/sessions/$id': {
+      id: '/_authenticated/training/sessions/$id'
+      path: '/training/sessions/$id'
+      fullPath: '/training/sessions/$id'
+      preLoaderRoute: typeof AuthenticatedTrainingSessionsIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -899,6 +939,8 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPerformanceCyclesIdRoute: typeof AuthenticatedPerformanceCyclesIdRoute
   AuthenticatedPerformanceEvaluationsIdRoute: typeof AuthenticatedPerformanceEvaluationsIdRoute
   AuthenticatedPerformanceProfilesIdRoute: typeof AuthenticatedPerformanceProfilesIdRoute
+  AuthenticatedTrainingPlansIdRoute: typeof AuthenticatedTrainingPlansIdRoute
+  AuthenticatedTrainingSessionsIdRoute: typeof AuthenticatedTrainingSessionsIdRoute
   AuthenticatedCompetencyLibraryIndexRoute: typeof AuthenticatedCompetencyLibraryIndexRoute
   AuthenticatedPeopleEmployeesIndexRoute: typeof AuthenticatedPeopleEmployeesIndexRoute
   AuthenticatedPerformanceCyclesIndexRoute: typeof AuthenticatedPerformanceCyclesIndexRoute
@@ -943,6 +985,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
     AuthenticatedPerformanceEvaluationsIdRoute,
   AuthenticatedPerformanceProfilesIdRoute:
     AuthenticatedPerformanceProfilesIdRoute,
+  AuthenticatedTrainingPlansIdRoute: AuthenticatedTrainingPlansIdRoute,
+  AuthenticatedTrainingSessionsIdRoute: AuthenticatedTrainingSessionsIdRoute,
   AuthenticatedCompetencyLibraryIndexRoute:
     AuthenticatedCompetencyLibraryIndexRoute,
   AuthenticatedPeopleEmployeesIndexRoute:
