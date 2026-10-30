@@ -70,6 +70,8 @@ import { Route as AuthenticatedTrainingPlansIndexRouteImport } from './routes/_a
 import { Route as AuthenticatedTrainingPlansIdRouteImport } from './routes/_authenticated/training.plans.$id'
 import { Route as AuthenticatedTrainingSessionsIdRouteImport } from './routes/_authenticated/training.sessions.$id'
 import { Route as ApiPublicOutboxProcessRouteImport } from './routes/api/public/outbox/process'
+import { Route as ApiV1CoursesIdRouteImport } from './routes/api/v1/courses.$id'
+import { Route as ApiV1OpenapiJsonRouteImport } from './routes/api/v1/openapi.json'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -421,6 +423,16 @@ const ApiPublicOutboxProcessRoute = ApiPublicOutboxProcessRouteImport.update({
   path: '/api/public/outbox/process',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiV1CoursesIdRoute = ApiV1CoursesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ApiV1CoursesRoute,
+} as any)
+const ApiV1OpenapiJsonRoute = ApiV1OpenapiJsonRouteImport.update({
+  id: '/api/v1/openapi/json',
+  path: '/api/v1/openapi/json',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -459,7 +471,7 @@ export interface FileRoutesByFullPath {
   '/training/calendar': typeof AuthenticatedTrainingCalendarRoute
   '/training/effectiveness': typeof AuthenticatedTrainingEffectivenessRoute
   '/api/public/health': typeof ApiPublicHealthRoute
-  '/api/v1/courses': typeof ApiV1CoursesRoute
+  '/api/v1/courses': typeof ApiV1CoursesRouteWithChildren
   '/api/v1/employees': typeof ApiV1EmployeesRoute
   '/api/v1/gaps': typeof ApiV1GapsRoute
   '/competency/': typeof AuthenticatedCompetencyIndexRoute
@@ -478,6 +490,8 @@ export interface FileRoutesByFullPath {
   '/training/plans/$id': typeof AuthenticatedTrainingPlansIdRoute
   '/training/sessions/$id': typeof AuthenticatedTrainingSessionsIdRoute
   '/api/public/outbox/process': typeof ApiPublicOutboxProcessRoute
+  '/api/v1/courses/$id': typeof ApiV1CoursesIdRoute
+  '/api/v1/openapi/json': typeof ApiV1OpenapiJsonRoute
   '/competency/library/': typeof AuthenticatedCompetencyLibraryIndexRoute
   '/people/employees/': typeof AuthenticatedPeopleEmployeesIndexRoute
   '/performance/cycles/': typeof AuthenticatedPerformanceCyclesIndexRoute
@@ -521,7 +535,7 @@ export interface FileRoutesByTo {
   '/training/calendar': typeof AuthenticatedTrainingCalendarRoute
   '/training/effectiveness': typeof AuthenticatedTrainingEffectivenessRoute
   '/api/public/health': typeof ApiPublicHealthRoute
-  '/api/v1/courses': typeof ApiV1CoursesRoute
+  '/api/v1/courses': typeof ApiV1CoursesRouteWithChildren
   '/api/v1/employees': typeof ApiV1EmployeesRoute
   '/api/v1/gaps': typeof ApiV1GapsRoute
   '/competency': typeof AuthenticatedCompetencyIndexRoute
@@ -540,6 +554,8 @@ export interface FileRoutesByTo {
   '/training/plans/$id': typeof AuthenticatedTrainingPlansIdRoute
   '/training/sessions/$id': typeof AuthenticatedTrainingSessionsIdRoute
   '/api/public/outbox/process': typeof ApiPublicOutboxProcessRoute
+  '/api/v1/courses/$id': typeof ApiV1CoursesIdRoute
+  '/api/v1/openapi/json': typeof ApiV1OpenapiJsonRoute
   '/competency/library': typeof AuthenticatedCompetencyLibraryIndexRoute
   '/people/employees': typeof AuthenticatedPeopleEmployeesIndexRoute
   '/performance/cycles': typeof AuthenticatedPerformanceCyclesIndexRoute
@@ -585,7 +601,7 @@ export interface FileRoutesById {
   '/_authenticated/training/calendar': typeof AuthenticatedTrainingCalendarRoute
   '/_authenticated/training/effectiveness': typeof AuthenticatedTrainingEffectivenessRoute
   '/api/public/health': typeof ApiPublicHealthRoute
-  '/api/v1/courses': typeof ApiV1CoursesRoute
+  '/api/v1/courses': typeof ApiV1CoursesRouteWithChildren
   '/api/v1/employees': typeof ApiV1EmployeesRoute
   '/api/v1/gaps': typeof ApiV1GapsRoute
   '/_authenticated/competency/': typeof AuthenticatedCompetencyIndexRoute
@@ -604,6 +620,8 @@ export interface FileRoutesById {
   '/_authenticated/training/plans/$id': typeof AuthenticatedTrainingPlansIdRoute
   '/_authenticated/training/sessions/$id': typeof AuthenticatedTrainingSessionsIdRoute
   '/api/public/outbox/process': typeof ApiPublicOutboxProcessRoute
+  '/api/v1/courses/$id': typeof ApiV1CoursesIdRoute
+  '/api/v1/openapi/json': typeof ApiV1OpenapiJsonRoute
   '/_authenticated/competency/library/': typeof AuthenticatedCompetencyLibraryIndexRoute
   '/_authenticated/people/employees/': typeof AuthenticatedPeopleEmployeesIndexRoute
   '/_authenticated/performance/cycles/': typeof AuthenticatedPerformanceCyclesIndexRoute
@@ -668,6 +686,8 @@ export interface FileRouteTypes {
     | '/training/plans/$id'
     | '/training/sessions/$id'
     | '/api/public/outbox/process'
+    | '/api/v1/courses/$id'
+    | '/api/v1/openapi/json'
     | '/competency/library/'
     | '/people/employees/'
     | '/performance/cycles/'
@@ -730,6 +750,8 @@ export interface FileRouteTypes {
     | '/training/plans/$id'
     | '/training/sessions/$id'
     | '/api/public/outbox/process'
+    | '/api/v1/courses/$id'
+    | '/api/v1/openapi/json'
     | '/competency/library'
     | '/people/employees'
     | '/performance/cycles'
@@ -793,6 +815,8 @@ export interface FileRouteTypes {
     | '/_authenticated/training/plans/$id'
     | '/_authenticated/training/sessions/$id'
     | '/api/public/outbox/process'
+    | '/api/v1/courses/$id'
+    | '/api/v1/openapi/json'
     | '/_authenticated/competency/library/'
     | '/_authenticated/people/employees/'
     | '/_authenticated/performance/cycles/'
@@ -805,10 +829,11 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   ApiPublicHealthRoute: typeof ApiPublicHealthRoute
-  ApiV1CoursesRoute: typeof ApiV1CoursesRoute
+  ApiV1CoursesRoute: typeof ApiV1CoursesRouteWithChildren
   ApiV1EmployeesRoute: typeof ApiV1EmployeesRoute
   ApiV1GapsRoute: typeof ApiV1GapsRoute
   ApiPublicOutboxProcessRoute: typeof ApiPublicOutboxProcessRoute
+  ApiV1OpenapiJsonRoute: typeof ApiV1OpenapiJsonRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -1240,6 +1265,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicOutboxProcessRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/v1/courses/$id': {
+      id: '/api/v1/courses/$id'
+      path: '/$id'
+      fullPath: '/api/v1/courses/$id'
+      preLoaderRoute: typeof ApiV1CoursesIdRouteImport
+      parentRoute: typeof ApiV1CoursesRoute
+    }
+    '/api/v1/openapi/json': {
+      id: '/api/v1/openapi/json'
+      path: '/api/v1/openapi/json'
+      fullPath: '/api/v1/openapi/json'
+      preLoaderRoute: typeof ApiV1OpenapiJsonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -1368,15 +1407,28 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface ApiV1CoursesRouteChildren {
+  ApiV1CoursesIdRoute: typeof ApiV1CoursesIdRoute
+}
+
+const ApiV1CoursesRouteChildren: ApiV1CoursesRouteChildren = {
+  ApiV1CoursesIdRoute: ApiV1CoursesIdRoute,
+}
+
+const ApiV1CoursesRouteWithChildren = ApiV1CoursesRoute._addFileChildren(
+  ApiV1CoursesRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   ApiPublicHealthRoute: ApiPublicHealthRoute,
-  ApiV1CoursesRoute: ApiV1CoursesRoute,
+  ApiV1CoursesRoute: ApiV1CoursesRouteWithChildren,
   ApiV1EmployeesRoute: ApiV1EmployeesRoute,
   ApiV1GapsRoute: ApiV1GapsRoute,
   ApiPublicOutboxProcessRoute: ApiPublicOutboxProcessRoute,
+  ApiV1OpenapiJsonRoute: ApiV1OpenapiJsonRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

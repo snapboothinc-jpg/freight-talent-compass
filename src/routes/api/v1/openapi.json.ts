@@ -179,7 +179,7 @@ const spec = {
   },
 } as const;
 
-export const Route = createFileRoute("/api/v1/openapi.json")({
+export const Route = createFileRoute("/api/v1/openapi/json")({
   server: {
     handlers: {
       GET: async () => Response.json(spec),
