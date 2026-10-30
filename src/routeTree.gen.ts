@@ -20,11 +20,14 @@ import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authen
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
 import { Route as AuthenticatedOrgDepartmentsRouteImport } from './routes/_authenticated/org.departments'
 import { Route as AuthenticatedOrgPositionsRouteImport } from './routes/_authenticated/org.positions'
+import { Route as AuthenticatedPerformanceIndexRouteImport } from './routes/_authenticated/performance.index'
 import { Route as AuthenticatedPerformanceHistoryRouteImport } from './routes/_authenticated/performance.history'
 import { Route as AuthenticatedPerformanceMyRouteImport } from './routes/_authenticated/performance.my'
 import { Route as AuthenticatedPerformanceTeamRouteImport } from './routes/_authenticated/performance.team'
 import { Route as AuthenticatedPeopleEmployeesIndexRouteImport } from './routes/_authenticated/people.employees.index'
 import { Route as AuthenticatedPeopleEmployeesIdRouteImport } from './routes/_authenticated/people.employees.$id'
+import { Route as AuthenticatedPerformanceCyclesIndexRouteImport } from './routes/_authenticated/performance.cycles.index'
+import { Route as AuthenticatedPerformanceCyclesIdRouteImport } from './routes/_authenticated/performance.cycles.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -84,6 +87,12 @@ const AuthenticatedOrgPositionsRoute =
     path: '/org/positions',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedPerformanceIndexRoute =
+  AuthenticatedPerformanceIndexRouteImport.update({
+    id: '/performance/',
+    path: '/performance/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedPerformanceHistoryRoute =
   AuthenticatedPerformanceHistoryRouteImport.update({
     id: '/performance/history',
@@ -114,6 +123,18 @@ const AuthenticatedPeopleEmployeesIdRoute =
     path: '/people/employees/$id',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedPerformanceCyclesIndexRoute =
+  AuthenticatedPerformanceCyclesIndexRouteImport.update({
+    id: '/performance/cycles/',
+    path: '/performance/cycles/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedPerformanceCyclesIdRoute =
+  AuthenticatedPerformanceCyclesIdRouteImport.update({
+    id: '/performance/cycles/$id',
+    path: '/performance/cycles/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -129,8 +150,11 @@ export interface FileRoutesByFullPath {
   '/performance/history': typeof AuthenticatedPerformanceHistoryRoute
   '/performance/my': typeof AuthenticatedPerformanceMyRoute
   '/performance/team': typeof AuthenticatedPerformanceTeamRoute
+  '/performance/': typeof AuthenticatedPerformanceIndexRoute
   '/people/employees/$id': typeof AuthenticatedPeopleEmployeesIdRoute
+  '/performance/cycles/$id': typeof AuthenticatedPerformanceCyclesIdRoute
   '/people/employees/': typeof AuthenticatedPeopleEmployeesIndexRoute
+  '/performance/cycles/': typeof AuthenticatedPerformanceCyclesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -146,8 +170,11 @@ export interface FileRoutesByTo {
   '/performance/history': typeof AuthenticatedPerformanceHistoryRoute
   '/performance/my': typeof AuthenticatedPerformanceMyRoute
   '/performance/team': typeof AuthenticatedPerformanceTeamRoute
+  '/performance': typeof AuthenticatedPerformanceIndexRoute
   '/people/employees/$id': typeof AuthenticatedPeopleEmployeesIdRoute
+  '/performance/cycles/$id': typeof AuthenticatedPerformanceCyclesIdRoute
   '/people/employees': typeof AuthenticatedPeopleEmployeesIndexRoute
+  '/performance/cycles': typeof AuthenticatedPerformanceCyclesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -165,8 +192,11 @@ export interface FileRoutesById {
   '/_authenticated/performance/history': typeof AuthenticatedPerformanceHistoryRoute
   '/_authenticated/performance/my': typeof AuthenticatedPerformanceMyRoute
   '/_authenticated/performance/team': typeof AuthenticatedPerformanceTeamRoute
+  '/_authenticated/performance/': typeof AuthenticatedPerformanceIndexRoute
   '/_authenticated/people/employees/$id': typeof AuthenticatedPeopleEmployeesIdRoute
+  '/_authenticated/performance/cycles/$id': typeof AuthenticatedPerformanceCyclesIdRoute
   '/_authenticated/people/employees/': typeof AuthenticatedPeopleEmployeesIndexRoute
+  '/_authenticated/performance/cycles/': typeof AuthenticatedPerformanceCyclesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -184,8 +214,11 @@ export interface FileRouteTypes {
     | '/performance/history'
     | '/performance/my'
     | '/performance/team'
+    | '/performance/'
     | '/people/employees/$id'
+    | '/performance/cycles/$id'
     | '/people/employees/'
+    | '/performance/cycles/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -201,8 +234,11 @@ export interface FileRouteTypes {
     | '/performance/history'
     | '/performance/my'
     | '/performance/team'
+    | '/performance'
     | '/people/employees/$id'
+    | '/performance/cycles/$id'
     | '/people/employees'
+    | '/performance/cycles'
   id:
     | '__root__'
     | '/'
@@ -219,8 +255,11 @@ export interface FileRouteTypes {
     | '/_authenticated/performance/history'
     | '/_authenticated/performance/my'
     | '/_authenticated/performance/team'
+    | '/_authenticated/performance/'
     | '/_authenticated/people/employees/$id'
+    | '/_authenticated/performance/cycles/$id'
     | '/_authenticated/people/employees/'
+    | '/_authenticated/performance/cycles/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -308,6 +347,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOrgPositionsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/performance/': {
+      id: '/_authenticated/performance/'
+      path: '/performance'
+      fullPath: '/performance/'
+      preLoaderRoute: typeof AuthenticatedPerformanceIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/performance/history': {
       id: '/_authenticated/performance/history'
       path: '/performance/history'
@@ -343,6 +389,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPeopleEmployeesIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/performance/cycles/': {
+      id: '/_authenticated/performance/cycles/'
+      path: '/performance/cycles'
+      fullPath: '/performance/cycles/'
+      preLoaderRoute: typeof AuthenticatedPerformanceCyclesIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/performance/cycles/$id': {
+      id: '/_authenticated/performance/cycles/$id'
+      path: '/performance/cycles/$id'
+      fullPath: '/performance/cycles/$id'
+      preLoaderRoute: typeof AuthenticatedPerformanceCyclesIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -358,8 +418,11 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPerformanceHistoryRoute: typeof AuthenticatedPerformanceHistoryRoute
   AuthenticatedPerformanceMyRoute: typeof AuthenticatedPerformanceMyRoute
   AuthenticatedPerformanceTeamRoute: typeof AuthenticatedPerformanceTeamRoute
+  AuthenticatedPerformanceIndexRoute: typeof AuthenticatedPerformanceIndexRoute
   AuthenticatedPeopleEmployeesIdRoute: typeof AuthenticatedPeopleEmployeesIdRoute
+  AuthenticatedPerformanceCyclesIdRoute: typeof AuthenticatedPerformanceCyclesIdRoute
   AuthenticatedPeopleEmployeesIndexRoute: typeof AuthenticatedPeopleEmployeesIndexRoute
+  AuthenticatedPerformanceCyclesIndexRoute: typeof AuthenticatedPerformanceCyclesIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -374,9 +437,13 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPerformanceHistoryRoute: AuthenticatedPerformanceHistoryRoute,
   AuthenticatedPerformanceMyRoute: AuthenticatedPerformanceMyRoute,
   AuthenticatedPerformanceTeamRoute: AuthenticatedPerformanceTeamRoute,
+  AuthenticatedPerformanceIndexRoute: AuthenticatedPerformanceIndexRoute,
   AuthenticatedPeopleEmployeesIdRoute: AuthenticatedPeopleEmployeesIdRoute,
+  AuthenticatedPerformanceCyclesIdRoute: AuthenticatedPerformanceCyclesIdRoute,
   AuthenticatedPeopleEmployeesIndexRoute:
     AuthenticatedPeopleEmployeesIndexRoute,
+  AuthenticatedPerformanceCyclesIndexRoute:
+    AuthenticatedPerformanceCyclesIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

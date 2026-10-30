@@ -13,7 +13,7 @@ import { AssignmentsTable } from "@/components/app/assignments-table";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { CycleDialog } from "./performance.cycles.index";
+import { CycleDialog } from "@/components/app/cycle-dialog";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/performance/cycles/$id")({
