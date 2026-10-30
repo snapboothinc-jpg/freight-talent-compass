@@ -37,8 +37,26 @@ export const fetchPositions = async () => check(await supabase.from("positions")
 export const EMPLOYEE_SELECT =
   "*, department:departments!employees_department_id_fkey(name), position:positions!employees_position_id_fkey(title)";
 
+export interface Page {
+  limit?: number;
+  offset?: number;
+}
+const pageOf = (p?: Page) => ({ limit: Math.min(p?.limit ?? 50, 200), offset: Math.max(p?.offset ?? 0, 0) });
+
+/** Full list for picker dropdowns (bounded by the 1,000-row safety cap). */
 export const fetchEmployees = async () =>
   check(await supabase.from("employees").select(EMPLOYEE_SELECT).order("last_name").limit(1000)) as unknown as EmployeeRow[];
+
+/** Server-side paginated list for the employees page. */
+export const fetchEmployeesPage = async (p?: Page) => {
+  const { limit, offset } = pageOf(p);
+  return check(
+    await supabase.from("employees").select(EMPLOYEE_SELECT).order("last_name").range(offset, offset + limit - 1),
+  ) as unknown as EmployeeRow[];
+};
+
+export const countEmployees = async () =>
+  (await supabase.from("employees").select("id", { count: "exact", head: true })).count ?? 0;
 
 export const fetchEmployee = async (id: string) => {
   const r = await supabase.from("employees").select(EMPLOYEE_SELECT).eq("id", id).maybeSingle();
@@ -46,10 +64,16 @@ export const fetchEmployee = async (id: string) => {
 };
 
 export const fetchCurrentSupervisors = async () =>
-  check(await supabase.from("reporting_relationships").select("employee_id, supervisor_id, effective_from").eq("is_current", true)) as {
+  check(
+    await supabase
+      .from("reporting_relationships")
+      .select("employee_id, supervisor_id, effective_from, supervisor:employees!reporting_relationships_supervisor_id_fkey(first_name,last_name)")
+      .eq("is_current", true),
+  ) as unknown as {
     employee_id: string;
     supervisor_id: string;
     effective_from: string;
+    supervisor: { first_name: string; last_name: string } | null;
   }[];
 
 export const empName = (e?: { first_name: string; last_name: string } | null) => (e ? `${e.first_name} ${e.last_name}` : "—");
@@ -159,8 +183,13 @@ export type AssignmentRow = {
 export const ASSIGNMENT_SELECT =
   "id, cycle_id, employee_id, evaluator_id, status, overall_score, submitted_at, approved_at, self_submitted_at, self_evaluation, created_at, version, profile_version_id, employee:employees!evaluation_assignments_employee_id_fkey(first_name,last_name,employee_code,department_id), evaluator:employees!evaluation_assignments_evaluator_id_fkey(first_name,last_name), cycle:evaluation_cycles(name,status,due_date), profile_version:evaluation_profile_versions(version_number)";
 
-export const fetchAssignments = async (f: { cycle?: string; employee?: string; evaluator?: string } = {}) => {
-  let q = supabase.from("evaluation_assignments").select(ASSIGNMENT_SELECT).order("created_at", { ascending: false }).limit(1000);
+export const fetchAssignments = async (f: { cycle?: string; employee?: string; evaluator?: string } & Page = {}) => {
+  const { limit, offset } = pageOf(f);
+  let q = supabase
+    .from("evaluation_assignments")
+    .select(ASSIGNMENT_SELECT)
+    .order("created_at", { ascending: false })
+    .range(offset, offset + limit - 1);
   if (f.cycle) q = q.eq("cycle_id", f.cycle);
   if (f.employee) q = q.eq("employee_id", f.employee);
   if (f.evaluator) q = q.eq("evaluator_id", f.evaluator);
@@ -200,12 +229,13 @@ export type AssessmentRow = {
   competency: { name: string; code: string } | null;
 };
 
-export const fetchAssessments = async (f: { employee?: string; competency?: string; status?: string; mine?: string } = {}) => {
+export const fetchAssessments = async (f: { employee?: string; competency?: string; status?: string; mine?: string } & Page = {}) => {
+  const { limit, offset } = pageOf(f);
   let q = supabase
     .from("competency_assessments")
     .select("*, employee:employees(first_name,last_name), competency:competencies(name,code)")
     .order("created_at", { ascending: false })
-    .limit(1000);
+    .range(offset, offset + limit - 1);
   if (f.employee) q = q.eq("employee_id", f.employee);
   if (f.competency) q = q.eq("competency_id", f.competency);
   if (f.status) q = q.eq("status", f.status);

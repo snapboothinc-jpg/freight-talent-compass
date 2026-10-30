@@ -182,6 +182,7 @@ export const NAV: NavGroup[] = [
       { to: "/admin/users", label: "Users & roles", icon: ShieldCheck, anyOf: ["admin.users"] },
       { to: "/admin/audit", label: "Audit log", icon: ScrollText, anyOf: ["admin.audit"] },
       { to: "/admin/settings", label: "Settings", icon: Settings, anyOf: ["admin.settings", "comp.manage", "perf.manage"] },
+      { to: "/admin/config", label: "Configuration", icon: Settings, anyOf: ["admin.settings", "succession.manage", "recognition.review"] },
       { to: "/admin/ai", label: "AI settings", icon: Sparkles, anyOf: ["admin.settings", "ai.review"] },
     ],
   },

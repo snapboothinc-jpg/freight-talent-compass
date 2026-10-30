@@ -1,5 +1,7 @@
 # Skills index
 
+Note on counts: the three sources held **81 skills, not 83** as originally stated. 80 skill folders are installed here (one source skill had no `SKILL.md` and was skipped); the presentation group additionally contains nested subskills.
+
 | Skill | Source | Purpose | Applies to this stack |
 |---|---|---|---|
 | angular-architect | claude-skills | Generates Angular 17+ standalone components, configures advanced routing with lazy loading and guards, implements NgRx state management, app | Not applied |

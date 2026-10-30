@@ -15,9 +15,12 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedApprovalsRouteImport } from './routes/_authenticated/approvals'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
+import { Route as AuthenticatedAdminAiRouteImport } from './routes/_authenticated/admin.ai'
 import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
+import { Route as AuthenticatedAdminConfigRouteImport } from './routes/_authenticated/admin.config'
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
+import { Route as AuthenticatedAiQueueRouteImport } from './routes/_authenticated/ai.queue'
 import { Route as AuthenticatedCompetencyIndexRouteImport } from './routes/_authenticated/competency.index'
 import { Route as AuthenticatedCompetencyAssessRouteImport } from './routes/_authenticated/competency.assess'
 import { Route as AuthenticatedCompetencyGapsRouteImport } from './routes/_authenticated/competency.gaps'
@@ -37,9 +40,22 @@ import { Route as AuthenticatedPerformanceHistoryRouteImport } from './routes/_a
 import { Route as AuthenticatedPerformanceMatrixRouteImport } from './routes/_authenticated/performance.matrix'
 import { Route as AuthenticatedPerformanceMyRouteImport } from './routes/_authenticated/performance.my'
 import { Route as AuthenticatedPerformanceTeamRouteImport } from './routes/_authenticated/performance.team'
+import { Route as AuthenticatedRecognitionIndexRouteImport } from './routes/_authenticated/recognition.index'
+import { Route as AuthenticatedRecognitionAnalyticsRouteImport } from './routes/_authenticated/recognition.analytics'
+import { Route as AuthenticatedRecognitionMyRouteImport } from './routes/_authenticated/recognition.my'
+import { Route as AuthenticatedRecognitionNominateRouteImport } from './routes/_authenticated/recognition.nominate'
+import { Route as AuthenticatedRecognitionQueueRouteImport } from './routes/_authenticated/recognition.queue'
+import { Route as AuthenticatedReportsIndexRouteImport } from './routes/_authenticated/reports.index'
+import { Route as AuthenticatedSuccessionIndexRouteImport } from './routes/_authenticated/succession.index'
+import { Route as AuthenticatedSuccessionCandidatesRouteImport } from './routes/_authenticated/succession.candidates'
+import { Route as AuthenticatedSuccessionPositionsRouteImport } from './routes/_authenticated/succession.positions'
 import { Route as AuthenticatedTrainingIndexRouteImport } from './routes/_authenticated/training.index'
 import { Route as AuthenticatedTrainingCalendarRouteImport } from './routes/_authenticated/training.calendar'
+import { Route as AuthenticatedTrainingEffectivenessRouteImport } from './routes/_authenticated/training.effectiveness'
 import { Route as ApiPublicHealthRouteImport } from './routes/api/public/health'
+import { Route as ApiV1CoursesRouteImport } from './routes/api/v1/courses'
+import { Route as ApiV1EmployeesRouteImport } from './routes/api/v1/employees'
+import { Route as ApiV1GapsRouteImport } from './routes/api/v1/gaps'
 import { Route as AuthenticatedCompetencyLibraryIndexRouteImport } from './routes/_authenticated/competency.library.index'
 import { Route as AuthenticatedCompetencyLibraryIdRouteImport } from './routes/_authenticated/competency.library.$id'
 import { Route as AuthenticatedLearningCourseIdRouteImport } from './routes/_authenticated/learning.course.$id'
@@ -53,6 +69,9 @@ import { Route as AuthenticatedPerformanceProfilesIdRouteImport } from './routes
 import { Route as AuthenticatedTrainingPlansIndexRouteImport } from './routes/_authenticated/training.plans.index'
 import { Route as AuthenticatedTrainingPlansIdRouteImport } from './routes/_authenticated/training.plans.$id'
 import { Route as AuthenticatedTrainingSessionsIdRouteImport } from './routes/_authenticated/training.sessions.$id'
+import { Route as ApiPublicOutboxProcessRouteImport } from './routes/api/public/outbox/process'
+import { Route as ApiV1CoursesIdRouteImport } from './routes/api/v1/courses.$id'
+import { Route as ApiV1OpenapiJsonRouteImport } from './routes/api/v1/openapi.json'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -84,11 +103,22 @@ const AuthenticatedNotificationsRoute =
     path: '/notifications',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminAiRoute = AuthenticatedAdminAiRouteImport.update({
+  id: '/admin/ai',
+  path: '/admin/ai',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedAdminAuditRoute = AuthenticatedAdminAuditRouteImport.update({
   id: '/admin/audit',
   path: '/admin/audit',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminConfigRoute =
+  AuthenticatedAdminConfigRouteImport.update({
+    id: '/admin/config',
+    path: '/admin/config',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminSettingsRoute =
   AuthenticatedAdminSettingsRouteImport.update({
     id: '/admin/settings',
@@ -98,6 +128,11 @@ const AuthenticatedAdminSettingsRoute =
 const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
   id: '/admin/users',
   path: '/admin/users',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAiQueueRoute = AuthenticatedAiQueueRouteImport.update({
+  id: '/ai/queue',
+  path: '/ai/queue',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedCompetencyIndexRoute =
@@ -213,6 +248,60 @@ const AuthenticatedPerformanceTeamRoute =
     path: '/performance/team',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedRecognitionIndexRoute =
+  AuthenticatedRecognitionIndexRouteImport.update({
+    id: '/recognition/',
+    path: '/recognition/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedRecognitionAnalyticsRoute =
+  AuthenticatedRecognitionAnalyticsRouteImport.update({
+    id: '/recognition/analytics',
+    path: '/recognition/analytics',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedRecognitionMyRoute =
+  AuthenticatedRecognitionMyRouteImport.update({
+    id: '/recognition/my',
+    path: '/recognition/my',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedRecognitionNominateRoute =
+  AuthenticatedRecognitionNominateRouteImport.update({
+    id: '/recognition/nominate',
+    path: '/recognition/nominate',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedRecognitionQueueRoute =
+  AuthenticatedRecognitionQueueRouteImport.update({
+    id: '/recognition/queue',
+    path: '/recognition/queue',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedReportsIndexRoute =
+  AuthenticatedReportsIndexRouteImport.update({
+    id: '/reports/',
+    path: '/reports/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedSuccessionIndexRoute =
+  AuthenticatedSuccessionIndexRouteImport.update({
+    id: '/succession/',
+    path: '/succession/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedSuccessionCandidatesRoute =
+  AuthenticatedSuccessionCandidatesRouteImport.update({
+    id: '/succession/candidates',
+    path: '/succession/candidates',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedSuccessionPositionsRoute =
+  AuthenticatedSuccessionPositionsRouteImport.update({
+    id: '/succession/positions',
+    path: '/succession/positions',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedTrainingIndexRoute =
   AuthenticatedTrainingIndexRouteImport.update({
     id: '/training/',
@@ -225,9 +314,30 @@ const AuthenticatedTrainingCalendarRoute =
     path: '/training/calendar',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedTrainingEffectivenessRoute =
+  AuthenticatedTrainingEffectivenessRouteImport.update({
+    id: '/training/effectiveness',
+    path: '/training/effectiveness',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const ApiPublicHealthRoute = ApiPublicHealthRouteImport.update({
   id: '/api/public/health',
   path: '/api/public/health',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1CoursesRoute = ApiV1CoursesRouteImport.update({
+  id: '/api/v1/courses',
+  path: '/api/v1/courses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1EmployeesRoute = ApiV1EmployeesRouteImport.update({
+  id: '/api/v1/employees',
+  path: '/api/v1/employees',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1GapsRoute = ApiV1GapsRouteImport.update({
+  id: '/api/v1/gaps',
+  path: '/api/v1/gaps',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedCompetencyLibraryIndexRoute =
@@ -308,6 +418,21 @@ const AuthenticatedTrainingSessionsIdRoute =
     path: '/training/sessions/$id',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const ApiPublicOutboxProcessRoute = ApiPublicOutboxProcessRouteImport.update({
+  id: '/api/public/outbox/process',
+  path: '/api/public/outbox/process',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1CoursesIdRoute = ApiV1CoursesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ApiV1CoursesRoute,
+} as any)
+const ApiV1OpenapiJsonRoute = ApiV1OpenapiJsonRouteImport.update({
+  id: '/api/v1/openapi/json',
+  path: '/api/v1/openapi/json',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -315,9 +440,12 @@ export interface FileRoutesByFullPath {
   '/approvals': typeof AuthenticatedApprovalsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
+  '/admin/ai': typeof AuthenticatedAdminAiRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/admin/config': typeof AuthenticatedAdminConfigRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/ai/queue': typeof AuthenticatedAiQueueRoute
   '/competency/assess': typeof AuthenticatedCompetencyAssessRoute
   '/competency/gaps': typeof AuthenticatedCompetencyGapsRoute
   '/competency/history': typeof AuthenticatedCompetencyHistoryRoute
@@ -334,11 +462,24 @@ export interface FileRoutesByFullPath {
   '/performance/matrix': typeof AuthenticatedPerformanceMatrixRoute
   '/performance/my': typeof AuthenticatedPerformanceMyRoute
   '/performance/team': typeof AuthenticatedPerformanceTeamRoute
+  '/recognition/analytics': typeof AuthenticatedRecognitionAnalyticsRoute
+  '/recognition/my': typeof AuthenticatedRecognitionMyRoute
+  '/recognition/nominate': typeof AuthenticatedRecognitionNominateRoute
+  '/recognition/queue': typeof AuthenticatedRecognitionQueueRoute
+  '/succession/candidates': typeof AuthenticatedSuccessionCandidatesRoute
+  '/succession/positions': typeof AuthenticatedSuccessionPositionsRoute
   '/training/calendar': typeof AuthenticatedTrainingCalendarRoute
+  '/training/effectiveness': typeof AuthenticatedTrainingEffectivenessRoute
   '/api/public/health': typeof ApiPublicHealthRoute
+  '/api/v1/courses': typeof ApiV1CoursesRouteWithChildren
+  '/api/v1/employees': typeof ApiV1EmployeesRoute
+  '/api/v1/gaps': typeof ApiV1GapsRoute
   '/competency/': typeof AuthenticatedCompetencyIndexRoute
   '/learning/': typeof AuthenticatedLearningIndexRoute
   '/performance/': typeof AuthenticatedPerformanceIndexRoute
+  '/recognition/': typeof AuthenticatedRecognitionIndexRoute
+  '/reports/': typeof AuthenticatedReportsIndexRoute
+  '/succession/': typeof AuthenticatedSuccessionIndexRoute
   '/training/': typeof AuthenticatedTrainingIndexRoute
   '/competency/library/$id': typeof AuthenticatedCompetencyLibraryIdRoute
   '/learning/course/$id': typeof AuthenticatedLearningCourseIdRoute
@@ -348,6 +489,9 @@ export interface FileRoutesByFullPath {
   '/performance/profiles/$id': typeof AuthenticatedPerformanceProfilesIdRoute
   '/training/plans/$id': typeof AuthenticatedTrainingPlansIdRoute
   '/training/sessions/$id': typeof AuthenticatedTrainingSessionsIdRoute
+  '/api/public/outbox/process': typeof ApiPublicOutboxProcessRoute
+  '/api/v1/courses/$id': typeof ApiV1CoursesIdRoute
+  '/api/v1/openapi/json': typeof ApiV1OpenapiJsonRoute
   '/competency/library/': typeof AuthenticatedCompetencyLibraryIndexRoute
   '/people/employees/': typeof AuthenticatedPeopleEmployeesIndexRoute
   '/performance/cycles/': typeof AuthenticatedPerformanceCyclesIndexRoute
@@ -360,9 +504,12 @@ export interface FileRoutesByTo {
   '/approvals': typeof AuthenticatedApprovalsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
+  '/admin/ai': typeof AuthenticatedAdminAiRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/admin/config': typeof AuthenticatedAdminConfigRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/ai/queue': typeof AuthenticatedAiQueueRoute
   '/competency/assess': typeof AuthenticatedCompetencyAssessRoute
   '/competency/gaps': typeof AuthenticatedCompetencyGapsRoute
   '/competency/history': typeof AuthenticatedCompetencyHistoryRoute
@@ -379,11 +526,24 @@ export interface FileRoutesByTo {
   '/performance/matrix': typeof AuthenticatedPerformanceMatrixRoute
   '/performance/my': typeof AuthenticatedPerformanceMyRoute
   '/performance/team': typeof AuthenticatedPerformanceTeamRoute
+  '/recognition/analytics': typeof AuthenticatedRecognitionAnalyticsRoute
+  '/recognition/my': typeof AuthenticatedRecognitionMyRoute
+  '/recognition/nominate': typeof AuthenticatedRecognitionNominateRoute
+  '/recognition/queue': typeof AuthenticatedRecognitionQueueRoute
+  '/succession/candidates': typeof AuthenticatedSuccessionCandidatesRoute
+  '/succession/positions': typeof AuthenticatedSuccessionPositionsRoute
   '/training/calendar': typeof AuthenticatedTrainingCalendarRoute
+  '/training/effectiveness': typeof AuthenticatedTrainingEffectivenessRoute
   '/api/public/health': typeof ApiPublicHealthRoute
+  '/api/v1/courses': typeof ApiV1CoursesRouteWithChildren
+  '/api/v1/employees': typeof ApiV1EmployeesRoute
+  '/api/v1/gaps': typeof ApiV1GapsRoute
   '/competency': typeof AuthenticatedCompetencyIndexRoute
   '/learning': typeof AuthenticatedLearningIndexRoute
   '/performance': typeof AuthenticatedPerformanceIndexRoute
+  '/recognition': typeof AuthenticatedRecognitionIndexRoute
+  '/reports': typeof AuthenticatedReportsIndexRoute
+  '/succession': typeof AuthenticatedSuccessionIndexRoute
   '/training': typeof AuthenticatedTrainingIndexRoute
   '/competency/library/$id': typeof AuthenticatedCompetencyLibraryIdRoute
   '/learning/course/$id': typeof AuthenticatedLearningCourseIdRoute
@@ -393,6 +553,9 @@ export interface FileRoutesByTo {
   '/performance/profiles/$id': typeof AuthenticatedPerformanceProfilesIdRoute
   '/training/plans/$id': typeof AuthenticatedTrainingPlansIdRoute
   '/training/sessions/$id': typeof AuthenticatedTrainingSessionsIdRoute
+  '/api/public/outbox/process': typeof ApiPublicOutboxProcessRoute
+  '/api/v1/courses/$id': typeof ApiV1CoursesIdRoute
+  '/api/v1/openapi/json': typeof ApiV1OpenapiJsonRoute
   '/competency/library': typeof AuthenticatedCompetencyLibraryIndexRoute
   '/people/employees': typeof AuthenticatedPeopleEmployeesIndexRoute
   '/performance/cycles': typeof AuthenticatedPerformanceCyclesIndexRoute
@@ -407,9 +570,12 @@ export interface FileRoutesById {
   '/_authenticated/approvals': typeof AuthenticatedApprovalsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
+  '/_authenticated/admin/ai': typeof AuthenticatedAdminAiRoute
   '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/_authenticated/admin/config': typeof AuthenticatedAdminConfigRoute
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/_authenticated/ai/queue': typeof AuthenticatedAiQueueRoute
   '/_authenticated/competency/assess': typeof AuthenticatedCompetencyAssessRoute
   '/_authenticated/competency/gaps': typeof AuthenticatedCompetencyGapsRoute
   '/_authenticated/competency/history': typeof AuthenticatedCompetencyHistoryRoute
@@ -426,11 +592,24 @@ export interface FileRoutesById {
   '/_authenticated/performance/matrix': typeof AuthenticatedPerformanceMatrixRoute
   '/_authenticated/performance/my': typeof AuthenticatedPerformanceMyRoute
   '/_authenticated/performance/team': typeof AuthenticatedPerformanceTeamRoute
+  '/_authenticated/recognition/analytics': typeof AuthenticatedRecognitionAnalyticsRoute
+  '/_authenticated/recognition/my': typeof AuthenticatedRecognitionMyRoute
+  '/_authenticated/recognition/nominate': typeof AuthenticatedRecognitionNominateRoute
+  '/_authenticated/recognition/queue': typeof AuthenticatedRecognitionQueueRoute
+  '/_authenticated/succession/candidates': typeof AuthenticatedSuccessionCandidatesRoute
+  '/_authenticated/succession/positions': typeof AuthenticatedSuccessionPositionsRoute
   '/_authenticated/training/calendar': typeof AuthenticatedTrainingCalendarRoute
+  '/_authenticated/training/effectiveness': typeof AuthenticatedTrainingEffectivenessRoute
   '/api/public/health': typeof ApiPublicHealthRoute
+  '/api/v1/courses': typeof ApiV1CoursesRouteWithChildren
+  '/api/v1/employees': typeof ApiV1EmployeesRoute
+  '/api/v1/gaps': typeof ApiV1GapsRoute
   '/_authenticated/competency/': typeof AuthenticatedCompetencyIndexRoute
   '/_authenticated/learning/': typeof AuthenticatedLearningIndexRoute
   '/_authenticated/performance/': typeof AuthenticatedPerformanceIndexRoute
+  '/_authenticated/recognition/': typeof AuthenticatedRecognitionIndexRoute
+  '/_authenticated/reports/': typeof AuthenticatedReportsIndexRoute
+  '/_authenticated/succession/': typeof AuthenticatedSuccessionIndexRoute
   '/_authenticated/training/': typeof AuthenticatedTrainingIndexRoute
   '/_authenticated/competency/library/$id': typeof AuthenticatedCompetencyLibraryIdRoute
   '/_authenticated/learning/course/$id': typeof AuthenticatedLearningCourseIdRoute
@@ -440,6 +619,9 @@ export interface FileRoutesById {
   '/_authenticated/performance/profiles/$id': typeof AuthenticatedPerformanceProfilesIdRoute
   '/_authenticated/training/plans/$id': typeof AuthenticatedTrainingPlansIdRoute
   '/_authenticated/training/sessions/$id': typeof AuthenticatedTrainingSessionsIdRoute
+  '/api/public/outbox/process': typeof ApiPublicOutboxProcessRoute
+  '/api/v1/courses/$id': typeof ApiV1CoursesIdRoute
+  '/api/v1/openapi/json': typeof ApiV1OpenapiJsonRoute
   '/_authenticated/competency/library/': typeof AuthenticatedCompetencyLibraryIndexRoute
   '/_authenticated/people/employees/': typeof AuthenticatedPeopleEmployeesIndexRoute
   '/_authenticated/performance/cycles/': typeof AuthenticatedPerformanceCyclesIndexRoute
@@ -454,9 +636,12 @@ export interface FileRouteTypes {
     | '/approvals'
     | '/dashboard'
     | '/notifications'
+    | '/admin/ai'
     | '/admin/audit'
+    | '/admin/config'
     | '/admin/settings'
     | '/admin/users'
+    | '/ai/queue'
     | '/competency/assess'
     | '/competency/gaps'
     | '/competency/history'
@@ -473,11 +658,24 @@ export interface FileRouteTypes {
     | '/performance/matrix'
     | '/performance/my'
     | '/performance/team'
+    | '/recognition/analytics'
+    | '/recognition/my'
+    | '/recognition/nominate'
+    | '/recognition/queue'
+    | '/succession/candidates'
+    | '/succession/positions'
     | '/training/calendar'
+    | '/training/effectiveness'
     | '/api/public/health'
+    | '/api/v1/courses'
+    | '/api/v1/employees'
+    | '/api/v1/gaps'
     | '/competency/'
     | '/learning/'
     | '/performance/'
+    | '/recognition/'
+    | '/reports/'
+    | '/succession/'
     | '/training/'
     | '/competency/library/$id'
     | '/learning/course/$id'
@@ -487,6 +685,9 @@ export interface FileRouteTypes {
     | '/performance/profiles/$id'
     | '/training/plans/$id'
     | '/training/sessions/$id'
+    | '/api/public/outbox/process'
+    | '/api/v1/courses/$id'
+    | '/api/v1/openapi/json'
     | '/competency/library/'
     | '/people/employees/'
     | '/performance/cycles/'
@@ -499,9 +700,12 @@ export interface FileRouteTypes {
     | '/approvals'
     | '/dashboard'
     | '/notifications'
+    | '/admin/ai'
     | '/admin/audit'
+    | '/admin/config'
     | '/admin/settings'
     | '/admin/users'
+    | '/ai/queue'
     | '/competency/assess'
     | '/competency/gaps'
     | '/competency/history'
@@ -518,11 +722,24 @@ export interface FileRouteTypes {
     | '/performance/matrix'
     | '/performance/my'
     | '/performance/team'
+    | '/recognition/analytics'
+    | '/recognition/my'
+    | '/recognition/nominate'
+    | '/recognition/queue'
+    | '/succession/candidates'
+    | '/succession/positions'
     | '/training/calendar'
+    | '/training/effectiveness'
     | '/api/public/health'
+    | '/api/v1/courses'
+    | '/api/v1/employees'
+    | '/api/v1/gaps'
     | '/competency'
     | '/learning'
     | '/performance'
+    | '/recognition'
+    | '/reports'
+    | '/succession'
     | '/training'
     | '/competency/library/$id'
     | '/learning/course/$id'
@@ -532,6 +749,9 @@ export interface FileRouteTypes {
     | '/performance/profiles/$id'
     | '/training/plans/$id'
     | '/training/sessions/$id'
+    | '/api/public/outbox/process'
+    | '/api/v1/courses/$id'
+    | '/api/v1/openapi/json'
     | '/competency/library'
     | '/people/employees'
     | '/performance/cycles'
@@ -545,9 +765,12 @@ export interface FileRouteTypes {
     | '/_authenticated/approvals'
     | '/_authenticated/dashboard'
     | '/_authenticated/notifications'
+    | '/_authenticated/admin/ai'
     | '/_authenticated/admin/audit'
+    | '/_authenticated/admin/config'
     | '/_authenticated/admin/settings'
     | '/_authenticated/admin/users'
+    | '/_authenticated/ai/queue'
     | '/_authenticated/competency/assess'
     | '/_authenticated/competency/gaps'
     | '/_authenticated/competency/history'
@@ -564,11 +787,24 @@ export interface FileRouteTypes {
     | '/_authenticated/performance/matrix'
     | '/_authenticated/performance/my'
     | '/_authenticated/performance/team'
+    | '/_authenticated/recognition/analytics'
+    | '/_authenticated/recognition/my'
+    | '/_authenticated/recognition/nominate'
+    | '/_authenticated/recognition/queue'
+    | '/_authenticated/succession/candidates'
+    | '/_authenticated/succession/positions'
     | '/_authenticated/training/calendar'
+    | '/_authenticated/training/effectiveness'
     | '/api/public/health'
+    | '/api/v1/courses'
+    | '/api/v1/employees'
+    | '/api/v1/gaps'
     | '/_authenticated/competency/'
     | '/_authenticated/learning/'
     | '/_authenticated/performance/'
+    | '/_authenticated/recognition/'
+    | '/_authenticated/reports/'
+    | '/_authenticated/succession/'
     | '/_authenticated/training/'
     | '/_authenticated/competency/library/$id'
     | '/_authenticated/learning/course/$id'
@@ -578,6 +814,9 @@ export interface FileRouteTypes {
     | '/_authenticated/performance/profiles/$id'
     | '/_authenticated/training/plans/$id'
     | '/_authenticated/training/sessions/$id'
+    | '/api/public/outbox/process'
+    | '/api/v1/courses/$id'
+    | '/api/v1/openapi/json'
     | '/_authenticated/competency/library/'
     | '/_authenticated/people/employees/'
     | '/_authenticated/performance/cycles/'
@@ -590,6 +829,11 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   ApiPublicHealthRoute: typeof ApiPublicHealthRoute
+  ApiV1CoursesRoute: typeof ApiV1CoursesRouteWithChildren
+  ApiV1EmployeesRoute: typeof ApiV1EmployeesRoute
+  ApiV1GapsRoute: typeof ApiV1GapsRoute
+  ApiPublicOutboxProcessRoute: typeof ApiPublicOutboxProcessRoute
+  ApiV1OpenapiJsonRoute: typeof ApiV1OpenapiJsonRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -636,11 +880,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedNotificationsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/ai': {
+      id: '/_authenticated/admin/ai'
+      path: '/admin/ai'
+      fullPath: '/admin/ai'
+      preLoaderRoute: typeof AuthenticatedAdminAiRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/audit': {
       id: '/_authenticated/admin/audit'
       path: '/admin/audit'
       fullPath: '/admin/audit'
       preLoaderRoute: typeof AuthenticatedAdminAuditRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/config': {
+      id: '/_authenticated/admin/config'
+      path: '/admin/config'
+      fullPath: '/admin/config'
+      preLoaderRoute: typeof AuthenticatedAdminConfigRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/settings': {
@@ -655,6 +913,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/users'
       fullPath: '/admin/users'
       preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/ai/queue': {
+      id: '/_authenticated/ai/queue'
+      path: '/ai/queue'
+      fullPath: '/ai/queue'
+      preLoaderRoute: typeof AuthenticatedAiQueueRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/competency/': {
@@ -790,6 +1055,69 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPerformanceTeamRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/recognition/': {
+      id: '/_authenticated/recognition/'
+      path: '/recognition'
+      fullPath: '/recognition/'
+      preLoaderRoute: typeof AuthenticatedRecognitionIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/recognition/analytics': {
+      id: '/_authenticated/recognition/analytics'
+      path: '/recognition/analytics'
+      fullPath: '/recognition/analytics'
+      preLoaderRoute: typeof AuthenticatedRecognitionAnalyticsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/recognition/my': {
+      id: '/_authenticated/recognition/my'
+      path: '/recognition/my'
+      fullPath: '/recognition/my'
+      preLoaderRoute: typeof AuthenticatedRecognitionMyRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/recognition/nominate': {
+      id: '/_authenticated/recognition/nominate'
+      path: '/recognition/nominate'
+      fullPath: '/recognition/nominate'
+      preLoaderRoute: typeof AuthenticatedRecognitionNominateRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/recognition/queue': {
+      id: '/_authenticated/recognition/queue'
+      path: '/recognition/queue'
+      fullPath: '/recognition/queue'
+      preLoaderRoute: typeof AuthenticatedRecognitionQueueRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reports/': {
+      id: '/_authenticated/reports/'
+      path: '/reports'
+      fullPath: '/reports/'
+      preLoaderRoute: typeof AuthenticatedReportsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/succession/': {
+      id: '/_authenticated/succession/'
+      path: '/succession'
+      fullPath: '/succession/'
+      preLoaderRoute: typeof AuthenticatedSuccessionIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/succession/candidates': {
+      id: '/_authenticated/succession/candidates'
+      path: '/succession/candidates'
+      fullPath: '/succession/candidates'
+      preLoaderRoute: typeof AuthenticatedSuccessionCandidatesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/succession/positions': {
+      id: '/_authenticated/succession/positions'
+      path: '/succession/positions'
+      fullPath: '/succession/positions'
+      preLoaderRoute: typeof AuthenticatedSuccessionPositionsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/training/': {
       id: '/_authenticated/training/'
       path: '/training'
@@ -804,11 +1132,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTrainingCalendarRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/training/effectiveness': {
+      id: '/_authenticated/training/effectiveness'
+      path: '/training/effectiveness'
+      fullPath: '/training/effectiveness'
+      preLoaderRoute: typeof AuthenticatedTrainingEffectivenessRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/api/public/health': {
       id: '/api/public/health'
       path: '/api/public/health'
       fullPath: '/api/public/health'
       preLoaderRoute: typeof ApiPublicHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/courses': {
+      id: '/api/v1/courses'
+      path: '/api/v1/courses'
+      fullPath: '/api/v1/courses'
+      preLoaderRoute: typeof ApiV1CoursesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/employees': {
+      id: '/api/v1/employees'
+      path: '/api/v1/employees'
+      fullPath: '/api/v1/employees'
+      preLoaderRoute: typeof ApiV1EmployeesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/gaps': {
+      id: '/api/v1/gaps'
+      path: '/api/v1/gaps'
+      fullPath: '/api/v1/gaps'
+      preLoaderRoute: typeof ApiV1GapsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/competency/library/': {
@@ -902,6 +1258,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTrainingSessionsIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/outbox/process': {
+      id: '/api/public/outbox/process'
+      path: '/api/public/outbox/process'
+      fullPath: '/api/public/outbox/process'
+      preLoaderRoute: typeof ApiPublicOutboxProcessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/courses/$id': {
+      id: '/api/v1/courses/$id'
+      path: '/$id'
+      fullPath: '/api/v1/courses/$id'
+      preLoaderRoute: typeof ApiV1CoursesIdRouteImport
+      parentRoute: typeof ApiV1CoursesRoute
+    }
+    '/api/v1/openapi/json': {
+      id: '/api/v1/openapi/json'
+      path: '/api/v1/openapi/json'
+      fullPath: '/api/v1/openapi/json'
+      preLoaderRoute: typeof ApiV1OpenapiJsonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -909,9 +1286,12 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedApprovalsRoute: typeof AuthenticatedApprovalsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
+  AuthenticatedAdminAiRoute: typeof AuthenticatedAdminAiRoute
   AuthenticatedAdminAuditRoute: typeof AuthenticatedAdminAuditRoute
+  AuthenticatedAdminConfigRoute: typeof AuthenticatedAdminConfigRoute
   AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
+  AuthenticatedAiQueueRoute: typeof AuthenticatedAiQueueRoute
   AuthenticatedCompetencyAssessRoute: typeof AuthenticatedCompetencyAssessRoute
   AuthenticatedCompetencyGapsRoute: typeof AuthenticatedCompetencyGapsRoute
   AuthenticatedCompetencyHistoryRoute: typeof AuthenticatedCompetencyHistoryRoute
@@ -928,10 +1308,20 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPerformanceMatrixRoute: typeof AuthenticatedPerformanceMatrixRoute
   AuthenticatedPerformanceMyRoute: typeof AuthenticatedPerformanceMyRoute
   AuthenticatedPerformanceTeamRoute: typeof AuthenticatedPerformanceTeamRoute
+  AuthenticatedRecognitionAnalyticsRoute: typeof AuthenticatedRecognitionAnalyticsRoute
+  AuthenticatedRecognitionMyRoute: typeof AuthenticatedRecognitionMyRoute
+  AuthenticatedRecognitionNominateRoute: typeof AuthenticatedRecognitionNominateRoute
+  AuthenticatedRecognitionQueueRoute: typeof AuthenticatedRecognitionQueueRoute
+  AuthenticatedSuccessionCandidatesRoute: typeof AuthenticatedSuccessionCandidatesRoute
+  AuthenticatedSuccessionPositionsRoute: typeof AuthenticatedSuccessionPositionsRoute
   AuthenticatedTrainingCalendarRoute: typeof AuthenticatedTrainingCalendarRoute
+  AuthenticatedTrainingEffectivenessRoute: typeof AuthenticatedTrainingEffectivenessRoute
   AuthenticatedCompetencyIndexRoute: typeof AuthenticatedCompetencyIndexRoute
   AuthenticatedLearningIndexRoute: typeof AuthenticatedLearningIndexRoute
   AuthenticatedPerformanceIndexRoute: typeof AuthenticatedPerformanceIndexRoute
+  AuthenticatedRecognitionIndexRoute: typeof AuthenticatedRecognitionIndexRoute
+  AuthenticatedReportsIndexRoute: typeof AuthenticatedReportsIndexRoute
+  AuthenticatedSuccessionIndexRoute: typeof AuthenticatedSuccessionIndexRoute
   AuthenticatedTrainingIndexRoute: typeof AuthenticatedTrainingIndexRoute
   AuthenticatedCompetencyLibraryIdRoute: typeof AuthenticatedCompetencyLibraryIdRoute
   AuthenticatedLearningCourseIdRoute: typeof AuthenticatedLearningCourseIdRoute
@@ -952,9 +1342,12 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedApprovalsRoute: AuthenticatedApprovalsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
+  AuthenticatedAdminAiRoute: AuthenticatedAdminAiRoute,
   AuthenticatedAdminAuditRoute: AuthenticatedAdminAuditRoute,
+  AuthenticatedAdminConfigRoute: AuthenticatedAdminConfigRoute,
   AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
+  AuthenticatedAiQueueRoute: AuthenticatedAiQueueRoute,
   AuthenticatedCompetencyAssessRoute: AuthenticatedCompetencyAssessRoute,
   AuthenticatedCompetencyGapsRoute: AuthenticatedCompetencyGapsRoute,
   AuthenticatedCompetencyHistoryRoute: AuthenticatedCompetencyHistoryRoute,
@@ -972,10 +1365,23 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPerformanceMatrixRoute: AuthenticatedPerformanceMatrixRoute,
   AuthenticatedPerformanceMyRoute: AuthenticatedPerformanceMyRoute,
   AuthenticatedPerformanceTeamRoute: AuthenticatedPerformanceTeamRoute,
+  AuthenticatedRecognitionAnalyticsRoute:
+    AuthenticatedRecognitionAnalyticsRoute,
+  AuthenticatedRecognitionMyRoute: AuthenticatedRecognitionMyRoute,
+  AuthenticatedRecognitionNominateRoute: AuthenticatedRecognitionNominateRoute,
+  AuthenticatedRecognitionQueueRoute: AuthenticatedRecognitionQueueRoute,
+  AuthenticatedSuccessionCandidatesRoute:
+    AuthenticatedSuccessionCandidatesRoute,
+  AuthenticatedSuccessionPositionsRoute: AuthenticatedSuccessionPositionsRoute,
   AuthenticatedTrainingCalendarRoute: AuthenticatedTrainingCalendarRoute,
+  AuthenticatedTrainingEffectivenessRoute:
+    AuthenticatedTrainingEffectivenessRoute,
   AuthenticatedCompetencyIndexRoute: AuthenticatedCompetencyIndexRoute,
   AuthenticatedLearningIndexRoute: AuthenticatedLearningIndexRoute,
   AuthenticatedPerformanceIndexRoute: AuthenticatedPerformanceIndexRoute,
+  AuthenticatedRecognitionIndexRoute: AuthenticatedRecognitionIndexRoute,
+  AuthenticatedReportsIndexRoute: AuthenticatedReportsIndexRoute,
+  AuthenticatedSuccessionIndexRoute: AuthenticatedSuccessionIndexRoute,
   AuthenticatedTrainingIndexRoute: AuthenticatedTrainingIndexRoute,
   AuthenticatedCompetencyLibraryIdRoute: AuthenticatedCompetencyLibraryIdRoute,
   AuthenticatedLearningCourseIdRoute: AuthenticatedLearningCourseIdRoute,
@@ -1001,11 +1407,28 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface ApiV1CoursesRouteChildren {
+  ApiV1CoursesIdRoute: typeof ApiV1CoursesIdRoute
+}
+
+const ApiV1CoursesRouteChildren: ApiV1CoursesRouteChildren = {
+  ApiV1CoursesIdRoute: ApiV1CoursesIdRoute,
+}
+
+const ApiV1CoursesRouteWithChildren = ApiV1CoursesRoute._addFileChildren(
+  ApiV1CoursesRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   ApiPublicHealthRoute: ApiPublicHealthRoute,
+  ApiV1CoursesRoute: ApiV1CoursesRouteWithChildren,
+  ApiV1EmployeesRoute: ApiV1EmployeesRoute,
+  ApiV1GapsRoute: ApiV1GapsRoute,
+  ApiPublicOutboxProcessRoute: ApiPublicOutboxProcessRoute,
+  ApiV1OpenapiJsonRoute: ApiV1OpenapiJsonRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
