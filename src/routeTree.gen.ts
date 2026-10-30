@@ -39,6 +39,8 @@ import { Route as AuthenticatedPerformanceHistoryRouteImport } from './routes/_a
 import { Route as AuthenticatedPerformanceMatrixRouteImport } from './routes/_authenticated/performance.matrix'
 import { Route as AuthenticatedPerformanceMyRouteImport } from './routes/_authenticated/performance.my'
 import { Route as AuthenticatedPerformanceTeamRouteImport } from './routes/_authenticated/performance.team'
+import { Route as AuthenticatedSuccessionIndexRouteImport } from './routes/_authenticated/succession.index'
+import { Route as AuthenticatedSuccessionPositionsRouteImport } from './routes/_authenticated/succession.positions'
 import { Route as AuthenticatedTrainingIndexRouteImport } from './routes/_authenticated/training.index'
 import { Route as AuthenticatedTrainingCalendarRouteImport } from './routes/_authenticated/training.calendar'
 import { Route as AuthenticatedTrainingEffectivenessRouteImport } from './routes/_authenticated/training.effectiveness'
@@ -226,6 +228,18 @@ const AuthenticatedPerformanceTeamRoute =
     path: '/performance/team',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedSuccessionIndexRoute =
+  AuthenticatedSuccessionIndexRouteImport.update({
+    id: '/succession/',
+    path: '/succession/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedSuccessionPositionsRoute =
+  AuthenticatedSuccessionPositionsRouteImport.update({
+    id: '/succession/positions',
+    path: '/succession/positions',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedTrainingIndexRoute =
   AuthenticatedTrainingIndexRouteImport.update({
     id: '/training/',
@@ -355,12 +369,14 @@ export interface FileRoutesByFullPath {
   '/performance/matrix': typeof AuthenticatedPerformanceMatrixRoute
   '/performance/my': typeof AuthenticatedPerformanceMyRoute
   '/performance/team': typeof AuthenticatedPerformanceTeamRoute
+  '/succession/positions': typeof AuthenticatedSuccessionPositionsRoute
   '/training/calendar': typeof AuthenticatedTrainingCalendarRoute
   '/training/effectiveness': typeof AuthenticatedTrainingEffectivenessRoute
   '/api/public/health': typeof ApiPublicHealthRoute
   '/competency/': typeof AuthenticatedCompetencyIndexRoute
   '/learning/': typeof AuthenticatedLearningIndexRoute
   '/performance/': typeof AuthenticatedPerformanceIndexRoute
+  '/succession/': typeof AuthenticatedSuccessionIndexRoute
   '/training/': typeof AuthenticatedTrainingIndexRoute
   '/competency/library/$id': typeof AuthenticatedCompetencyLibraryIdRoute
   '/learning/course/$id': typeof AuthenticatedLearningCourseIdRoute
@@ -403,12 +419,14 @@ export interface FileRoutesByTo {
   '/performance/matrix': typeof AuthenticatedPerformanceMatrixRoute
   '/performance/my': typeof AuthenticatedPerformanceMyRoute
   '/performance/team': typeof AuthenticatedPerformanceTeamRoute
+  '/succession/positions': typeof AuthenticatedSuccessionPositionsRoute
   '/training/calendar': typeof AuthenticatedTrainingCalendarRoute
   '/training/effectiveness': typeof AuthenticatedTrainingEffectivenessRoute
   '/api/public/health': typeof ApiPublicHealthRoute
   '/competency': typeof AuthenticatedCompetencyIndexRoute
   '/learning': typeof AuthenticatedLearningIndexRoute
   '/performance': typeof AuthenticatedPerformanceIndexRoute
+  '/succession': typeof AuthenticatedSuccessionIndexRoute
   '/training': typeof AuthenticatedTrainingIndexRoute
   '/competency/library/$id': typeof AuthenticatedCompetencyLibraryIdRoute
   '/learning/course/$id': typeof AuthenticatedLearningCourseIdRoute
@@ -453,12 +471,14 @@ export interface FileRoutesById {
   '/_authenticated/performance/matrix': typeof AuthenticatedPerformanceMatrixRoute
   '/_authenticated/performance/my': typeof AuthenticatedPerformanceMyRoute
   '/_authenticated/performance/team': typeof AuthenticatedPerformanceTeamRoute
+  '/_authenticated/succession/positions': typeof AuthenticatedSuccessionPositionsRoute
   '/_authenticated/training/calendar': typeof AuthenticatedTrainingCalendarRoute
   '/_authenticated/training/effectiveness': typeof AuthenticatedTrainingEffectivenessRoute
   '/api/public/health': typeof ApiPublicHealthRoute
   '/_authenticated/competency/': typeof AuthenticatedCompetencyIndexRoute
   '/_authenticated/learning/': typeof AuthenticatedLearningIndexRoute
   '/_authenticated/performance/': typeof AuthenticatedPerformanceIndexRoute
+  '/_authenticated/succession/': typeof AuthenticatedSuccessionIndexRoute
   '/_authenticated/training/': typeof AuthenticatedTrainingIndexRoute
   '/_authenticated/competency/library/$id': typeof AuthenticatedCompetencyLibraryIdRoute
   '/_authenticated/learning/course/$id': typeof AuthenticatedLearningCourseIdRoute
@@ -503,12 +523,14 @@ export interface FileRouteTypes {
     | '/performance/matrix'
     | '/performance/my'
     | '/performance/team'
+    | '/succession/positions'
     | '/training/calendar'
     | '/training/effectiveness'
     | '/api/public/health'
     | '/competency/'
     | '/learning/'
     | '/performance/'
+    | '/succession/'
     | '/training/'
     | '/competency/library/$id'
     | '/learning/course/$id'
@@ -551,12 +573,14 @@ export interface FileRouteTypes {
     | '/performance/matrix'
     | '/performance/my'
     | '/performance/team'
+    | '/succession/positions'
     | '/training/calendar'
     | '/training/effectiveness'
     | '/api/public/health'
     | '/competency'
     | '/learning'
     | '/performance'
+    | '/succession'
     | '/training'
     | '/competency/library/$id'
     | '/learning/course/$id'
@@ -600,12 +624,14 @@ export interface FileRouteTypes {
     | '/_authenticated/performance/matrix'
     | '/_authenticated/performance/my'
     | '/_authenticated/performance/team'
+    | '/_authenticated/succession/positions'
     | '/_authenticated/training/calendar'
     | '/_authenticated/training/effectiveness'
     | '/api/public/health'
     | '/_authenticated/competency/'
     | '/_authenticated/learning/'
     | '/_authenticated/performance/'
+    | '/_authenticated/succession/'
     | '/_authenticated/training/'
     | '/_authenticated/competency/library/$id'
     | '/_authenticated/learning/course/$id'
@@ -841,6 +867,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPerformanceTeamRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/succession/': {
+      id: '/_authenticated/succession/'
+      path: '/succession'
+      fullPath: '/succession/'
+      preLoaderRoute: typeof AuthenticatedSuccessionIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/succession/positions': {
+      id: '/_authenticated/succession/positions'
+      path: '/succession/positions'
+      fullPath: '/succession/positions'
+      preLoaderRoute: typeof AuthenticatedSuccessionPositionsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/training/': {
       id: '/_authenticated/training/'
       path: '/training'
@@ -988,11 +1028,13 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPerformanceMatrixRoute: typeof AuthenticatedPerformanceMatrixRoute
   AuthenticatedPerformanceMyRoute: typeof AuthenticatedPerformanceMyRoute
   AuthenticatedPerformanceTeamRoute: typeof AuthenticatedPerformanceTeamRoute
+  AuthenticatedSuccessionPositionsRoute: typeof AuthenticatedSuccessionPositionsRoute
   AuthenticatedTrainingCalendarRoute: typeof AuthenticatedTrainingCalendarRoute
   AuthenticatedTrainingEffectivenessRoute: typeof AuthenticatedTrainingEffectivenessRoute
   AuthenticatedCompetencyIndexRoute: typeof AuthenticatedCompetencyIndexRoute
   AuthenticatedLearningIndexRoute: typeof AuthenticatedLearningIndexRoute
   AuthenticatedPerformanceIndexRoute: typeof AuthenticatedPerformanceIndexRoute
+  AuthenticatedSuccessionIndexRoute: typeof AuthenticatedSuccessionIndexRoute
   AuthenticatedTrainingIndexRoute: typeof AuthenticatedTrainingIndexRoute
   AuthenticatedCompetencyLibraryIdRoute: typeof AuthenticatedCompetencyLibraryIdRoute
   AuthenticatedLearningCourseIdRoute: typeof AuthenticatedLearningCourseIdRoute
@@ -1035,12 +1077,14 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPerformanceMatrixRoute: AuthenticatedPerformanceMatrixRoute,
   AuthenticatedPerformanceMyRoute: AuthenticatedPerformanceMyRoute,
   AuthenticatedPerformanceTeamRoute: AuthenticatedPerformanceTeamRoute,
+  AuthenticatedSuccessionPositionsRoute: AuthenticatedSuccessionPositionsRoute,
   AuthenticatedTrainingCalendarRoute: AuthenticatedTrainingCalendarRoute,
   AuthenticatedTrainingEffectivenessRoute:
     AuthenticatedTrainingEffectivenessRoute,
   AuthenticatedCompetencyIndexRoute: AuthenticatedCompetencyIndexRoute,
   AuthenticatedLearningIndexRoute: AuthenticatedLearningIndexRoute,
   AuthenticatedPerformanceIndexRoute: AuthenticatedPerformanceIndexRoute,
+  AuthenticatedSuccessionIndexRoute: AuthenticatedSuccessionIndexRoute,
   AuthenticatedTrainingIndexRoute: AuthenticatedTrainingIndexRoute,
   AuthenticatedCompetencyLibraryIdRoute: AuthenticatedCompetencyLibraryIdRoute,
   AuthenticatedLearningCourseIdRoute: AuthenticatedLearningCourseIdRoute,
