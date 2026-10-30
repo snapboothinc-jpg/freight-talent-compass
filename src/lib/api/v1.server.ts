@@ -75,10 +75,12 @@ export function pickFilters(url: URL, allowed: readonly string[]): Record<string
 }
 
 // ---------------- idempotency ----------------
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 export function requireIdempotencyKey(request: Request): string | Response {
   const key = request.headers.get("idempotency-key")?.trim();
-  if (!key || key.length > 200) {
-    return apiError(400, "INVALID", "An Idempotency-Key header (1–200 chars) is required on this method");
+  if (!key || !UUID_RE.test(key)) {
+    return apiError(400, "INVALID", "An Idempotency-Key header containing a UUID is required on this method");
   }
   return key;
 }

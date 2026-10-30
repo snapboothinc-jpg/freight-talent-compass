@@ -1,17 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
-import { authenticate, pageParams, paginate, pickSort, pickFilters, apiError, requireIdempotencyKey } from "@/lib/api/v1.server";
+import { authenticate, pageParams, paginate, pickSort, pickFilters, apiError } from "@/lib/api/v1.server";
 
 const SORTABLE = ["created_at", "title"] as const;
 const FILTERABLE = ["status"] as const;
-
-const patchSchema = z
-  .object({
-    title: z.string().trim().min(3).max(200).optional(),
-    description: z.string().max(4000).optional(),
-    duration_minutes: z.number().int().min(1).max(100000).optional(),
-  })
-  .strict();
 
 export const Route = createFileRoute("/api/v1/courses")({
   server: {
