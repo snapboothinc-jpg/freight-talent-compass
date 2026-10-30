@@ -16,8 +16,9 @@ interface Opts<TOut> {
  * same idempotency key for retries, maps standard errors to toasts (with
  * request id), and invalidates affected query roots.
  */
-export function useAction<TIn extends object, TOut>(
-  fn: (args: { data: TIn }) => Promise<ApiResult<TOut>>,
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function useAction<TIn extends object, TOut = any>(
+  fn: (args: { data: TIn }) => Promise<unknown>,
   opts: Opts<TOut> = {},
 ) {
   const qc = useQueryClient();
@@ -29,7 +30,7 @@ export function useAction<TIn extends object, TOut>(
         keyRef.current ??= crypto.randomUUID();
         data = { ...input, idempotencyKey: keyRef.current } as TIn;
       }
-      return unwrap(await fn({ data }));
+      return unwrap((await fn({ data })) as ApiResult<TOut>);
     },
     onSuccess: (d) => {
       keyRef.current = null;
