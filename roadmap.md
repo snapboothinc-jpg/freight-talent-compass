@@ -12,12 +12,12 @@
 - [x] Phase 6 database: succession, recognition, readiness classes, report reader, remove/reset demo data (migrations 0010–0011)
 - [x] AI service module (env-switchable Lovable/Gemini provider, Zod-validated output, unknown resource IDs rejected)
 - [x] Server functions: learning, training, AI, succession, recognition, reports, PDF export
-- [~] Phase 5 pages: learning (dashboard, catalog, player+quiz, manage, my, paths, progress) and training (dashboard, plans, plan detail, calendar, session detail with attendance/results) done; effectiveness page pending
-- [ ] Phase 6 pages: AI queue, AI settings, succession (3), recognition (5), reports
+- [x] Phase 5 pages: learning (dashboard, catalog, player+quiz, manage, my, paths, progress), training (dashboard, plans, plan detail, calendar, session detail with attendance/results), effectiveness with reassessment linking
+- [x] Phase 6 pages: AI queue with review/edit/reject, AI settings with provider status, succession (dashboard, positions, candidates with readiness + access grants), recognition (feed, nominate, queue, my, analytics), reports with audited CSV export, admin configuration (categories, readiness classes)
 - [ ] Hardening: /api/v1 + OpenAPI, outbox processor route, server-side pagination, tests, security-functions doc
 
 ## Open (next sessions)
-- [ ] Phase 6 pages and remaining hardening (see In progress)
+- [ ] Remaining hardening (see In progress)
 - [ ] MFA for Admin/Super Admin, session idle timeout (not started)
 - [ ] Separate staging environment (needs a second Lovable Cloud project; document in runbook)
 - [ ] Strict tsconfig settings: kept relaxed (generated shadcn/TanStack typings incompatible) — documented in AGENTS.md
