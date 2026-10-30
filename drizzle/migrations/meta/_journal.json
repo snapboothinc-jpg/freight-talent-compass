@@ -8,6 +8,13 @@
       "when": 1793376182829,
       "tag": "0000_foundation_identity_org_shared",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1793376252854,
+      "tag": "0001_performance_competency_schema",
+      "breakpoints": true
     }
   ]
 }
