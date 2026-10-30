@@ -76,7 +76,7 @@ function Page() {
         ) : (
           <ul className="divide-y">
             {nominations.data.map((n) => {
-              const own = n.nominator_id === me.data?.employee_id;
+              const own = n.nominator_id === me.data?.employee?.id;
               return (
                 <li key={n.id} className="flex items-start justify-between gap-4 py-3">
                   <div>

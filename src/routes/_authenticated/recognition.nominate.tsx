@@ -33,7 +33,7 @@ export function NominationForm({ onDone }: { onDone?: () => void }) {
   if (employees.error) return <ErrorState error={employees.error} onRetry={() => employees.refetch()} />;
   if (!employees.data || !categories.data) return <LoadingRows />;
 
-  const eligible = employees.data.filter((e) => e.id !== me.data?.employee_id && e.status === "active");
+  const eligible = employees.data.filter((e) => e.id !== me.data?.employee?.id && e.employment_status === "active");
   const activeCategories = categories.data.filter((c) => c.active);
   const MIN_MESSAGE = 20;
 

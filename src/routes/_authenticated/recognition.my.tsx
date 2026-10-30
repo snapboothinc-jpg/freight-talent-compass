@@ -22,7 +22,7 @@ function Page() {
   if (nominations.error) return <ErrorState error={nominations.error} onRetry={() => nominations.refetch()} />;
   if (!nominations.data || !me.data) return <LoadingRows />;
 
-  const myId = me.data.employee_id;
+  const myId = me.data.employee?.id;
   const sent = nominations.data.filter((n) => n.nominator_id === myId);
   const received = nominations.data.filter((n) => n.recipient_id === myId && n.status === "approved");
 
