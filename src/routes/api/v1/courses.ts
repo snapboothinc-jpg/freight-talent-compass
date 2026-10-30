@@ -31,6 +31,3 @@ export const Route = createFileRoute("/api/v1/courses")({
     },
   },
 });
-
-export const coursePatchSchema = patchSchema;
-export { requireIdempotencyKey };
