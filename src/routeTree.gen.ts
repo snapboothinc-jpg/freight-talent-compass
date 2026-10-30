@@ -31,6 +31,7 @@ import { Route as AuthenticatedPerformanceHistoryRouteImport } from './routes/_a
 import { Route as AuthenticatedPerformanceMatrixRouteImport } from './routes/_authenticated/performance.matrix'
 import { Route as AuthenticatedPerformanceMyRouteImport } from './routes/_authenticated/performance.my'
 import { Route as AuthenticatedPerformanceTeamRouteImport } from './routes/_authenticated/performance.team'
+import { Route as ApiPublicHealthRouteImport } from './routes/api/public/health'
 import { Route as AuthenticatedCompetencyLibraryIndexRouteImport } from './routes/_authenticated/competency.library.index'
 import { Route as AuthenticatedCompetencyLibraryIdRouteImport } from './routes/_authenticated/competency.library.$id'
 import { Route as AuthenticatedPeopleEmployeesIndexRouteImport } from './routes/_authenticated/people.employees.index'
@@ -165,6 +166,11 @@ const AuthenticatedPerformanceTeamRoute =
     path: '/performance/team',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const ApiPublicHealthRoute = ApiPublicHealthRouteImport.update({
+  id: '/api/public/health',
+  path: '/api/public/health',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedCompetencyLibraryIndexRoute =
   AuthenticatedCompetencyLibraryIndexRouteImport.update({
     id: '/competency/library/',
@@ -240,6 +246,7 @@ export interface FileRoutesByFullPath {
   '/performance/matrix': typeof AuthenticatedPerformanceMatrixRoute
   '/performance/my': typeof AuthenticatedPerformanceMyRoute
   '/performance/team': typeof AuthenticatedPerformanceTeamRoute
+  '/api/public/health': typeof ApiPublicHealthRoute
   '/competency/': typeof AuthenticatedCompetencyIndexRoute
   '/performance/': typeof AuthenticatedPerformanceIndexRoute
   '/competency/library/$id': typeof AuthenticatedCompetencyLibraryIdRoute
@@ -272,6 +279,7 @@ export interface FileRoutesByTo {
   '/performance/matrix': typeof AuthenticatedPerformanceMatrixRoute
   '/performance/my': typeof AuthenticatedPerformanceMyRoute
   '/performance/team': typeof AuthenticatedPerformanceTeamRoute
+  '/api/public/health': typeof ApiPublicHealthRoute
   '/competency': typeof AuthenticatedCompetencyIndexRoute
   '/performance': typeof AuthenticatedPerformanceIndexRoute
   '/competency/library/$id': typeof AuthenticatedCompetencyLibraryIdRoute
@@ -306,6 +314,7 @@ export interface FileRoutesById {
   '/_authenticated/performance/matrix': typeof AuthenticatedPerformanceMatrixRoute
   '/_authenticated/performance/my': typeof AuthenticatedPerformanceMyRoute
   '/_authenticated/performance/team': typeof AuthenticatedPerformanceTeamRoute
+  '/api/public/health': typeof ApiPublicHealthRoute
   '/_authenticated/competency/': typeof AuthenticatedCompetencyIndexRoute
   '/_authenticated/performance/': typeof AuthenticatedPerformanceIndexRoute
   '/_authenticated/competency/library/$id': typeof AuthenticatedCompetencyLibraryIdRoute
@@ -340,6 +349,7 @@ export interface FileRouteTypes {
     | '/performance/matrix'
     | '/performance/my'
     | '/performance/team'
+    | '/api/public/health'
     | '/competency/'
     | '/performance/'
     | '/competency/library/$id'
@@ -372,6 +382,7 @@ export interface FileRouteTypes {
     | '/performance/matrix'
     | '/performance/my'
     | '/performance/team'
+    | '/api/public/health'
     | '/competency'
     | '/performance'
     | '/competency/library/$id'
@@ -405,6 +416,7 @@ export interface FileRouteTypes {
     | '/_authenticated/performance/matrix'
     | '/_authenticated/performance/my'
     | '/_authenticated/performance/team'
+    | '/api/public/health'
     | '/_authenticated/competency/'
     | '/_authenticated/performance/'
     | '/_authenticated/competency/library/$id'
@@ -422,6 +434,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  ApiPublicHealthRoute: typeof ApiPublicHealthRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -580,6 +593,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPerformanceTeamRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/health': {
+      id: '/api/public/health'
+      path: '/api/public/health'
+      fullPath: '/api/public/health'
+      preLoaderRoute: typeof ApiPublicHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/competency/library/': {
       id: '/_authenticated/competency/library/'
       path: '/competency/library'
@@ -722,6 +742,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  ApiPublicHealthRoute: ApiPublicHealthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
