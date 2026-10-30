@@ -14,6 +14,221 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_generation_logs: {
+        Row: {
+          created_at: string
+          employee_id: string | null
+          error: string | null
+          id: string
+          latency_ms: number | null
+          model: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          employee_id?: string | null
+          error?: string | null
+          id?: string
+          latency_ms?: number | null
+          model: string
+          status: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          employee_id?: string | null
+          error?: string | null
+          id?: string
+          latency_ms?: number | null
+          model?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      ai_integration_settings: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          last_checked_at: string | null
+          last_error: string | null
+          last_status: string | null
+          model: string
+          provider: string
+          updated_at: string
+          updated_by: string | null
+          version: number
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          last_checked_at?: string | null
+          last_error?: string | null
+          last_status?: string | null
+          model?: string
+          provider?: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          last_checked_at?: string | null
+          last_error?: string | null
+          last_status?: string | null
+          model?: string
+          provider?: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Relationships: []
+      }
+      ai_recommendation_reviews: {
+        Row: {
+          comments: string | null
+          created_at: string
+          created_by: string | null
+          decision: string
+          edited: Json | null
+          id: string
+          is_demo: boolean
+          recommendation_id: string
+          reviewer_id: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          comments?: string | null
+          created_at?: string
+          created_by?: string | null
+          decision: string
+          edited?: Json | null
+          id?: string
+          is_demo?: boolean
+          recommendation_id: string
+          reviewer_id: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          comments?: string | null
+          created_at?: string
+          created_by?: string | null
+          decision?: string
+          edited?: Json | null
+          id?: string
+          is_demo?: boolean
+          recommendation_id?: string
+          reviewer_id?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_recommendation_reviews_recommendation_id_fkey"
+            columns: ["recommendation_id"]
+            isOneToOne: false
+            referencedRelation: "ai_recommendations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ai_recommendations: {
+        Row: {
+          competency_id: string
+          created_at: string
+          created_by: string | null
+          current_level: number | null
+          employee_id: string
+          expected_outcome: string | null
+          gap: number
+          gap_snapshot_id: string | null
+          generated_by: string
+          id: string
+          is_demo: boolean
+          model: string
+          priority: string
+          rationale: string
+          recommendation_type: string
+          required_level: number
+          resource_id: string
+          sources: Json
+          status: string
+          updated_at: string
+          updated_by: string | null
+          version: number
+        }
+        Insert: {
+          competency_id: string
+          created_at?: string
+          created_by?: string | null
+          current_level?: number | null
+          employee_id: string
+          expected_outcome?: string | null
+          gap: number
+          gap_snapshot_id?: string | null
+          generated_by: string
+          id?: string
+          is_demo?: boolean
+          model: string
+          priority?: string
+          rationale: string
+          recommendation_type: string
+          required_level: number
+          resource_id: string
+          sources?: Json
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Update: {
+          competency_id?: string
+          created_at?: string
+          created_by?: string | null
+          current_level?: number | null
+          employee_id?: string
+          expected_outcome?: string | null
+          gap?: number
+          gap_snapshot_id?: string | null
+          generated_by?: string
+          id?: string
+          is_demo?: boolean
+          model?: string
+          priority?: string
+          rationale?: string
+          recommendation_type?: string
+          required_level?: number
+          resource_id?: string
+          sources?: Json
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_recommendations_competency_id_fkey"
+            columns: ["competency_id"]
+            isOneToOne: false
+            referencedRelation: "competencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ai_recommendations_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       approval_tasks: {
         Row: {
           assignee_role: Database["public"]["Enums"]["app_role"] | null
@@ -476,6 +691,77 @@ export type Database = {
           },
         ]
       }
+      competency_reassessments: {
+        Row: {
+          assessment_id: string
+          competency_id: string
+          created_at: string
+          created_by: string | null
+          employee_id: string
+          id: string
+          is_demo: boolean
+          notes: string | null
+          session_id: string | null
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          assessment_id: string
+          competency_id: string
+          created_at?: string
+          created_by?: string | null
+          employee_id: string
+          id?: string
+          is_demo?: boolean
+          notes?: string | null
+          session_id?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          assessment_id?: string
+          competency_id?: string
+          created_at?: string
+          created_by?: string | null
+          employee_id?: string
+          id?: string
+          is_demo?: boolean
+          notes?: string | null
+          session_id?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "competency_reassessments_assessment_id_fkey"
+            columns: ["assessment_id"]
+            isOneToOne: false
+            referencedRelation: "competency_assessments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "competency_reassessments_competency_id_fkey"
+            columns: ["competency_id"]
+            isOneToOne: false
+            referencedRelation: "competencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "competency_reassessments_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "competency_reassessments_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "training_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       course_competency_mappings: {
         Row: {
           competency_id: string
@@ -834,6 +1120,176 @@ export type Database = {
             columns: ["parent_id"]
             isOneToOne: false
             referencedRelation: "departments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      development_plan_items: {
+        Row: {
+          ai_recommendation_id: string | null
+          competency_id: string | null
+          completed_at: string | null
+          course_id: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          evidence: string | null
+          gap_snapshot_id: string | null
+          id: string
+          is_demo: boolean
+          item_type: string
+          learning_path_id: string | null
+          plan_id: string
+          priority: string
+          status: string
+          target_date: string | null
+          title: string
+          training_session_id: string | null
+          updated_at: string
+          updated_by: string | null
+          version: number
+        }
+        Insert: {
+          ai_recommendation_id?: string | null
+          competency_id?: string | null
+          completed_at?: string | null
+          course_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          evidence?: string | null
+          gap_snapshot_id?: string | null
+          id?: string
+          is_demo?: boolean
+          item_type: string
+          learning_path_id?: string | null
+          plan_id: string
+          priority?: string
+          status?: string
+          target_date?: string | null
+          title: string
+          training_session_id?: string | null
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Update: {
+          ai_recommendation_id?: string | null
+          competency_id?: string | null
+          completed_at?: string | null
+          course_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          evidence?: string | null
+          gap_snapshot_id?: string | null
+          id?: string
+          is_demo?: boolean
+          item_type?: string
+          learning_path_id?: string | null
+          plan_id?: string
+          priority?: string
+          status?: string
+          target_date?: string | null
+          title?: string
+          training_session_id?: string | null
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "development_plan_items_competency_id_fkey"
+            columns: ["competency_id"]
+            isOneToOne: false
+            referencedRelation: "competencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "development_plan_items_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "development_plan_items_learning_path_id_fkey"
+            columns: ["learning_path_id"]
+            isOneToOne: false
+            referencedRelation: "learning_paths"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "development_plan_items_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "development_plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      development_plans: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          employee_id: string
+          id: string
+          is_demo: boolean
+          notes: string | null
+          objectives: string | null
+          responsible_id: string | null
+          status: string
+          target_date: string | null
+          title: string
+          updated_at: string
+          updated_by: string | null
+          version: number
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          employee_id: string
+          id?: string
+          is_demo?: boolean
+          notes?: string | null
+          objectives?: string | null
+          responsible_id?: string | null
+          status?: string
+          target_date?: string | null
+          title: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          employee_id?: string
+          id?: string
+          is_demo?: boolean
+          notes?: string | null
+          objectives?: string | null
+          responsible_id?: string | null
+          status?: string
+          target_date?: string | null
+          title?: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "development_plans_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "development_plans_responsible_id_fkey"
+            columns: ["responsible_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
             referencedColumns: ["id"]
           },
         ]
@@ -1867,6 +2323,51 @@ export type Database = {
           },
         ]
       }
+      outbox_events: {
+        Row: {
+          attempts: number
+          created_at: string
+          created_by: string | null
+          id: string
+          kind: string
+          last_error: string | null
+          next_retry_at: string
+          payload: Json
+          processed_at: string | null
+          status: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          attempts?: number
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          kind: string
+          last_error?: string | null
+          next_retry_at?: string
+          payload: Json
+          processed_at?: string | null
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          attempts?: number
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          kind?: string
+          last_error?: string | null
+          next_retry_at?: string
+          payload?: Json
+          processed_at?: string | null
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
       position_competency_requirements: {
         Row: {
           change_reason: string | null
@@ -2389,6 +2890,367 @@ export type Database = {
           version?: number
         }
         Relationships: []
+      }
+      trainers: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          email: string | null
+          id: string
+          is_demo: boolean
+          is_external: boolean
+          name: string
+          specialty: string | null
+          status: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          id?: string
+          is_demo?: boolean
+          is_external?: boolean
+          name: string
+          specialty?: string | null
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          id?: string
+          is_demo?: boolean
+          is_external?: boolean
+          name?: string
+          specialty?: string | null
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
+      training_attendance: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          employee_id: string
+          id: string
+          is_demo: boolean
+          recorded_at: string
+          recorded_by: string | null
+          remarks: string | null
+          session_id: string
+          status: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          employee_id: string
+          id?: string
+          is_demo?: boolean
+          recorded_at?: string
+          recorded_by?: string | null
+          remarks?: string | null
+          session_id: string
+          status: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          employee_id?: string
+          id?: string
+          is_demo?: boolean
+          recorded_at?: string
+          recorded_by?: string | null
+          remarks?: string | null
+          session_id?: string
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "training_attendance_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "training_attendance_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "training_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      training_effectiveness_reviews: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          follow_up_notes: string | null
+          follow_up_required: boolean
+          id: string
+          is_demo: boolean
+          reviewer_id: string | null
+          session_id: string
+          summary: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          follow_up_notes?: string | null
+          follow_up_required?: boolean
+          id?: string
+          is_demo?: boolean
+          reviewer_id?: string | null
+          session_id: string
+          summary: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          follow_up_notes?: string | null
+          follow_up_required?: boolean
+          id?: string
+          is_demo?: boolean
+          reviewer_id?: string | null
+          session_id?: string
+          summary?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "training_effectiveness_reviews_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "training_effectiveness_reviews_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "training_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      training_participants: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          development_plan_item_id: string | null
+          employee_id: string
+          id: string
+          is_demo: boolean
+          session_id: string
+          status: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          development_plan_item_id?: string | null
+          employee_id: string
+          id?: string
+          is_demo?: boolean
+          session_id: string
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          development_plan_item_id?: string | null
+          employee_id?: string
+          id?: string
+          is_demo?: boolean
+          session_id?: string
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "training_participants_development_plan_item_id_fkey"
+            columns: ["development_plan_item_id"]
+            isOneToOne: false
+            referencedRelation: "development_plan_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "training_participants_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "training_participants_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "training_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      training_results: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          employee_id: string
+          evidence: string | null
+          feedback: string | null
+          id: string
+          is_demo: boolean
+          outcome: string
+          recorded_by: string | null
+          score: number | null
+          session_id: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          employee_id: string
+          evidence?: string | null
+          feedback?: string | null
+          id?: string
+          is_demo?: boolean
+          outcome: string
+          recorded_by?: string | null
+          score?: number | null
+          session_id: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          employee_id?: string
+          evidence?: string | null
+          feedback?: string | null
+          id?: string
+          is_demo?: boolean
+          outcome?: string
+          recorded_by?: string | null
+          score?: number | null
+          session_id?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "training_results_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "training_results_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "training_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      training_sessions: {
+        Row: {
+          capacity: number | null
+          code: string
+          created_at: string
+          created_by: string | null
+          delivery_method: string
+          ends_at: string
+          id: string
+          is_demo: boolean
+          related_competency_id: string | null
+          starts_at: string
+          status: string
+          title: string
+          trainer_id: string | null
+          type: string
+          updated_at: string
+          updated_by: string | null
+          venue: string | null
+          version: number
+        }
+        Insert: {
+          capacity?: number | null
+          code: string
+          created_at?: string
+          created_by?: string | null
+          delivery_method?: string
+          ends_at: string
+          id?: string
+          is_demo?: boolean
+          related_competency_id?: string | null
+          starts_at: string
+          status?: string
+          title: string
+          trainer_id?: string | null
+          type?: string
+          updated_at?: string
+          updated_by?: string | null
+          venue?: string | null
+          version?: number
+        }
+        Update: {
+          capacity?: number | null
+          code?: string
+          created_at?: string
+          created_by?: string | null
+          delivery_method?: string
+          ends_at?: string
+          id?: string
+          is_demo?: boolean
+          related_competency_id?: string | null
+          starts_at?: string
+          status?: string
+          title?: string
+          trainer_id?: string | null
+          type?: string
+          updated_at?: string
+          updated_by?: string | null
+          venue?: string | null
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "training_sessions_related_competency_id_fkey"
+            columns: ["related_competency_id"]
+            isOneToOne: false
+            referencedRelation: "competencies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "training_sessions_trainer_id_fkey"
+            columns: ["trainer_id"]
+            isOneToOne: false
+            referencedRelation: "trainers"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {
