@@ -24,6 +24,8 @@ import { Route as AuthenticatedCompetencyGapsRouteImport } from './routes/_authe
 import { Route as AuthenticatedCompetencyHistoryRouteImport } from './routes/_authenticated/competency.history'
 import { Route as AuthenticatedCompetencyMatrixRouteImport } from './routes/_authenticated/competency.matrix'
 import { Route as AuthenticatedCompetencyRequirementsRouteImport } from './routes/_authenticated/competency.requirements'
+import { Route as AuthenticatedLearningIndexRouteImport } from './routes/_authenticated/learning.index'
+import { Route as AuthenticatedLearningCatalogRouteImport } from './routes/_authenticated/learning.catalog'
 import { Route as AuthenticatedOrgDepartmentsRouteImport } from './routes/_authenticated/org.departments'
 import { Route as AuthenticatedOrgPositionsRouteImport } from './routes/_authenticated/org.positions'
 import { Route as AuthenticatedPerformanceIndexRouteImport } from './routes/_authenticated/performance.index'
@@ -122,6 +124,18 @@ const AuthenticatedCompetencyRequirementsRoute =
   AuthenticatedCompetencyRequirementsRouteImport.update({
     id: '/competency/requirements',
     path: '/competency/requirements',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedLearningIndexRoute =
+  AuthenticatedLearningIndexRouteImport.update({
+    id: '/learning/',
+    path: '/learning/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedLearningCatalogRoute =
+  AuthenticatedLearningCatalogRouteImport.update({
+    id: '/learning/catalog',
+    path: '/learning/catalog',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedOrgDepartmentsRoute =
@@ -240,6 +254,7 @@ export interface FileRoutesByFullPath {
   '/competency/history': typeof AuthenticatedCompetencyHistoryRoute
   '/competency/matrix': typeof AuthenticatedCompetencyMatrixRoute
   '/competency/requirements': typeof AuthenticatedCompetencyRequirementsRoute
+  '/learning/catalog': typeof AuthenticatedLearningCatalogRoute
   '/org/departments': typeof AuthenticatedOrgDepartmentsRoute
   '/org/positions': typeof AuthenticatedOrgPositionsRoute
   '/performance/history': typeof AuthenticatedPerformanceHistoryRoute
@@ -248,6 +263,7 @@ export interface FileRoutesByFullPath {
   '/performance/team': typeof AuthenticatedPerformanceTeamRoute
   '/api/public/health': typeof ApiPublicHealthRoute
   '/competency/': typeof AuthenticatedCompetencyIndexRoute
+  '/learning/': typeof AuthenticatedLearningIndexRoute
   '/performance/': typeof AuthenticatedPerformanceIndexRoute
   '/competency/library/$id': typeof AuthenticatedCompetencyLibraryIdRoute
   '/people/employees/$id': typeof AuthenticatedPeopleEmployeesIdRoute
@@ -273,6 +289,7 @@ export interface FileRoutesByTo {
   '/competency/history': typeof AuthenticatedCompetencyHistoryRoute
   '/competency/matrix': typeof AuthenticatedCompetencyMatrixRoute
   '/competency/requirements': typeof AuthenticatedCompetencyRequirementsRoute
+  '/learning/catalog': typeof AuthenticatedLearningCatalogRoute
   '/org/departments': typeof AuthenticatedOrgDepartmentsRoute
   '/org/positions': typeof AuthenticatedOrgPositionsRoute
   '/performance/history': typeof AuthenticatedPerformanceHistoryRoute
@@ -281,6 +298,7 @@ export interface FileRoutesByTo {
   '/performance/team': typeof AuthenticatedPerformanceTeamRoute
   '/api/public/health': typeof ApiPublicHealthRoute
   '/competency': typeof AuthenticatedCompetencyIndexRoute
+  '/learning': typeof AuthenticatedLearningIndexRoute
   '/performance': typeof AuthenticatedPerformanceIndexRoute
   '/competency/library/$id': typeof AuthenticatedCompetencyLibraryIdRoute
   '/people/employees/$id': typeof AuthenticatedPeopleEmployeesIdRoute
@@ -308,6 +326,7 @@ export interface FileRoutesById {
   '/_authenticated/competency/history': typeof AuthenticatedCompetencyHistoryRoute
   '/_authenticated/competency/matrix': typeof AuthenticatedCompetencyMatrixRoute
   '/_authenticated/competency/requirements': typeof AuthenticatedCompetencyRequirementsRoute
+  '/_authenticated/learning/catalog': typeof AuthenticatedLearningCatalogRoute
   '/_authenticated/org/departments': typeof AuthenticatedOrgDepartmentsRoute
   '/_authenticated/org/positions': typeof AuthenticatedOrgPositionsRoute
   '/_authenticated/performance/history': typeof AuthenticatedPerformanceHistoryRoute
@@ -316,6 +335,7 @@ export interface FileRoutesById {
   '/_authenticated/performance/team': typeof AuthenticatedPerformanceTeamRoute
   '/api/public/health': typeof ApiPublicHealthRoute
   '/_authenticated/competency/': typeof AuthenticatedCompetencyIndexRoute
+  '/_authenticated/learning/': typeof AuthenticatedLearningIndexRoute
   '/_authenticated/performance/': typeof AuthenticatedPerformanceIndexRoute
   '/_authenticated/competency/library/$id': typeof AuthenticatedCompetencyLibraryIdRoute
   '/_authenticated/people/employees/$id': typeof AuthenticatedPeopleEmployeesIdRoute
@@ -343,6 +363,7 @@ export interface FileRouteTypes {
     | '/competency/history'
     | '/competency/matrix'
     | '/competency/requirements'
+    | '/learning/catalog'
     | '/org/departments'
     | '/org/positions'
     | '/performance/history'
@@ -351,6 +372,7 @@ export interface FileRouteTypes {
     | '/performance/team'
     | '/api/public/health'
     | '/competency/'
+    | '/learning/'
     | '/performance/'
     | '/competency/library/$id'
     | '/people/employees/$id'
@@ -376,6 +398,7 @@ export interface FileRouteTypes {
     | '/competency/history'
     | '/competency/matrix'
     | '/competency/requirements'
+    | '/learning/catalog'
     | '/org/departments'
     | '/org/positions'
     | '/performance/history'
@@ -384,6 +407,7 @@ export interface FileRouteTypes {
     | '/performance/team'
     | '/api/public/health'
     | '/competency'
+    | '/learning'
     | '/performance'
     | '/competency/library/$id'
     | '/people/employees/$id'
@@ -410,6 +434,7 @@ export interface FileRouteTypes {
     | '/_authenticated/competency/history'
     | '/_authenticated/competency/matrix'
     | '/_authenticated/competency/requirements'
+    | '/_authenticated/learning/catalog'
     | '/_authenticated/org/departments'
     | '/_authenticated/org/positions'
     | '/_authenticated/performance/history'
@@ -418,6 +443,7 @@ export interface FileRouteTypes {
     | '/_authenticated/performance/team'
     | '/api/public/health'
     | '/_authenticated/competency/'
+    | '/_authenticated/learning/'
     | '/_authenticated/performance/'
     | '/_authenticated/competency/library/$id'
     | '/_authenticated/people/employees/$id'
@@ -542,6 +568,20 @@ declare module '@tanstack/react-router' {
       path: '/competency/requirements'
       fullPath: '/competency/requirements'
       preLoaderRoute: typeof AuthenticatedCompetencyRequirementsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/learning/': {
+      id: '/_authenticated/learning/'
+      path: '/learning'
+      fullPath: '/learning/'
+      preLoaderRoute: typeof AuthenticatedLearningIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/learning/catalog': {
+      id: '/_authenticated/learning/catalog'
+      path: '/learning/catalog'
+      fullPath: '/learning/catalog'
+      preLoaderRoute: typeof AuthenticatedLearningCatalogRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/org/departments': {
@@ -678,6 +718,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedCompetencyHistoryRoute: typeof AuthenticatedCompetencyHistoryRoute
   AuthenticatedCompetencyMatrixRoute: typeof AuthenticatedCompetencyMatrixRoute
   AuthenticatedCompetencyRequirementsRoute: typeof AuthenticatedCompetencyRequirementsRoute
+  AuthenticatedLearningCatalogRoute: typeof AuthenticatedLearningCatalogRoute
   AuthenticatedOrgDepartmentsRoute: typeof AuthenticatedOrgDepartmentsRoute
   AuthenticatedOrgPositionsRoute: typeof AuthenticatedOrgPositionsRoute
   AuthenticatedPerformanceHistoryRoute: typeof AuthenticatedPerformanceHistoryRoute
@@ -685,6 +726,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPerformanceMyRoute: typeof AuthenticatedPerformanceMyRoute
   AuthenticatedPerformanceTeamRoute: typeof AuthenticatedPerformanceTeamRoute
   AuthenticatedCompetencyIndexRoute: typeof AuthenticatedCompetencyIndexRoute
+  AuthenticatedLearningIndexRoute: typeof AuthenticatedLearningIndexRoute
   AuthenticatedPerformanceIndexRoute: typeof AuthenticatedPerformanceIndexRoute
   AuthenticatedCompetencyLibraryIdRoute: typeof AuthenticatedCompetencyLibraryIdRoute
   AuthenticatedPeopleEmployeesIdRoute: typeof AuthenticatedPeopleEmployeesIdRoute
@@ -710,6 +752,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedCompetencyMatrixRoute: AuthenticatedCompetencyMatrixRoute,
   AuthenticatedCompetencyRequirementsRoute:
     AuthenticatedCompetencyRequirementsRoute,
+  AuthenticatedLearningCatalogRoute: AuthenticatedLearningCatalogRoute,
   AuthenticatedOrgDepartmentsRoute: AuthenticatedOrgDepartmentsRoute,
   AuthenticatedOrgPositionsRoute: AuthenticatedOrgPositionsRoute,
   AuthenticatedPerformanceHistoryRoute: AuthenticatedPerformanceHistoryRoute,
@@ -717,6 +760,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPerformanceMyRoute: AuthenticatedPerformanceMyRoute,
   AuthenticatedPerformanceTeamRoute: AuthenticatedPerformanceTeamRoute,
   AuthenticatedCompetencyIndexRoute: AuthenticatedCompetencyIndexRoute,
+  AuthenticatedLearningIndexRoute: AuthenticatedLearningIndexRoute,
   AuthenticatedPerformanceIndexRoute: AuthenticatedPerformanceIndexRoute,
   AuthenticatedCompetencyLibraryIdRoute: AuthenticatedCompetencyLibraryIdRoute,
   AuthenticatedPeopleEmployeesIdRoute: AuthenticatedPeopleEmployeesIdRoute,
