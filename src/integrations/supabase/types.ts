@@ -1064,6 +1064,79 @@ export type Database = {
           },
         ]
       }
+      critical_positions: {
+        Row: {
+          business_impact: string | null
+          created_at: string
+          created_by: string | null
+          criticality: string
+          department_id: string
+          id: string
+          incumbent_employee_id: string | null
+          is_demo: boolean
+          position_id: string
+          review_date: string | null
+          status: string
+          updated_at: string
+          updated_by: string | null
+          version: number
+        }
+        Insert: {
+          business_impact?: string | null
+          created_at?: string
+          created_by?: string | null
+          criticality?: string
+          department_id: string
+          id?: string
+          incumbent_employee_id?: string | null
+          is_demo?: boolean
+          position_id: string
+          review_date?: string | null
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Update: {
+          business_impact?: string | null
+          created_at?: string
+          created_by?: string | null
+          criticality?: string
+          department_id?: string
+          id?: string
+          incumbent_employee_id?: string | null
+          is_demo?: boolean
+          position_id?: string
+          review_date?: string | null
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "critical_positions_department_id_fkey"
+            columns: ["department_id"]
+            isOneToOne: false
+            referencedRelation: "departments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "critical_positions_incumbent_employee_id_fkey"
+            columns: ["incumbent_employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "critical_positions_position_id_fkey"
+            columns: ["position_id"]
+            isOneToOne: false
+            referencedRelation: "positions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       departments: {
         Row: {
           code: string
@@ -2732,6 +2805,263 @@ export type Database = {
           },
         ]
       }
+      readiness_classes: {
+        Row: {
+          code: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          label: string
+          requires_validation: boolean
+          sort_order: number
+          updated_at: string
+          updated_by: string | null
+          version: number
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          label: string
+          requires_validation?: boolean
+          sort_order?: number
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          label?: string
+          requires_validation?: boolean
+          sort_order?: number
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Relationships: []
+      }
+      recognition_categories: {
+        Row: {
+          active: boolean
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          name: string
+          updated_at: string
+          updated_by: string | null
+          version: number
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          name: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          name?: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Relationships: []
+      }
+      recognition_nominations: {
+        Row: {
+          category_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_demo: boolean
+          message: string
+          nominator_id: string
+          recipient_id: string
+          review_comments: string | null
+          reviewed_at: string | null
+          reviewer_id: string | null
+          show_nominator: boolean
+          status: string
+          supporting_info: string | null
+          updated_at: string
+          updated_by: string | null
+          version: number
+          visibility: string
+        }
+        Insert: {
+          category_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_demo?: boolean
+          message: string
+          nominator_id: string
+          recipient_id: string
+          review_comments?: string | null
+          reviewed_at?: string | null
+          reviewer_id?: string | null
+          show_nominator?: boolean
+          status?: string
+          supporting_info?: string | null
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+          visibility?: string
+        }
+        Update: {
+          category_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_demo?: boolean
+          message?: string
+          nominator_id?: string
+          recipient_id?: string
+          review_comments?: string | null
+          reviewed_at?: string | null
+          reviewer_id?: string | null
+          show_nominator?: boolean
+          status?: string
+          supporting_info?: string | null
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+          visibility?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "recognition_nominations_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "recognition_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "recognition_nominations_nominator_id_fkey"
+            columns: ["nominator_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "recognition_nominations_recipient_id_fkey"
+            columns: ["recipient_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      recognition_publications: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          is_demo: boolean
+          nomination_id: string
+          published_at: string
+          published_by: string | null
+          updated_at: string
+          updated_by: string | null
+          visibility: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_demo?: boolean
+          nomination_id: string
+          published_at?: string
+          published_by?: string | null
+          updated_at?: string
+          updated_by?: string | null
+          visibility: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_demo?: boolean
+          nomination_id?: string
+          published_at?: string
+          published_by?: string | null
+          updated_at?: string
+          updated_by?: string | null
+          visibility?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "recognition_publications_nomination_id_fkey"
+            columns: ["nomination_id"]
+            isOneToOne: true
+            referencedRelation: "recognition_nominations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      recognition_reviews: {
+        Row: {
+          comments: string | null
+          created_at: string
+          created_by: string | null
+          decision: string
+          id: string
+          is_demo: boolean
+          nomination_id: string
+          reviewer_id: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          comments?: string | null
+          created_at?: string
+          created_by?: string | null
+          decision: string
+          id?: string
+          is_demo?: boolean
+          nomination_id: string
+          reviewer_id: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          comments?: string | null
+          created_at?: string
+          created_by?: string | null
+          decision?: string
+          id?: string
+          is_demo?: boolean
+          nomination_id?: string
+          reviewer_id?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "recognition_reviews_nomination_id_fkey"
+            columns: ["nomination_id"]
+            isOneToOne: false
+            referencedRelation: "recognition_nominations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       reporting_relationships: {
         Row: {
           created_at: string
@@ -2851,6 +3181,248 @@ export type Database = {
           updated_by?: string | null
         }
         Relationships: []
+      }
+      succession_access_grants: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          department_id: string
+          granted_by: string | null
+          id: string
+          is_demo: boolean
+          updated_at: string
+          updated_by: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          department_id: string
+          granted_by?: string | null
+          id?: string
+          is_demo?: boolean
+          updated_at?: string
+          updated_by?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          department_id?: string
+          granted_by?: string | null
+          id?: string
+          is_demo?: boolean
+          updated_at?: string
+          updated_by?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "succession_access_grants_department_id_fkey"
+            columns: ["department_id"]
+            isOneToOne: false
+            referencedRelation: "departments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "succession_access_grants_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      succession_candidates: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          critical_position_id: string
+          employee_id: string
+          id: string
+          is_demo: boolean
+          notes: string | null
+          readiness_class_id: string | null
+          status: string
+          updated_at: string
+          updated_by: string | null
+          version: number
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          critical_position_id: string
+          employee_id: string
+          id?: string
+          is_demo?: boolean
+          notes?: string | null
+          readiness_class_id?: string | null
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          critical_position_id?: string
+          employee_id?: string
+          id?: string
+          is_demo?: boolean
+          notes?: string | null
+          readiness_class_id?: string | null
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "succession_candidates_critical_position_id_fkey"
+            columns: ["critical_position_id"]
+            isOneToOne: false
+            referencedRelation: "critical_positions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "succession_candidates_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "succession_candidates_readiness_class_id_fkey"
+            columns: ["readiness_class_id"]
+            isOneToOne: false
+            referencedRelation: "readiness_classes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      succession_development_activities: {
+        Row: {
+          candidate_id: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          development_plan_item_id: string | null
+          id: string
+          is_demo: boolean
+          status: string
+          target_date: string | null
+          title: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          candidate_id: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          development_plan_item_id?: string | null
+          id?: string
+          is_demo?: boolean
+          status?: string
+          target_date?: string | null
+          title: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          candidate_id?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          development_plan_item_id?: string | null
+          id?: string
+          is_demo?: boolean
+          status?: string
+          target_date?: string | null
+          title?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "succession_development_activities_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "succession_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "succession_development_activities_development_plan_item_id_fkey"
+            columns: ["development_plan_item_id"]
+            isOneToOne: false
+            referencedRelation: "development_plan_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      succession_readiness_assessments: {
+        Row: {
+          assessment_date: string
+          assessor_id: string | null
+          candidate_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_demo: boolean
+          readiness_class_id: string | null
+          summary: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          assessment_date?: string
+          assessor_id?: string | null
+          candidate_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_demo?: boolean
+          readiness_class_id?: string | null
+          summary: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          assessment_date?: string
+          assessor_id?: string | null
+          candidate_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_demo?: boolean
+          readiness_class_id?: string | null
+          summary?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "succession_readiness_assessments_assessor_id_fkey"
+            columns: ["assessor_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "succession_readiness_assessments_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "succession_candidates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "succession_readiness_assessments_readiness_class_id_fkey"
+            columns: ["readiness_class_id"]
+            isOneToOne: false
+            referencedRelation: "readiness_classes"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       system_settings: {
         Row: {
@@ -3287,6 +3859,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      _assert_succession_write: { Args: { _dept: string }; Returns: undefined }
       _build_snapshot: { Args: { _version_id: string }; Returns: Json }
       _idem_get: {
         Args: { _hash: string; _key: string; _op: string }
@@ -3360,6 +3933,7 @@ export type Database = {
       can_view_development: { Args: { _emp: string }; Returns: boolean }
       can_view_employee: { Args: { _emp: string }; Returns: boolean }
       can_view_perf: { Args: { _emp: string }; Returns: boolean }
+      can_view_succession: { Args: { _dept: string }; Returns: boolean }
       competency_gaps: {
         Args: {
           _category?: string
@@ -3437,6 +4011,10 @@ export type Database = {
           sublabel: string
         }[]
       }
+      grant_succession_access: {
+        Args: { _department: string; _user: string }
+        Returns: Json
+      }
       has_perm: { Args: { _perm: string }; Returns: boolean }
       has_role: {
         Args: {
@@ -3476,6 +4054,10 @@ export type Database = {
         }
         Returns: undefined
       }
+      log_succession_view: {
+        Args: { _record: string; _record_type: string }
+        Returns: Json
+      }
       mark_notifications_read: { Args: { _ids: string[] }; Returns: Json }
       my_context: { Args: never; Returns: Json }
       my_employee_id: { Args: never; Returns: string }
@@ -3504,6 +4086,15 @@ export type Database = {
           _hash: string
           _idem: string
           _reason: string
+        }
+        Returns: Json
+      }
+      report_data: {
+        Args: {
+          _department?: string
+          _from?: string
+          _kind: string
+          _to?: string
         }
         Returns: Json
       }
@@ -3548,6 +4139,19 @@ export type Database = {
         }
         Returns: Json
       }
+      review_nomination: {
+        Args: {
+          _comments: string
+          _decision: string
+          _hash: string
+          _id: string
+          _idem: string
+          _show_nominator: boolean
+          _visibility: string
+        }
+        Returns: Json
+      }
+      revoke_succession_access: { Args: { _grant: string }; Returns: Json }
       save_ai_recommendations: {
         Args: {
           _employee: string
@@ -3610,6 +4214,14 @@ export type Database = {
         Args: { _c: Json; _expected: number; _version_id: string }
         Returns: Json
       }
+      save_readiness_assessment: {
+        Args: { _candidate: string; _class: string; _summary: string }
+        Returns: Json
+      }
+      save_succession_activity: {
+        Args: { _candidate: string; _d: Json; _id: string }
+        Returns: Json
+      }
       save_training_result: {
         Args: { _d: Json; _employee: string; _session: string }
         Returns: Json
@@ -3668,6 +4280,17 @@ export type Database = {
         }
         Returns: Json
       }
+      submit_nomination: {
+        Args: {
+          _category: string
+          _hash: string
+          _idem: string
+          _message: string
+          _recipient: string
+          _supporting: string
+        }
+        Returns: Json
+      }
       submit_quiz_attempt: {
         Args: {
           _answers: Json
@@ -3711,6 +4334,10 @@ export type Database = {
         Args: { _d: Json; _id: string; _version: number }
         Returns: Json
       }
+      upsert_critical_position: {
+        Args: { _d: Json; _id: string; _version: number }
+        Returns: Json
+      }
       upsert_cycle: {
         Args: { _d: Json; _id: string; _version: number }
         Returns: Json
@@ -3749,6 +4376,18 @@ export type Database = {
           _title: string
           _version: number
         }
+        Returns: Json
+      }
+      upsert_readiness_class: {
+        Args: { _d: Json; _id: string; _version: number }
+        Returns: Json
+      }
+      upsert_recognition_category: {
+        Args: { _d: Json; _id: string; _version: number }
+        Returns: Json
+      }
+      upsert_succession_candidate: {
+        Args: { _d: Json; _id: string; _version: number }
         Returns: Json
       }
       upsert_trainer: {
